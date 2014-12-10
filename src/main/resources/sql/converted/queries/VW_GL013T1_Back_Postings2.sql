@@ -38,9 +38,9 @@ SELECT
     SUM(F.reporting_amount_credit) ,
     SUM(F.reporting_amount_debit) ,
     f.reporting_amount_curr_cd ,
-    SUM(f.[functional_amount]) ,
-    SUM(f.[functional_credit_amount]) ,
-    SUM(f.[functional_debit_amount]) ,
+    SUM(f.functional_amount) ,
+    SUM(f.functional_credit_amount) ,
+    SUM(f.functional_debit_amount) ,
     f.functional_curr_cd
 FROM
     dbo.flat_JE F

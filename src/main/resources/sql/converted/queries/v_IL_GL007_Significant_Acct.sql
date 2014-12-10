@@ -84,7 +84,7 @@ SELECT
     net_reporting_amount_current ,
     net_reporting_amount_prior
 FROM
-    dbo.[GL_007_Significant_Acct] FJ
+    dbo.GL_007_Significant_Acct FJ
 INNER JOIN
     dbo.v_Chart_of_accounts coa
 ON

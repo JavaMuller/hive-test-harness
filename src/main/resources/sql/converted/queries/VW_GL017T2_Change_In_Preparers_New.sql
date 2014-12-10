@@ -22,7 +22,7 @@ SELECT
     Dp.department ,
     F.reporting_amount_curr_cd ,
     F.functional_curr_cd ,
-    'New' AS [Category]
+    'New'
 FROM
     dbo.FT_GL_Account F
 INNER JOIN

@@ -16,12 +16,12 @@ WITH
             agg.Ey_period ,
             reporting_amount_curr_cd ,
             functional_curr_cd ,
-            SUM(Net_reporting_amount)         AS Net_reporting_amount ,
-            SUM(Net_reporting_amount_credit)  AS Net_reporting_amount_credit ,
-            SUM(Net_reporting_amount_debit)   AS Net_reporting_amount_debit ,
-            SUM(net_functional_amount)        AS net_functional_amount ,
-            SUM(net_functional_amount_credit) AS net_functional_amount_credit ,
-            SUM(net_functional_amount_debit)  AS net_functional_amount_debit
+            SUM(Net_reporting_amount)          ,
+            SUM(Net_reporting_amount_credit)   ,
+            SUM(Net_reporting_amount_debit)    ,
+            SUM(net_functional_amount)         ,
+            SUM(net_functional_amount_credit) ,
+            SUM(net_functional_amount_debit)
         FROM
             dbo.FT_GL_Account AGG
         GROUP BY

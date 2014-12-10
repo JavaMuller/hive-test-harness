@@ -24,7 +24,7 @@ SELECT
     src.source_ref ,
     full_result.sum_of_amount ,
     full_result.sum_of_func_amount ,
-    full_result.count_je_id AS [NUMBER OF Postings] ,
+    full_result.count_je_id  ,
     full_result.reporting_amount_curr_cd ,
     full_result.functional_curr_cd
 FROM
