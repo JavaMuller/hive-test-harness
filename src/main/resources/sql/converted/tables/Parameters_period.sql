@@ -1,6 +1,6 @@
 
 CREATE TABLE
-    [Parameters_period]
+    Parameters_period
     (
         year_flag NVARCHAR(25) NOT NULL ,
         year_flag_desc NVARCHAR(100) NOT NULL ,

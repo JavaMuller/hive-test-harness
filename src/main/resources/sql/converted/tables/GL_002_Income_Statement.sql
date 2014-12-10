@@ -1,5 +1,5 @@
 CREATE TABLE
-    [GL_002_Income_Statement]
+    GL_002_Income_Statement
     (
         COA_Id INT NULL ,
         Period_Id INT NULL ,
@@ -13,7 +13,7 @@ CREATE TABLE
         Period_flag nvarchar(50) NULL ,
         Accounting_period nvarchar(100) NULL ,
         Accounting_sub_period nvarchar(100) NULL ,
-        [YEAR] nvarchar(100) NULL ,
+        YEAR nvarchar(100) NULL ,
         Fiscal_period nvarchar(100) NULL ,
         Journal_type nvarchar(25) NULL ,
         Functional_Currency_Code nvarchar(50) NULL ,

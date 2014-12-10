@@ -1,5 +1,5 @@
 CREATE TABLE
-    [GL_008_JE_Search_Amount]
+    GL_008_JE_Search_Amount
     (
         Journal_entry_id nvarchar(100) NULL ,
         Journal_entry_line nvarchar(100) NULL ,

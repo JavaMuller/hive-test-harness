@@ -1,5 +1,5 @@
 CREATE TABLE
-    [Country_currency_mapping]
+    Country_currency_mapping
     (
         country_cd NVARCHAR(10) NULL ,
         country NVARCHAR(200) NULL ,

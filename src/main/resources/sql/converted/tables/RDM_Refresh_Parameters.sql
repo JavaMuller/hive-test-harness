@@ -1,5 +1,5 @@
 CREATE TABLE
-    [RDM_Refresh_Parameters]
+    RDM_Refresh_Parameters
     (
         row_counter INT NOT NULL IDENTITY(1,1) ,
         data_refresh_counter INT NOT NULL ,

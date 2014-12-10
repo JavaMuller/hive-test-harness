@@ -1,5 +1,5 @@
 CREATE TABLE
-    [GL_007_Significant_Acct]
+    GL_007_Significant_Acct
     (
         coa_id INT NULL ,
         bu_id INT NULL ,

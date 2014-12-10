@@ -1,5 +1,5 @@
 CREATE TABLE
-    [Parameters_engagement]
+    Parameters_engagement
     (
         engagement_id UNIQUEIDENTIFIER NULL ,
         planning_materiality NVARCHAR(50) NULL ,

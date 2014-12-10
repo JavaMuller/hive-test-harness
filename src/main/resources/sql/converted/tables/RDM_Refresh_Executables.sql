@@ -1,5 +1,5 @@
 CREATE TABLE
-    [RDM_Refresh_Executables]
+    RDM_Refresh_Executables
     (
         row_counter INT NOT NULL IDENTITY(1,1) ,
         Sequence INT NULL ,
