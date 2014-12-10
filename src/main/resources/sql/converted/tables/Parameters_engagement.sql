@@ -1,17 +1,17 @@
-CREATE TABLE Parameters_engagement (
+CREATE TABLE if not exists Parameters_engagement (
   engagement_id UNIQUEIDENTIFIER NULL,
-  planning_materiality NVARCHAR (50) NULL,
+  planning_materiality VARCHAR (50) NULL,
   tolerable_error INT NULL,
   sad_thresholds INT NULL,
-  current_year_cd NVARCHAR (100) NULL,
-  audit_period_end_period_cd NVARCHAR (100) NULL,
-  interim_period_end_period_cd NVARCHAR (100) NULL,
-  prior_year_cd NVARCHAR (100) NULL,
-  comparative_period_end_period_cd NVARCHAR (100) NULL,
-  receivables_ey_class NVARCHAR (100) NULL,
+  current_year_cd VARCHAR (100) NULL,
+  audit_period_end_period_cd VARCHAR (100) NULL,
+  interim_period_end_period_cd VARCHAR (100) NULL,
+  prior_year_cd VARCHAR (100) NULL,
+  comparative_period_end_period_cd VARCHAR (100) NULL,
+  receivables_ey_class VARCHAR (100) NULL,
   AR_aged_debt_threshold INT NULL,
-  AR_aging_basis NVARCHAR (50) NULL,
-  AP_aging_basis NVARCHAR (50) NULL,
+  AR_aging_basis VARCHAR (50) NULL,
+  AP_aging_basis VARCHAR (50) NULL,
   bu_id_for_dates INT NULL,
   Segment_selection1 VARCHAR(50) NULL,
   Segment_selection2 VARCHAR(50) NULL,
@@ -21,5 +21,5 @@ CREATE TABLE Parameters_engagement (
   audit_period_start_date DATE NULL,
   audit_period_end_date DATE NULL,
   interim_period_end_date DATE NULL,
-  system_manual_indicator_option NVARCHAR (50) NULL
+  system_manual_indicator_option VARCHAR (50) NULL
 )
