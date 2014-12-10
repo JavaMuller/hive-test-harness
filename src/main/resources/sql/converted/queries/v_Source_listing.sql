@@ -14,9 +14,9 @@ SELECT
                                                                                                 source_group,
   latest_version.source_cd + ' - ' + latest_version.source_desc                              AS source_ref
 FROM
-  dbo.Source_listing all_version
+  Source_listing all_version
   LEFT OUTER JOIN
-  dbo.Source_listing latest_version
+  Source_listing latest_version
     ON
       all_version.source_cd = latest_version.source_cd
   LEFT OUTER JOIN

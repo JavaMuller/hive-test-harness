@@ -44,35 +44,35 @@ SELECT
   SUM(FT_GL.net_functional_amount_credit),
   SUM(FT_GL.net_functional_amount_debit)
 FROM
-  dbo.FT_GL_Account FT_GL
+  FT_GL_Account FT_GL
   INNER JOIN
-  dbo.v_Chart_of_accounts COA
+  v_Chart_of_accounts COA
     ON
       COA.coa_id = FT_GL.coa_id
       AND COA.bu_id = FT_GL.bu_id
   LEFT OUTER JOIN
-  dbo.Parameters_period PP
+  Parameters_period PP
     ON
       PP.period_flag = FT_GL.period_flag
       AND PP.year_flag = FT_GL.year_flag
   LEFT OUTER JOIN
-  dbo.v_User_listing ul
+  v_User_listing ul
     ON
       ul.user_listing_id = FT_GL.user_listing_id
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing bu
+  v_Business_unit_listing bu
     ON
       FT_GL.bu_id = bu.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing SL
+  v_Source_listing SL
     ON
       FT_GL.source_id = SL.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing SG1
+  v_Segment01_listing SG1
     ON
       SG1.ey_segment_id = FT_GL.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing SG2
+  v_Segment02_listing SG2
     ON
       SG2.ey_segment_id = FT_GL.segment2_id
 GROUP BY

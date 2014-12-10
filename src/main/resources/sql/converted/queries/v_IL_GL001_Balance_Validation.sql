@@ -24,30 +24,30 @@ SELECT
     SUM(tb.reporting_ending_balance) ,
     SUM(tb.functional_ending_balance)
 FROM
-    dbo.TrialBalance tb
+    TrialBalance tb
 INNER JOIN
-    dbo.DIM_Chart_of_Accounts coa
+    DIM_Chart_of_Accounts coa
 ON
     coa.Coa_id = tb.coa_id
 INNER JOIN
-    dbo.Dim_Fiscal_calendar fc
+    Dim_Fiscal_calendar fc
 ON
     tb.period_id = fc.period_id
 INNER JOIN
-    dbo.Parameters_period pp
+    Parameters_period pp
 ON
     fc.fiscal_period_seq = pp.fiscal_period_seq_end
 AND fc.fiscal_year_cd = pp.fiscal_year_cd
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing Bu
+    v_Business_unit_listing Bu
 ON
     bu.bu_id = tb.bu_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     s1.ey_segment_id = tb.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing s2
+    v_Segment02_listing s2
 ON
     s2.ey_segment_id = tb.segment2_id
 WHERE

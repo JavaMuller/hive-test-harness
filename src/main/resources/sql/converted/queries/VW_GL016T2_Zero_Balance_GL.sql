@@ -17,13 +17,13 @@ SELECT
   'Journal entries with GL accounts not in trial balance',
   NULL
 FROM
-  dbo.FT_GL_Account FJ
+  FT_GL_Account FJ
   INNER JOIN
-  dbo.v_Chart_of_accounts coa
+  v_Chart_of_accounts coa
     ON
       coa.coa_id = fj.coa_id
   INNER JOIN
-  dbo.Parameters_period PP
+  Parameters_period PP
     ON
       pp.period_flag = fj.period_flag
       AND pp.year_flag = fj.year_flag
@@ -32,9 +32,9 @@ WHERE
   (
     SELECT DISTINCT coa.gl_account_cd
     FROM
-      dbo.trialbalance tb
+      trialbalance tb
       INNER JOIN
-      dbo.DIM_Chart_of_Accounts coa
+      DIM_Chart_of_Accounts coa
         ON
           coa.coa_id = tb.coa_id
     WHERE
@@ -58,17 +58,17 @@ WHERE
       'Active GL accounts with no balance',
       fc.fiscal_period_seq AS 'FPS'
     FROM
-    dbo.TrialBalance tb
+    TrialBalance tb
     INNER JOIN
-    dbo.DIM_Chart_of_Accounts coa
+    DIM_Chart_of_Accounts coa
   ON
   coa.Coa_id = tb.coa_id
     INNER JOIN
-    dbo.Dim_Fiscal_calendar fc
+    Dim_Fiscal_calendar fc
     ON
     tb.period_id = fc.period_id
   INNER JOIN
-  dbo.Parameters_period pp
+  Parameters_period pp
     ON
     fc.fiscal_period_seq = pp.fiscal_period_seq_end
     AND fc.fiscal_year_cd = pp.fiscal_year_cd
@@ -78,7 +78,7 @@ WHERE
     SELECT
     MAX(pp1.fiscal_period_seq_end)
     FROM
-    dbo.Parameters_period pp1
+    Parameters_period pp1
     WHERE
     pp1.fiscal_year_cd = pp.fiscal_year_cd
     AND pp1.year_flag = pp.year_flag )
@@ -93,5 +93,5 @@ WHERE
     SELECT DISTINCT
     fj.coa_id
     FROM
-    dbo.FT_GL_Account FJ )
+    FT_GL_Account FJ )
     AND TB.ver_end_date_id IS NULL

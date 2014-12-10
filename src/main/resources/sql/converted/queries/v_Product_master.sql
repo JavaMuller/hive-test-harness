@@ -17,9 +17,9 @@ SELECT
   latest_version.ver_end_date_id,
   latest_version.ver_desc
 FROM
-  dbo.Product_master all_version
+  Product_master all_version
   LEFT OUTER JOIN
-  dbo.Product_master latest_version
+  Product_master latest_version
     ON
       all_version.client_product_cd = latest_version.client_product_cd
       AND all_version.bu_id = latest_version.bu_id

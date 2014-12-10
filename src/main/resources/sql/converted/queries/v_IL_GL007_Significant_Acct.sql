@@ -84,38 +84,38 @@ SELECT
     net_reporting_amount_current ,
     net_reporting_amount_prior
 FROM
-    dbo.GL_007_Significant_Acct FJ
+    GL_007_Significant_Acct FJ
 INNER JOIN
-    dbo.v_Chart_of_accounts coa
+    v_Chart_of_accounts coa
 ON
     coa.coa_id = fj.coa_id
 AND coa.bu_id = fj.bu_id
 LEFT OUTER JOIN
-    dbo.Parameters_period pp
+    Parameters_period pp
 ON
     pp.year_flag = fj.year_flag
 AND PP.period_flag = fj.period_flag
 LEFT OUTER JOIN
-    dbo.v_User_listing UL
+    v_User_listing UL
 ON
     UL.user_listing_id = fj.user_listing_id
 LEFT OUTER JOIN
-    dbo.v_User_listing AUL
+    v_User_listing AUL
 ON
     AUL.user_listing_id = FJ.approved_by_id
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing BU
+    v_Business_unit_listing BU
 ON
     Bu.bu_id = fj.bu_id
 LEFT OUTER JOIN
-    dbo.v_Source_listing src
+    v_Source_listing src
 ON
     src.source_id = fj.source_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = fj.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = fj.segment2_id

@@ -49,37 +49,37 @@ SELECT
     DV.net_functional_credit_amount ,
     DV.net_functional_debit_amount
 FROM
-    dbo.[GL_012_Date_Validation] DV
+    [GL_012_Date_Validation] DV
 INNER JOIN
-    DBO.v_Chart_of_accounts coa
+    v_Chart_of_accounts coa
 ON
     COA.coa_id = DV.coa_id
 INNER JOIN
-    dbo.Parameters_period PP
+    Parameters_period PP
 ON
     PP.period_flag = DV.period_flag
 AND PP.year_flag = dv.year_flag
 LEFT OUTER JOIN
-    dbo.v_User_listing UL
+    v_User_listing UL
 ON
     UL.user_listing_id = dv.user_listing_id
 LEFT OUTER JOIN
-    dbo.v_User_listing AUL
+    v_User_listing AUL
 ON
     AUL.user_listing_id = dv.approver_by_id
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing BU
+    v_Business_unit_listing BU
 ON
     Bu.bu_id = DV.bu_id
 LEFT OUTER JOIN
-    dbo.v_Source_listing src
+    v_Source_listing src
 ON
     src.source_id = DV.source_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = DV.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = DV.segment2_id

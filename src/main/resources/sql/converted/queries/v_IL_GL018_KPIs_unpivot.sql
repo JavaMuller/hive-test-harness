@@ -20,4 +20,4 @@ SELECT
     Amount,
     Multiplier
 FROM
-    dbo.GL_018_KPIs_unpivot
+    GL_018_KPIs_unpivot

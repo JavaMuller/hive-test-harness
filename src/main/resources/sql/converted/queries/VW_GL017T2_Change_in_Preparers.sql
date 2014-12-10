@@ -21,18 +21,18 @@ SELECT
 FROM
   GL_017_Change_in_Preparers CP
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing BU
+  v_Business_unit_listing BU
     ON
       Bu.bu_id = cp.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing src
+  v_Source_listing src
     ON
       src.source_id = cp.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       S1.ey_segment_id = cp.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing S2
+  v_Segment02_listing S2
     ON
       S2.ey_segment_id = cp.segment2_id

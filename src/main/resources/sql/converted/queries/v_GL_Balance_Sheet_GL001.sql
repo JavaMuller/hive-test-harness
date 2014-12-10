@@ -59,33 +59,33 @@ SELECT
   GL.Fiscal_period_sequence,
   GL.Fiscal_period_sequence_end
 FROM
-  dbo.GL_001_Balance_Sheet GL (NOLOCK)
+  GL_001_Balance_Sheet GL (NOLOCK)
   LEFT OUTER JOIN
-  dbo.DIM_Chart_of_Accounts coa
+  DIM_Chart_of_Accounts coa
     ON
       coa.Coa_id = GL.coa_id
       AND coa.Coa_id = GL.coa_id
   LEFT OUTER JOIN
-  dbo.Dim_Preparer dp
+  Dim_Preparer dp
     ON
       dp.user_listing_id = GL.user_listing_id
   LEFT OUTER JOIN
-  dbo.Dim_Preparer dp1
+  Dim_Preparer dp1
     ON
       dp1.user_listing_id = GL.approved_by_id
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing BU
+  v_Business_unit_listing BU
     ON
       Bu.bu_id = GL.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing src
+  v_Source_listing src
     ON
       src.source_id = GL.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       S1.ey_segment_id = GL.Segment_1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing S2
+  v_Segment02_listing S2
     ON
       S2.ey_segment_id = GL.Segment_2_id

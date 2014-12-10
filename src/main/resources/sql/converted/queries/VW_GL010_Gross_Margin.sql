@@ -67,38 +67,38 @@ SELECT
   SUM(F.Net_functional_amount_debit) COMMENTED AS PER
 DISCUSSION WITH SPOTFIRE*/
 FROM
-dbo.FT_GL_Account F
+FT_GL_Account F
 INNER JOIN
-dbo.Dim_Chart_of_Accounts C
+Dim_Chart_of_Accounts C
 ON
 F.coa_id = C.coa_id
 INNER JOIN
-dbo.Dim_Preparer Dp
+Dim_Preparer Dp
 ON
 Dp.user_listing_id = F.user_listing_id
 INNER JOIN
-dbo.Dim_Preparer Dp1
+Dim_Preparer Dp1
 ON
 Dp1.user_listing_id = F.approved_by_id
 INNER JOIN
-dbo.Parameters_period PP
+Parameters_period PP
 ON
 pp.year_flag = F.year_flag
 AND pp.period_flag = F.period_flag
 LEFT OUTER JOIN
-dbo.v_Business_unit_listing BU
+v_Business_unit_listing BU
 ON
 Bu.bu_id = f.bu_id
 LEFT OUTER JOIN
-dbo.v_Source_listing src
+v_Source_listing src
 ON
 src.source_id = f.source_id
 LEFT OUTER JOIN
-dbo.v_Segment01_listing S1
+v_Segment01_listing S1
 ON
 S1.ey_segment_id = f.segment1_id
 LEFT OUTER JOIN
-dbo.v_Segment02_listing S2
+v_Segment02_listing S2
 ON
 S2.ey_segment_id = f.segment2_id
 GROUP BY

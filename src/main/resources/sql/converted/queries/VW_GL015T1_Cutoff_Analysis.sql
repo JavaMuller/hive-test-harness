@@ -44,39 +44,39 @@ SELECT
   SUM(FJ.net_functional_amount_credit),
   SUM(FJ.net_functional_amount_debit)
 FROM
-  dbo.FT_GL_Account FJ
+  FT_GL_Account FJ
   INNER JOIN
-  dbo.v_Chart_of_accounts coa
+  v_Chart_of_accounts coa
     ON
       coa.coa_id = FJ.coa_id
       AND COA.bu_id = FJ.bu_id
   LEFT OUTER JOIN
-  dbo.v_User_listing UL
+  v_User_listing UL
     ON
       UL.user_listing_id = FJ.user_listing_id
   LEFT OUTER JOIN
-  dbo.v_User_listing AUL
+  v_User_listing AUL
     ON
       AUL.user_listing_id = FJ.approved_by_id
   LEFT OUTER JOIN
-  dbo.Parameters_period pp
+  Parameters_period pp
     ON
       PP.period_flag = FJ.period_flag
       AND PP.year_flag = FJ.year_flag
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing BU
+  v_Business_unit_listing BU
     ON
       Bu.bu_id = fj.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing src
+  v_Source_listing src
     ON
       src.source_id = fj.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       S1.ey_segment_id = fj.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing S2
+  v_Segment02_listing S2
     ON
       S2.ey_segment_id = fj.segment2_id
 GROUP BY
@@ -156,30 +156,30 @@ SELECT
   0.0,
   0.0
 FROM
-  dbo.TrialBalance tb
+  TrialBalance tb
   INNER JOIN
-  dbo.DIM_Chart_of_Accounts coa
+  DIM_Chart_of_Accounts coa
     ON
       coa.Coa_id = tb.coa_id
   INNER JOIN
-  dbo.Dim_Fiscal_calendar fc
+  Dim_Fiscal_calendar fc
     ON
       tb.period_id = fc.period_id
   INNER JOIN
-  dbo.Parameters_period pp
+  Parameters_period pp
     ON
       fc.fiscal_period_seq = pp.fiscal_period_seq_end
       AND fc.fiscal_year_cd = pp.fiscal_year_cd
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing Bu
+  v_Business_unit_listing Bu
     ON
       bu.bu_id = tb.bu_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       s1.ey_segment_id = tb.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing s2
+  v_Segment02_listing s2
     ON
       s2.ey_segment_id = tb.segment2_id
 WHERE
@@ -187,7 +187,7 @@ WHERE
   (
     SELECT MAX(pp1.fiscal_period_seq_end)
     FROM
-      dbo.Parameters_period pp1
+      Parameters_period pp1
     WHERE
       PP1.year_flag = PP.year_flag
       AND pp1.fiscal_year_cd = pp.fiscal_year_cd)
@@ -239,30 +239,30 @@ SELECT
   0.0,
   0.0
 FROM
-  dbo.TrialBalance tb
+  TrialBalance tb
   INNER JOIN
-  dbo.DIM_Chart_of_Accounts coa
+  DIM_Chart_of_Accounts coa
     ON
       coa.Coa_id = tb.coa_id
   INNER JOIN
-  dbo.Dim_Fiscal_calendar fc
+  Dim_Fiscal_calendar fc
     ON
       tb.period_id = fc.period_id
   INNER JOIN
-  dbo.Parameters_period pp
+  Parameters_period pp
     ON
       fc.fiscal_period_seq = pp.fiscal_period_seq_end
       AND fc.fiscal_year_cd = pp.fiscal_year_cd
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing Bu
+  v_Business_unit_listing Bu
     ON
       bu.bu_id = tb.bu_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       s1.ey_segment_id = tb.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing s2
+  v_Segment02_listing s2
     ON
       s2.ey_segment_id = tb.segment2_id
 WHERE
@@ -270,7 +270,7 @@ WHERE
   (
     SELECT MAX(pp1.fiscal_period_seq_end)
     FROM
-      dbo.Parameters_period pp1
+      Parameters_period pp1
     WHERE
       PP1.year_flag = PP.year_flag
       AND pp1.fiscal_year_cd = pp.fiscal_year_cd)

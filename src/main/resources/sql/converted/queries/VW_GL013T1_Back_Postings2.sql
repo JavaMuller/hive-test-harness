@@ -43,26 +43,26 @@ SELECT
     SUM(f.functional_debit_amount) ,
     f.functional_curr_cd
 FROM
-    dbo.flat_JE F
+    flat_JE F
 INNER JOIN
     Parameters_period pa
 ON
     f.year_flag = pa.year_flag
 AND f.period_flag = pa.period_flag
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing BU
+    v_Business_unit_listing BU
 ON
     Bu.bu_id = f.bu_id
 LEFT OUTER JOIN
-    dbo.v_Source_listing src
+    v_Source_listing src
 ON
     src.source_id = f.source_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = f.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = f.segment2_id
 WHERE

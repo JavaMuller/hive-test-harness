@@ -42,7 +42,7 @@ SELECT
   '',
   ''
 FROM
-  dbo.FLAT_JE
+  FLAT_JE
 WHERE
   (
     je_line_desc IS NULL

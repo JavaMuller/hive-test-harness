@@ -29,17 +29,17 @@ SELECT
     latest_version.ver_desc,
     latest_version.gl_account_cd + ' - ' + latest_version.gl_account_name AS ey_gl_account_name
 FROM
-    dbo.Chart_of_accounts all_version
+    Chart_of_accounts all_version
 LEFT OUTER JOIN
-    dbo.Chart_of_accounts latest_version
+    Chart_of_accounts latest_version
 ON
     all_version.gl_account_cd = latest_version.gl_account_cd
 LEFT OUTER JOIN
-    dbo.Business_unit_listing bu_all
+    Business_unit_listing bu_all
 ON
     all_version.bu_id = bu_all.bu_id
 LEFT OUTER JOIN
-    dbo.Business_unit_listing bu_latest
+    Business_unit_listing bu_latest
 ON
     latest_version.bu_id = bu_latest.bu_id
 WHERE

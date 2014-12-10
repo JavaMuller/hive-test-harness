@@ -26,21 +26,21 @@ SELECT
   f.department,
   f.preparer_ref
 FROM
-  dbo.FLAT_JE AS f
+  FLAT_JE AS f
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing bu
+  v_Business_unit_listing bu
     ON
       bu.bu_id = f.bu_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing s1
+  v_Segment01_listing s1
     ON
       s1.ey_segment_id = F.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing s2
+  v_Segment02_listing s2
     ON
       s2.ey_segment_id = F.segment2_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing src
+  v_Source_listing src
     ON
       src.source_id = f.source_id
 WHERE

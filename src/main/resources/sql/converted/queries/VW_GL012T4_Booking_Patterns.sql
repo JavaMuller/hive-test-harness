@@ -46,39 +46,39 @@ SELECT
   SUM(FJ.NET_functional_amount_credit),
   SUM(FJ.NET_functional_amount_debit)
 FROM
-  dbo.FT_GL_Account FJ
+  FT_GL_Account FJ
   INNER JOIN
-  dbo.v_Chart_of_accounts coa
+  v_Chart_of_accounts coa
     ON
       coa.coa_id = FJ.coa_id
       AND coa.bu_id = FJ.bu_id
   INNER JOIN
-  dbo.Parameters_period PP
+  Parameters_period PP
     ON
       PP.year_flag = fj.year_flag
       AND PP.period_flag = FJ.period_flag
   LEFT OUTER JOIN
-  dbo.v_User_listing UL
+  v_User_listing UL
     ON
       ul.user_listing_id = FJ.user_listing_id
   LEFT OUTER JOIN
-  dbo.v_User_listing AUL
+  v_User_listing AUL
     ON
       Aul.user_listing_id = FJ.approved_by_id
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing BU
+  v_Business_unit_listing BU
     ON
       Bu.bu_id = fJ.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing src
+  v_Source_listing src
     ON
       src.source_id = fJ.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       S1.ey_segment_id = fJ.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing S2
+  v_Segment02_listing S2
     ON
       S2.ey_segment_id = fJ.segment2_id
 GROUP BY

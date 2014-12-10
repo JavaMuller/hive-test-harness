@@ -59,9 +59,9 @@ FROM
                 END)              sum_of_func_amount ,
             SUM(f.count_je_id) AS count_je_id
         FROM
-            dbo.FT_GL_Account F
+            FT_GL_Account F
         INNER JOIN
-            dbo.DIM_Chart_of_Accounts pa
+            DIM_Chart_of_Accounts pa
         ON
             f.coa_id = pa.coa_id
         WHERE
@@ -73,9 +73,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_type IN ('Revenue')
@@ -83,9 +83,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_group_I IN ('Cash') )
@@ -133,9 +133,9 @@ FROM
                 END)              sum_of_func_amount ,
             SUM(f.count_je_id) AS count_je_id
         FROM
-            DBO.FT_GL_Account f
+            FT_GL_Account f
         INNER JOIN
-            dbo.DIM_Chart_of_Accounts Pa
+            DIM_Chart_of_Accounts Pa
         ON
             f.coa_id = pa.coa_id
         WHERE
@@ -147,9 +147,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_group_I IN ('Accounts receivable')
@@ -157,9 +157,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_group_I IN ('Accounts payable') )
@@ -208,9 +208,9 @@ FROM
                 END)              sum_of_func_amount ,
             SUM(f.count_je_id) AS count_je_id
         FROM
-            dbo.FT_GL_Account F
+            FT_GL_Account F
         INNER JOIN
-            dbo.DIM_Chart_of_Accounts Pa
+            DIM_Chart_of_Accounts Pa
         ON
             f.coa_id = pa.coa_id
         WHERE
@@ -222,9 +222,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_sub_type IN ('Cost of sales')
@@ -232,9 +232,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_group_I IN ('Cash') )
@@ -282,9 +282,9 @@ FROM
                 END)              sum_of_func_amount ,
             SUM(f.count_je_id) AS count_je_id
         FROM
-            dbo.FT_GL_Account F
+            FT_GL_Account F
         INNER JOIN
-            dbo.DIM_Chart_of_Accounts Pa
+            DIM_Chart_of_Accounts Pa
         ON
             f.coa_id = pa.coa_id
         WHERE
@@ -296,9 +296,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_sub_type IN ('Cost of sales')
@@ -306,9 +306,9 @@ FROM
                                   SELECT DISTINCT
                                       f1.user_listing_id
                                   FROM
-                                      dbo.FT_GL_Account F1
+                                      FT_GL_Account F1
                                   INNER JOIN
-                                      dbo.DIM_Chart_of_Accounts Pa1
+                                      DIM_Chart_of_Accounts Pa1
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_type IN ('Revenue') )
@@ -326,27 +326,27 @@ FROM
             f.reporting_amount_curr_cd ,
             f.functional_curr_cd ) AS full_result
 INNER JOIN
-    dbo.Parameters_period PP
+    Parameters_period PP
 ON
     PP.year_flag = full_result.year_flag
 AND pp.period_flag = full_result.period_flag
 LEFT OUTER JOIN
-    dbo.Dim_Preparer dp
+    Dim_Preparer dp
 ON
     full_result.user_listing_id = dp.user_listing_id
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing B
+    v_Business_unit_listing B
 ON
     B.bu_id = full_result.bu_id
 LEFT OUTER JOIN
-    dbo.v_Source_listing src
+    v_Source_listing src
 ON
     src.source_id = full_result.source_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = full_result.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = full_result.segment2_id

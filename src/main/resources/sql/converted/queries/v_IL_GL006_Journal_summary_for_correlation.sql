@@ -42,12 +42,12 @@ FROM
       AND fc.fiscal_year_cd = PP.fiscal_year_cd
       AND PP.period_flag = 'RP'
   LEFT OUTER JOIN
-  dbo.v_Chart_of_accounts COA
+  v_Chart_of_accounts COA
     ON
       COA.coa_id = TB.coa_id
       AND COA.bu_id = TB.bu_id
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing bu
+  v_Business_unit_listing bu
     ON
       bu.bu_id = TB.bu_id
 WHERE

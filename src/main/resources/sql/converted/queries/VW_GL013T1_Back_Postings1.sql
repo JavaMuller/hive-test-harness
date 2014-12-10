@@ -36,17 +36,17 @@ SELECT
     fj.ver_desc ,
     'Backposting activity'
 FROM
-    dbo.flat_je fj
+    flat_je fj
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing BU
+    v_Business_unit_listing BU
 ON
     Bu.bu_id = fj.bu_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = fj.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = fj.segment2_id
 WHERE
@@ -117,7 +117,7 @@ SELECT
     NULL ,
     'Interim as posted'
 FROM
-    dbo.TrialBalance tb
+    TrialBalance tb
 FULL OUTER JOIN
     (
         SELECT
@@ -144,17 +144,17 @@ FULL OUTER JOIN
             SUM(functional_amount) AS net_functional_amount ,
             SUM(reporting_amount)  AS net_reporting_amount
         FROM
-            dbo.flat_je fj
+            flat_je fj
         LEFT OUTER JOIN
-            dbo.v_Business_unit_listing BU
+            v_Business_unit_listing BU
         ON
             Bu.bu_id = fj.bu_id
         LEFT OUTER JOIN
-            dbo.v_Segment01_listing S1
+            v_Segment01_listing S1
         ON
             S1.ey_segment_id = fj.segment1_id
         LEFT OUTER JOIN
-            dbo.v_Segment02_listing S2
+            v_Segment02_listing S2
         ON
             S2.ey_segment_id = fj.segment2_id
         WHERE
@@ -185,28 +185,28 @@ ON
     ag.coa_id = tb.coa_id
 AND ag.bu_id = tb.bu_id
 INNER JOIN
-    dbo.DIM_Chart_of_Accounts coa
+    DIM_Chart_of_Accounts coa
 ON
     coa.Coa_id = tb.coa_id
 INNER JOIN
-    dbo.Dim_Fiscal_calendar fc
+    Dim_Fiscal_calendar fc
 ON
     tb.period_id = fc.period_id
 INNER JOIN
-    dbo.Parameters_period pp
+    Parameters_period pp
 ON
     fc.fiscal_period_seq = pp.fiscal_period_seq_end
 AND fc.fiscal_year_cd = pp.fiscal_year_cd
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing BU
+    v_Business_unit_listing BU
 ON
     Bu.bu_id = tb.bu_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = tb.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = tb.segment2_id
 WHERE
@@ -251,30 +251,30 @@ SELECT
     NULL ,
     'Interim as shown'
 FROM
-    dbo.TrialBalance tb
+    TrialBalance tb
 INNER JOIN
-    dbo.DIM_Chart_of_Accounts coa
+    DIM_Chart_of_Accounts coa
 ON
     coa.Coa_id = tb.coa_id
 INNER JOIN
-    dbo.Dim_Fiscal_calendar fc
+    Dim_Fiscal_calendar fc
 ON
     tb.period_id = fc.period_id
 INNER JOIN
-    dbo.Parameters_period pp
+    Parameters_period pp
 ON
     fc.fiscal_period_seq = pp.fiscal_period_seq_end
 AND fc.fiscal_year_cd = pp.fiscal_year_cd
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing BU
+    v_Business_unit_listing BU
 ON
     Bu.bu_id = tb.bu_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = tb.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = tb.segment2_id
 WHERE

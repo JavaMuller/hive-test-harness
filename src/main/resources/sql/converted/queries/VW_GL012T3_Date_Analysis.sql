@@ -48,7 +48,7 @@ SELECT
     EntCal.calendar_date ,
     cd.Sequence
 FROM
-    dbo.FT_GL_Account FJ
+    FT_GL_Account FJ
 INNER JOIN
     Gregorian_calendar EntCal
 ON
@@ -58,16 +58,16 @@ INNER JOIN
 ON
     FJ.effective_date_id = EFFCAL.date_id
 INNER JOIN
-    dbo.DIM_Calendar_seq_date cd
+    DIM_Calendar_seq_date cd
 ON
     EntCal.calendar_date = cd.Calendar_date
 INNER JOIN
-    dbo.Parameters_period PP
+    Parameters_period PP
 ON
     PP.period_flag = FJ.period_flag
 AND PP.year_flag = FJ.YEAR_FLAG
 INNER JOIN
-    dbo.v_Chart_of_accounts coa
+    v_Chart_of_accounts coa
 ON
     coa.coa_id = FJ.coa_id
 LEFT JOIN
@@ -77,22 +77,22 @@ ON
 AND ENTCAL.calendar_date BETWEEN FC.fiscal_period_start AND FC.fiscal_period_end
 AND FC.adjustment_period = 'N'
 LEFT OUTER JOIN
-    dbo.v_User_listing UL
+    v_User_listing UL
 ON
     UL.user_listing_id = FJ.user_listing_id
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing BU
+    v_Business_unit_listing BU
 ON
     Bu.bu_id = fJ.bu_id
 LEFT OUTER JOIN
-    dbo.v_Source_listing src
+    v_Source_listing src
 ON
     src.source_id = fJ.source_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     S1.ey_segment_id = fJ.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     S2.ey_segment_id = fJ.segment2_id

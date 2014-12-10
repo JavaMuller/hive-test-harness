@@ -57,32 +57,32 @@ SELECT
   GL.Source_type,
   GL.Period_end_date
 FROM
-  dbo.GL_002_Income_Statement GL
+  GL_002_Income_Statement GL
   INNER JOIN
-  dbo.v_Chart_of_accounts coa
+  v_Chart_of_accounts coa
     ON
       coa.coa_id = GL.COA_Id
   LEFT OUTER JOIN
-  dbo.v_User_listing dp
+  v_User_listing dp
     ON
       dp.user_listing_id = gl.user_listing_id
   LEFT OUTER JOIN
-  dbo.v_User_listing dp1
+  v_User_listing dp1
     ON
       dp1.user_listing_id = gl.approved_by_id
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing Bu
+  v_Business_unit_listing Bu
     ON
       bu.bu_id = GL.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing Src
+  v_Source_listing Src
     ON
       src.source_id = GL.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       s1.ey_segment_id = GL.segment_1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing s2
+  v_Segment02_listing s2
     ON
       s2.ey_segment_id = GL.segment_2_id

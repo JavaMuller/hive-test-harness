@@ -23,9 +23,9 @@ SELECT
   latest_version.client_user_id + ' - ' + latest_version.full_name,
   latest_version.client_user_id + ' - ' + latest_version.full_name
 FROM
-  dbo.User_listing all_version
+  User_listing all_version
   LEFT OUTER JOIN
-  dbo.User_listing latest_version
+  User_listing latest_version
     ON
       all_version.client_user_id = latest_version.client_user_id
       AND all_version.bu_id = latest_version.bu_id

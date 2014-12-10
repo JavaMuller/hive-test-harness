@@ -44,17 +44,17 @@ SELECT
     (latest_version.customer_account_name, '') AS customer_ref,
     bu_latest.bu_cd
 FROM
-    dbo.Customer_master all_version
+    Customer_master all_version
 LEFT OUTER JOIN
-    dbo.Customer_master latest_version
+    Customer_master latest_version
 ON
     all_version.customer_account_cd = latest_version.customer_account_cd
 LEFT OUTER JOIN
-    dbo.Business_unit_listing bu_all
+    Business_unit_listing bu_all
 ON
     all_version.bu_id = bu_all.bu_id
 LEFT OUTER JOIN
-    dbo.Business_unit_listing bu_latest
+    Business_unit_listing bu_latest
 ON
     latest_version.bu_id = bu_latest.bu_id
 WHERE

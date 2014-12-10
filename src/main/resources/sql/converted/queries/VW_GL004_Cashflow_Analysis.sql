@@ -75,39 +75,39 @@ SELECT
   ISNULL(f.segment2_id, 0),
   ISNULL(f.approved_by_id, 0)
 FROM
-  dbo.GL_004_Cashflow_Analysis F
+  GL_004_Cashflow_Analysis F
   INNER JOIN
-  dbo.v_Chart_of_accounts coa
+  v_Chart_of_accounts coa
     ON
       coa.coa_id = f.coa_id
       AND coa.bu_id = f.bu_id
   LEFT OUTER JOIN
-  dbo.v_User_listing UL
+  v_User_listing UL
     ON
       UL.user_listing_id = F.user_listing_id
   LEFT OUTER JOIN
-  dbo.v_User_listing AUL
+  v_User_listing AUL
     ON
       AUL.user_listing_id = F.approved_by_id
   LEFT OUTER JOIN
-  dbo.Parameters_period PP
+  Parameters_period PP
     ON
       PP.year_flag = F.year_flag
       AND PP.period_flag = F.period_flag
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing BU
+  v_Business_unit_listing BU
     ON
       Bu.bu_id = f.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing src
+  v_Source_listing src
     ON
       src.source_id = f.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       S1.ey_segment_id = f.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing S2
+  v_Segment02_listing S2
     ON
       S2.ey_segment_id = f.segment2_id
   ,
@@ -136,21 +136,21 @@ f.segment1_id,
 f.segment2_id,
 f.approved_by_id
 FROM
-dbo.Flat_JE F
+Flat_JE F
 LEFT OUTER JOIN
-dbo.v_Business_unit_listing BU
+v_Business_unit_listing BU
 ON
 Bu.bu_id = f.bu_id
 LEFT OUTER JOIN
-dbo.v_Source_listing src
+v_Source_listing src
 ON
 src.source_id = f.source_id
 LEFT OUTER JOIN
-dbo.v_Segment01_listing S1
+v_Segment01_listing S1
 ON
 S1.ey_segment_id = f.segment1_id
 LEFT OUTER JOIN
-dbo.v_Segment02_listing S2
+v_Segment02_listing S2
 ON
 S2.ey_segment_id = f.segment2_id
 WHERE
@@ -243,30 +243,30 @@ SELECT
   tb.segment2_id,
   0
 FROM
-  dbo.TrialBalance tb
+  TrialBalance tb
   INNER JOIN
-  dbo.DIM_Chart_of_Accounts coa
+  DIM_Chart_of_Accounts coa
     ON
       coa.Coa_id = tb.coa_id
   INNER JOIN
-  dbo.Dim_Fiscal_calendar fc
+  Dim_Fiscal_calendar fc
     ON
       tb.period_id = fc.period_id
   INNER JOIN
-  dbo.Parameters_period pp
+  Parameters_period pp
     ON
       fc.fiscal_period_seq = pp.fiscal_period_seq_end
       AND fc.fiscal_year_cd = pp.fiscal_year_cd
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing Bu
+  v_Business_unit_listing Bu
     ON
       bu.bu_id = tb.bu_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       s1.ey_segment_id = tb.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing s2
+  v_Segment02_listing s2
     ON
       s2.ey_segment_id = tb.segment2_id
 WHERE
@@ -274,7 +274,7 @@ WHERE
   (
     SELECT MAX(pp1.fiscal_period_seq_end)
     FROM
-      dbo.Parameters_period pp1
+      Parameters_period pp1
     WHERE
       pp1.fiscal_year_cd = pp.fiscal_year_cd)
   AND tb.ver_end_date_id IS NULL
@@ -330,30 +330,30 @@ SELECT
   tb.segment2_id,
   0
 FROM
-  dbo.TrialBalance tb
+  TrialBalance tb
   INNER JOIN
-  dbo.DIM_Chart_of_Accounts coa
+  DIM_Chart_of_Accounts coa
     ON
       coa.Coa_id = tb.coa_id
   INNER JOIN
-  dbo.Dim_Fiscal_calendar fc
+  Dim_Fiscal_calendar fc
     ON
       tb.period_id = fc.period_id
   INNER JOIN
-  dbo.Parameters_period pp
+  Parameters_period pp
     ON
       fc.fiscal_period_seq = pp.fiscal_period_seq_end
       AND fc.fiscal_year_cd = pp.fiscal_year_cd
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing Bu
+  v_Business_unit_listing Bu
     ON
       bu.bu_id = tb.bu_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       s1.ey_segment_id = tb.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing s2
+  v_Segment02_listing s2
     ON
       s2.ey_segment_id = tb.segment2_id
 WHERE
@@ -361,7 +361,7 @@ WHERE
   (
     SELECT MAX(pp1.fiscal_period_seq_end)
     FROM
-      dbo.Parameters_period pp1
+      Parameters_period pp1
     WHERE
       pp1.fiscal_year_cd = pp.fiscal_year_cd)
   AND tb.ver_end_date_id IS NULL

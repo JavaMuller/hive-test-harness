@@ -44,17 +44,17 @@ SELECT
   (latest_version.vendor_account_name, '') AS vendor_ref,
   bu_latest.bu_cd
 FROM
-  dbo.Vendor_master all_version
+  Vendor_master all_version
   LEFT OUTER JOIN
-  dbo.Vendor_master latest_version
+  Vendor_master latest_version
     ON
       all_version.Vendor_account_cd = latest_version.Vendor_account_cd
   LEFT OUTER JOIN
-  dbo.Business_unit_listing bu_all
+  Business_unit_listing bu_all
     ON
       all_version.bu_id = bu_all.bu_id
   LEFT OUTER JOIN
-  dbo.Business_unit_listing bu_latest
+  Business_unit_listing bu_latest
     ON
       latest_version.bu_id = bu_latest.bu_id
 WHERE

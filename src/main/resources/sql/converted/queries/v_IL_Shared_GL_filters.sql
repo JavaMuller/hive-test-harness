@@ -36,9 +36,9 @@ SELECT DISTINCT
   COA.gl_account_name,
   COA.ey_gl_account_name
 FROM
-  dbo.FT_GL_Account JE
+  FT_GL_Account JE
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing BU
+  v_Business_unit_listing BU
     ON
       JE.bu_id = BU.bu_id
   LEFT OUTER JOIN
@@ -46,11 +46,11 @@ FROM
 ON
 JE.period_flag = PP.period_flag
 LEFT OUTER JOIN
-dbo.v_User_listing PRP
+v_User_listing PRP
 ON
 JE.user_listing_id = PRP.user_listing_id
 LEFT OUTER JOIN
-dbo.v_User_listing ARP
+v_User_listing ARP
 ON
 JE.approved_by_id = ARP.user_listing_id
 LEFT OUTER JOIN

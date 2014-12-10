@@ -20,17 +20,17 @@ SELECT
     latest_version.ver_end_date_id,
     latest_version.ver_desc
 FROM
-    dbo.Fiscal_calendar all_version
+    Fiscal_calendar all_version
 LEFT OUTER JOIN
-    dbo.Fiscal_calendar latest_version
+    Fiscal_calendar latest_version
 ON
     all_version.fiscal_period_cd = latest_version.fiscal_period_cd
 LEFT OUTER JOIN
-    dbo.Business_unit_listing bu_all
+    Business_unit_listing bu_all
 ON
     all_version.bu_id = bu_all.bu_id
 LEFT OUTER JOIN
-    dbo.Business_unit_listing bu_latest
+    Business_unit_listing bu_latest
 ON
     latest_version.bu_id = bu_latest.bu_id
 WHERE

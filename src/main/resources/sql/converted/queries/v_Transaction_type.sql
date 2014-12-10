@@ -18,9 +18,9 @@ SELECT
   ISNULL(latest_version.Transaction_type_cd, '') + ' - ' + ISNULL
   (latest_version.transaction_type_desc, '') AS transaction_type_ref
 FROM
-  dbo.Transaction_type all_version
+  Transaction_type all_version
   LEFT OUTER JOIN
-  dbo.Transaction_type latest_version
+  Transaction_type latest_version
     ON
       all_version.Transaction_type_cd = latest_version.Transaction_type_cd
 WHERE

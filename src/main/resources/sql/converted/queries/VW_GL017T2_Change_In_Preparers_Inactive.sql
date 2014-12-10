@@ -24,14 +24,14 @@ SELECT
     F.functional_curr_cd ,
     'Inactive'
 FROM
-    dbo.FT_GL_Account F
+    FT_GL_Account F
 INNER JOIN
-    dbo.Parameters_period PP
+    Parameters_period PP
 ON
     PP.year_flag = f.year_flag
 AND PP.period_flag = f.period_flag
 INNER JOIN
-    dbo.Dim_Preparer DP
+    Dim_Preparer DP
 ON
     DP.user_listing_id = f.user_listing_id
 WHERE

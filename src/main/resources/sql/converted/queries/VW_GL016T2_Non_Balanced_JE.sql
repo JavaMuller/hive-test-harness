@@ -9,9 +9,9 @@ FROM
       SUM(Net_reporting_amount) AS Net_Amount,
       pp.year_flag_desc
     FROM
-      dbo.Ft_JE_Amounts f
+      Ft_JE_Amounts f
       INNER JOIN
-      dbo.Parameters_period PP
+      Parameters_period PP
         ON
           PP.year_flag = f.year_flag
           AND pp.period_flag = f.period_flag

@@ -41,20 +41,20 @@ SELECT
   gl.Calc_functional_ending_bal,
   gl.Diff_btw_calc_end_and_func_ending
 FROM
-  dbo.GL_016_Balance_By_GL gl
+  GL_016_Balance_By_GL gl
   LEFT OUTER JOIN
-  dbo.v_Business_unit_listing BU
+  v_Business_unit_listing BU
     ON
       Bu.bu_id = gl.bu_id
   LEFT OUTER JOIN
-  dbo.v_Source_listing src
+  v_Source_listing src
     ON
       src.source_id = gl.source_id
   LEFT OUTER JOIN
-  dbo.v_Segment01_listing S1
+  v_Segment01_listing S1
     ON
       S1.ey_segment_id = gl.segment1_id
   LEFT OUTER JOIN
-  dbo.v_Segment02_listing S2
+  v_Segment02_listing S2
     ON
       S2.ey_segment_id = gl.segment2_id

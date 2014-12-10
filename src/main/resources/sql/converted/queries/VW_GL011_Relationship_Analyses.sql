@@ -46,38 +46,38 @@ SELECT
     NULL ,
     NULL
 FROM
-    dbo.FT_GL_Account F
+    FT_GL_Account F
 INNER JOIN
-    dbo.Parameters_period PP
+    Parameters_period PP
 ON
     PP.year_flag = f.year_flag
 AND PP.period_flag = f.period_flag
 INNER JOIN
-    dbo.Dim_Preparer DP
+    Dim_Preparer DP
 ON
     DP.user_listing_id = f.user_listing_id
 LEFT OUTER JOIN
-    dbo.Dim_Preparer DP1
+    Dim_Preparer DP1
 ON
     DP1.user_listing_id = f.approved_by_id
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing B
+    v_Business_unit_listing B
 ON
     B.bu_id = F.bu_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     s1.ey_segment_id = f.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     s2.ey_segment_id = f.segment2_id
 LEFT OUTER JOIN
-    dbo.v_Source_listing Src
+    v_Source_listing Src
 ON
     Src.Source_Id = f.source_id
 INNER JOIN
-    dbo.DIM_Chart_of_Accounts C
+    DIM_Chart_of_Accounts C
 ON
     c.Coa_id = f.coa_id
 GROUP BY
@@ -158,13 +158,13 @@ SELECT
     fc.fiscal_period_seq ,
     pp.fiscal_period_seq_END
 FROM
-    dbo.TrialBalance tb
+    TrialBalance tb
 INNER JOIN
     DIM_Chart_of_Accounts coa
 ON
     coa.Coa_id = tb.coa_id
 INNER JOIN
-    dbo.Dim_Fiscal_calendar fc
+    Dim_Fiscal_calendar fc
 ON
     tb.period_id = fc.period_id
 AND tb.bu_id = fc.bu_id
@@ -173,15 +173,15 @@ INNER JOIN
 ON
     fc.fiscal_year_cd = pp.fiscal_year_cd
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing Bu
+    v_Business_unit_listing Bu
 ON
     Bu.bu_id = tb.bu_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing S1
+    v_Segment01_listing S1
 ON
     s1.ey_segment_id = tb.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing S2
+    v_Segment02_listing S2
 ON
     s2.ey_segment_id = tb.segment2_id
 WHERE

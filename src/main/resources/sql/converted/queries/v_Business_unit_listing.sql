@@ -25,9 +25,9 @@ SELECT
     CONVERT(VARCHAR(100), ISNULL(latest_version.bu_hier_01_desc, BU_MAPPING.bu_group)) AS bu_group,
     ISNULL(latest_version.bu_cd, '') + ' - ' + ISNULL(latest_version.bu_desc, '')      AS bu_ref
 FROM
-    dbo.Business_unit_listing all_version
+    Business_unit_listing all_version
 LEFT OUTER JOIN
-    dbo.Business_unit_listing latest_version
+    Business_unit_listing latest_version
 ON
     all_version.bu_cd = latest_version.bu_cd
 LEFT OUTER JOIN

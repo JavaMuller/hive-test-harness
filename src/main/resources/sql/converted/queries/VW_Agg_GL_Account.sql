@@ -23,7 +23,7 @@ WITH
             SUM(net_functional_amount_credit) ,
             SUM(net_functional_amount_debit)
         FROM
-            dbo.FT_GL_Account AGG
+            FT_GL_Account AGG
         GROUP BY
             AGG.coa_id ,
             agg.bu_id ,
@@ -89,17 +89,17 @@ SELECT
 FROM
     agg_acct AGG
 INNER JOIN
-    dbo.v_Chart_of_accounts COA
+    v_Chart_of_accounts COA
 ON
     COA.coa_id = AGG.coa_id
 AND COA.bu_id = AGG.bu_id
 LEFT OUTER JOIN
-    dbo.Parameters_period PP
+    Parameters_period PP
 ON
     PP.period_flag = AGG.period_flag
 AND PP.year_flag = AGG.year_flag
 LEFT OUTER JOIN
-    dbo.v_User_listing UL
+    v_User_listing UL
 ON
     UL.user_listing_id = AGG.user_listing_id
 LEFT OUTER JOIN
@@ -107,14 +107,14 @@ LEFT OUTER JOIN
 ON
     DS.source_id = AGG.Source_Id
 LEFT OUTER JOIN
-    dbo.v_Business_unit_listing Bu
+    v_Business_unit_listing Bu
 ON
     BU.bu_id = AGG.bu_id
 LEFT OUTER JOIN
-    dbo.v_Segment01_listing Seg1
+    v_Segment01_listing Seg1
 ON
     seg1.ey_segment_id = AGG.segment1_id
 LEFT OUTER JOIN
-    dbo.v_Segment02_listing Seg2
+    v_Segment02_listing Seg2
 ON
     seg2.ey_segment_id = AGG.segment2_id
