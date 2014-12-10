@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].GL_012_Date_Analysis
+CREATE TABLE GL_012_Date_Analysis
 (
 	Je_Id	nvarchar(100) NULL
 	,Je_Line_Id	nvarchar(100) NULL

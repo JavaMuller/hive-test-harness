@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[Dim_Dates]
+CREATE TABLE [Dim_Dates]
 (
 [calendar_date]				[datetime]					NULL
 ,[date_id]						[int]					NOT	NULL

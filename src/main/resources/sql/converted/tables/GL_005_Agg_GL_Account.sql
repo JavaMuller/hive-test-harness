@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_005_Agg_GL_Account](
+CREATE TABLE [GL_005_Agg_GL_Account](
 	[coa_id] [int] NOT NULL,
 	[account_type] [nvarchar](100) NULL,
 	[account_sub_type] [nvarchar](100) NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_016_Balance_by_GL](
+CREATE TABLE [GL_016_Balance_by_GL](
 	coa_id INT NULL,
 	bu_id INT NULL,
 	source_id INT NULL,

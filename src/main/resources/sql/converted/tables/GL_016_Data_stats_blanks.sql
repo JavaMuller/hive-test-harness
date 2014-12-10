@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_016_Data_stats_blanks](
+CREATE TABLE [GL_016_Data_stats_blanks](
 	[Metric_B] [nvarchar](250) NULL,
 	[Metric_Count_B] [int] NULL,
 	[Period_Type_B] [nvarchar](250) NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[Parameters_engagement]
+CREATE TABLE [Parameters_engagement]
 (
 engagement_id							UNIQUEIDENTIFIER	NULL
 ,planning_materiality					NVARCHAR(50)		NULL

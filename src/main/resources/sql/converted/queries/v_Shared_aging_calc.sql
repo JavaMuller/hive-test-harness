@@ -15,6 +15,6 @@ SELECT pab1.band								AS band
 ,ISNULL(pab2.ey_band_threshold_lower - 1,999999)		AS ey_band_threshold_higher
 ,CASE when (pab2.ey_band_threshold_lower - 1) IS NULL THEN ' >=' +  CONVERT(VARCHAR(10),pab1.ey_band_threshold_lower) +' days'
 ELSE CONVERT(VARCHAR(10),pab1.ey_band_threshold_lower ) + '-' + CONVERT(VARCHAR(10),ISNULL(pab2.ey_band_threshold_lower - 1,999999)) +' days' END AS [Aging ref]
-FROM [dbo].[parameters_aging_bands] pab1
-LEFT OUTER JOIN	 [dbo].[parameters_aging_bands] pab2		ON		pab1.band + 1 = pab2.band
+FROM [parameters_aging_bands] pab1
+LEFT OUTER JOIN	 [parameters_aging_bands] pab2		ON		pab1.band + 1 = pab2.band
 ) AS A

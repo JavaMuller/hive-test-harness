@@ -37,10 +37,10 @@
 
 	FROM	dbo.FT_GL_Account JE --dbo.FLAT_JE JE
 	LEFT OUTER JOIN		 dbo.v_Business_unit_listing BU	ON	JE.bu_id = BU.bu_id
-	LEFT OUTER JOIN		 [dbo].[Parameters_period] PP	ON	JE.period_flag = PP.period_flag
+	LEFT OUTER JOIN		 [Parameters_period] PP	ON	JE.period_flag = PP.period_flag
 	LEFT OUTER JOIN		 dbo.v_User_listing PRP			ON	JE.user_listing_id = PRP.user_listing_id
 	LEFT OUTER JOIN		 dbo.v_User_listing ARP			ON	JE.approved_by_id = ARP.user_listing_id
-	LEFT OUTER JOIN		 [dbo].[v_Segment01_listing] SL1 ON	JE.segment1_id = SL1.ey_segment_id
-	LEFT OUTER JOIN		 [dbo].[v_Segment02_listing] SL2 ON	JE.segment2_id = SL2.ey_segment_id
-	LEFT OUTER JOIN		[dbo].v_Source_listing	SL		ON  JE.source_id = SL.source_id
-	LEFT OUTER JOIN		[dbo].v_Chart_of_accounts COA		ON  JE.coa_id = COA.coa_id
+	LEFT OUTER JOIN		 [v_Segment01_listing] SL1 ON	JE.segment1_id = SL1.ey_segment_id
+	LEFT OUTER JOIN		 [v_Segment02_listing] SL2 ON	JE.segment2_id = SL2.ey_segment_id
+	LEFT OUTER JOIN		v_Source_listing	SL		ON  JE.source_id = SL.source_id
+	LEFT OUTER JOIN		v_Chart_of_accounts COA		ON  JE.coa_id = COA.coa_id

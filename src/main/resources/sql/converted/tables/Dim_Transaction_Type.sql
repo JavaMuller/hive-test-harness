@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[Dim_Transaction_Type]
+CREATE TABLE [Dim_Transaction_Type]
 (
 [transaction_type_id]					[int]							NOT NULL
 ,[transaction_type_cd]					[nvarchar](25)					NOT NULL

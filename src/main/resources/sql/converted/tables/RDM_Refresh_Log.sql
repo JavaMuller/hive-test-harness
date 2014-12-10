@@ -1,4 +1,4 @@
-CREATE TABLE	[dbo].[RDM_Refresh_Log]
+CREATE TABLE	[RDM_Refresh_Log]
 (
 row_counter				INT				NOT NULL IDENTITY(1,1)
 ,data_refresh_counter		INT				NOT NULL

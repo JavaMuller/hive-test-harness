@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[Ft_JE_Amounts]
+CREATE TABLE [Ft_JE_Amounts]
 (
 					 [je_id]							[nvarchar](200)			NOT NULL
 					,[coa_id]							[int]					NOT NULL

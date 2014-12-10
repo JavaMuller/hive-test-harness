@@ -1,6 +1,6 @@
 
 
-CREATE TABLE [dbo].[Dim_Fiscal_calendar]
+CREATE TABLE [Dim_Fiscal_calendar]
 (
 [period_id]					[int]			NOT		NULL
 ,[bu_id]						[int]					NULL

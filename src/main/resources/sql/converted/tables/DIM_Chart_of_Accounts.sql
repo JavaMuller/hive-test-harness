@@ -1,5 +1,5 @@
 
-CREATE TABLE [dbo].[DIM_Chart_of_Accounts]
+CREATE TABLE [DIM_Chart_of_Accounts]
 (
 [Coa_id]									[int]				NOT		NULL
 ,[bu_id]									[int]						NULL

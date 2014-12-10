@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[FLAT_JE]
+CREATE TABLE [FLAT_JE]
 (
 ID												BIGINT IDENTITY(1,1)
 ,[je_id]										[nvarchar](100)							NOT NULL

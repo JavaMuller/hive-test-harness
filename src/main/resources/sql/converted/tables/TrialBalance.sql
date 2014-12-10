@@ -1,5 +1,5 @@
 
-CREATE TABLE [dbo].[TrialBalance]
+CREATE TABLE [TrialBalance]
 (
 					 [coa_id]									[int]						NOT	NULL
 					,[bu_id]									[int]						NOT	NULL

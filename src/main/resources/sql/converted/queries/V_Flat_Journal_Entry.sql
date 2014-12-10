@@ -152,7 +152,7 @@
 		,TT.ey_trans_type as [Transaction type group] --added by Rajan 29th July 2014
 		,TT.transaction_type_ref as [Transaction type] --added by Rajan 29th July 2014
 
-  FROM [dbo].[FLAT_JE] FJ
+  FROM [FLAT_JE] FJ
 		LEFT OUTER JOIN dbo.v_Business_unit_listing BU on Bu.bu_id = FJ.bu_id
 		LEFT OUTER JOIN dbo.v_Source_listing src ON src.source_id = FJ.source_id
 		LEFT OUTER JOIN dbo.v_Segment01_listing S1 ON S1.ey_segment_id = fj.segment1_id

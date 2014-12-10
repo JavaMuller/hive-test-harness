@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_007_Significant_Acct](
+CREATE TABLE [GL_007_Significant_Acct](
 
 		coa_id INT NULL
 		,bu_id INT NULL

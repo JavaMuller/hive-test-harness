@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_012_Date_Validation](
+CREATE TABLE [GL_012_Date_Validation](
 	[coa_id] [int] NULL,
 	/*  Added below column to work with dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
 	[bu_id] [int] NULL,

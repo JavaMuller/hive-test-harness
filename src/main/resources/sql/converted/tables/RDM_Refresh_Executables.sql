@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[RDM_Refresh_Executables]
+CREATE TABLE [RDM_Refresh_Executables]
 (
 row_counter				INT				NOT NULL IDENTITY(1,1)
 ,Sequence					INT				NULL

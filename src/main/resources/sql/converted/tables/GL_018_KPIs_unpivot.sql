@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_018_KPIs_unpivot](
+CREATE TABLE [GL_018_KPIs_unpivot](
 
 			[source_id] [int] NOT NULL,
 			[source_ref] [nvarchar](200) NULL,

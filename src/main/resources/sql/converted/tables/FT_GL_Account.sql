@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[FT_GL_Account](
+CREATE TABLE [FT_GL_Account](
 	[coa_id] [int] NOT NULL,
 	[period_id] [int] NOT NULL,
 	[bu_id] [int] NOT NULL,

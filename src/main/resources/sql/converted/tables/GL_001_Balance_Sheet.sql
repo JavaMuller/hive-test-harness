@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_001_Balance_Sheet](
+CREATE TABLE [GL_001_Balance_Sheet](
 
 		COA_Id INT NULL
 		,Period_Id INT NULL

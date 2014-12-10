@@ -1,5 +1,5 @@
 
-CREATE TABLE [dbo].[GL_004_Cashflow_Analysis](
+CREATE TABLE [GL_004_Cashflow_Analysis](
 	coa_id INT NULL,
 	bu_id INT NULL,
 	source_id INT NULL,

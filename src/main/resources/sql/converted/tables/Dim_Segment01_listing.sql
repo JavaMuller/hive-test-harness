@@ -1,6 +1,6 @@
 
 
-CREATE TABLE [dbo].[Dim_Segment01_listing]
+CREATE TABLE [Dim_Segment01_listing]
 (
 [segment_id]			[int]					NOT NULL
 ,[engagement_id]		[uniqueidentifier]		NULL

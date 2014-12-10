@@ -7,7 +7,7 @@ SELECT
 ,SL.segment_cd
 ,SL.segment_desc
 ,SL.ey_segment_group
-FROM			 [dbo].[Segment01_listing] SL
+FROM			 [Segment01_listing] SL
 UNION ALL
 SELECT
 'Segment02'		AS		table_identifier
@@ -15,7 +15,7 @@ SELECT
 ,SL.segment_cd
 ,SL.segment_desc
 ,SL.ey_segment_group
-FROM			 [dbo].[Segment02_listing] SL
+FROM			 [Segment02_listing] SL
 UNION ALL
 SELECT
 'Segment03'		AS		table_identifier
@@ -23,7 +23,7 @@ SELECT
 ,SL.segment_cd
 ,SL.segment_desc
 ,SL.ey_segment_group
-FROM			 [dbo].[Segment03_listing] SL
+FROM			 [Segment03_listing] SL
 UNION ALL
 SELECT
 'Segment04'		AS		table_identifier
@@ -31,7 +31,7 @@ SELECT
 ,SL.segment_cd
 ,SL.segment_desc
 ,SL.ey_segment_group
-FROM			 [dbo].[Segment04_listing] SL
+FROM			 [Segment04_listing] SL
 UNION ALL
 SELECT
 'Segment05'		AS		table_identifier
@@ -39,7 +39,7 @@ SELECT
 ,SL.segment_cd
 ,SL.segment_desc
 ,SL.ey_segment_group
-FROM			 [dbo].[Segment05_listing] SL
+FROM			 [Segment05_listing] SL
 )
 
 SELECT
@@ -54,4 +54,4 @@ SELECT
   ,SEGMENT.ey_segment_group
   ,SEGMENT.segment_cd + ' - ' + SEGMENT.segment_desc AS ey_segment_ref  --Added by prabakar on June 25th for GL purpose
 FROM				 SEGMENT_CTE SEGMENT
-  INNER JOIN			 [dbo].[Parameters_engagement] PE		ON		SEGMENT.table_identifier = PE.segment_selection1
+  INNER JOIN			 [Parameters_engagement] PE		ON		SEGMENT.table_identifier = PE.segment_selection1

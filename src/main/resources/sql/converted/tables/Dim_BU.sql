@@ -1,5 +1,5 @@
 
-CREATE TABLE [dbo].[Dim_BU]
+CREATE TABLE [Dim_BU]
 (
 [bu_id]						[int]					NOT	NULL
 ,[bu_cd]						[nvarchar](50)				NULL

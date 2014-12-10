@@ -31,7 +31,7 @@
 		,cp.functional_curr_cd		as	[Functional currency code]
 		,cp.Category  AS [Category]
 
-   FROM [dbo].GL_017_Change_in_Preparers CP
+   FROM GL_017_Change_in_Preparers CP
    /*  added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
 		LEFT OUTER JOIN dbo.v_Business_unit_listing BU on Bu.bu_id = cp.bu_id
 		LEFT OUTER JOIN dbo.v_Source_listing src ON src.source_id = cp.source_id

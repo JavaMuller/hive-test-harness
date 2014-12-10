@@ -103,7 +103,7 @@
 		INNER JOIN dbo.v_Chart_of_accounts COA on COA.coa_id = AGG.coa_id and COA.bu_id = AGG.bu_id
 		LEFT OUTER JOIN dbo.Parameters_period PP on PP.period_flag = AGG.period_flag AND PP.year_flag = AGG.year_flag
 		LEFT OUTER JOIN dbo.v_User_listing UL on UL.user_listing_id = AGG.user_listing_id
-		LEFT OUTER JOIN [dbo].[v_Source_listing] DS ON DS.source_id	= AGG.Source_Id
+		LEFT OUTER JOIN [v_Source_listing] DS ON DS.source_id	= AGG.Source_Id
 		LEFT OUTER JOIN dbo.v_Business_unit_listing Bu ON BU.bu_id = AGG.bu_id
 		LEFT OUTER JOIN dbo.v_Segment01_listing Seg1 on seg1.ey_segment_id = AGG.segment1_id
 		LEFT OUTER JOIN dbo.v_Segment02_listing Seg2 on seg2.ey_segment_id = AGG.segment2_id

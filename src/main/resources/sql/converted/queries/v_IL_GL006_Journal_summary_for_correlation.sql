@@ -34,11 +34,11 @@ SELECT
 					,TB.reporting_beginning_balance						[Reporting beginning balance]
 					,TB.reporting_ending_balance						[Reporting ending balance]
 
-	FROM				 [dbo].[Trialbalance] TB --[dbo].[Trial_balance] TB -- Changed by prabakar on july 1st to refer the rdm table instead cdm
-	LEFT OUTER JOIN		 [dbo].[v_Fiscal_calendar] FC			ON		TB.period_id = FC.period_id
-	LEFT OUTER JOIN		 [dbo].[Gregorian_calendar] GC			ON		TB.trial_balance_end_date_id = GC.date_id
+	FROM				 [Trialbalance] TB --[Trial_balance] TB -- Changed by prabakar on july 1st to refer the rdm table instead cdm
+	LEFT OUTER JOIN		 [v_Fiscal_calendar] FC			ON		TB.period_id = FC.period_id
+	LEFT OUTER JOIN		 [Gregorian_calendar] GC			ON		TB.trial_balance_end_date_id = GC.date_id
 	--Joining condition is updated and commented the exisitng condition by Prabakar on July 30th as per Conversation with TIM -- BEGIN
-	INNER JOIN			 [dbo].[Parameters_period] PP			ON	FC.fiscal_period_seq = PP.fiscal_period_seq_end
+	INNER JOIN			 [Parameters_period] PP			ON	FC.fiscal_period_seq = PP.fiscal_period_seq_end
 																	AND fc.fiscal_year_cd = PP.fiscal_year_cd
 																	AND PP.period_flag = 'RP'
 																	--GC.calendar_date = PP.year_end_date

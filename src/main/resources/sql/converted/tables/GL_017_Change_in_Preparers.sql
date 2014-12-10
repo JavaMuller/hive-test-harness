@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_017_Change_in_Preparers](
+CREATE TABLE [GL_017_Change_in_Preparers](
 	--- Added by prabakar to have source, bu, segment to be dynamic on jun 26 - begin
 	[bu_id] [int] NULL,
 	[source_id] [int] NULL,

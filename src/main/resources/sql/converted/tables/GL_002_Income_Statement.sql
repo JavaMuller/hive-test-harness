@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[GL_002_Income_Statement](
+CREATE TABLE [GL_002_Income_Statement](
 
 	COA_Id INT NULL
 	,Period_Id INT NULL

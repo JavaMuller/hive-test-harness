@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[Dim_Preparer]
+CREATE TABLE [Dim_Preparer]
 (
 [user_listing_id]					[int]					NOT	NULL
 ,[client_user_id]					[nvarchar](25)				NULL

@@ -1,5 +1,5 @@
 
-CREATE TABLE [dbo].[GL_008_JE_Search_Description](
+CREATE TABLE [GL_008_JE_Search_Description](
 
 	Journal_entry_id nvarchar(100) null
 	,Journal_entry_line nvarchar(100) null

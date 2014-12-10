@@ -1,5 +1,5 @@
 
-CREATE TABLE [dbo].[Dim_Source_listing]
+CREATE TABLE [Dim_Source_listing]
 (
 [Source_Id]						[int]					NOT	NULL
 ,[source_cd]						[nvarchar](25)				NULL
