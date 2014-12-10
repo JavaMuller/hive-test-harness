@@ -1,22 +1,22 @@
-CREATE TABLE if not exists Dim_Fiscal_calendar (
+CREATE TABLE Dim_Fiscal_calendar (
   period_id INT NOT NULL,
   bu_id INT NULL,
-  fiscal_period_cd varchar (50) NULL,
-  fiscal_period_desc varchar (100) NULL,
-  fiscal_period_start varchar (50) NULL,
-  fiscal_period_end varchar (50) NULL,
-  fiscal_quarter_cd varchar (50) NULL,
-  fiscal_quarter_desc varchar (100) NULL,
-  fiscal_quarter_start varchar (50) NULL,
-  fiscal_quarter_end varchar (50) NULL,
-  fiscal_year_cd varchar (50) NULL,
-  fiscal_year_desc varchar (100) NULL,
-  fiscal_year_start varchar (50) NULL,
-  fiscal_year_end varchar (50) NULL,
-  adjustment_period varchar (1) NULL,
+  fiscal_period_cd VARCHAR(50) NULL,
+  fiscal_period_desc VARCHAR(100) NULL,
+  fiscal_period_start VARCHAR(50) NULL,
+  fiscal_period_end VARCHAR(50) NULL,
+  fiscal_quarter_cd VARCHAR(50) NULL,
+  fiscal_quarter_desc VARCHAR(100) NULL,
+  fiscal_quarter_start VARCHAR(50) NULL,
+  fiscal_quarter_end VARCHAR(50) NULL,
+  fiscal_year_cd VARCHAR(50) NULL,
+  fiscal_year_desc VARCHAR(100) NULL,
+  fiscal_year_start VARCHAR(50) NULL,
+  fiscal_year_end VARCHAR(50) NULL,
+  adjustment_period VARCHAR(1) NULL,
   engagement_id uniqueidentifier NULL,
   fiscal_period_seq INT NULL,
   ver_start_date_id INT NULL,
   ver_end_date_id INT NULL,
-  ver_desc varchar (200) NULL
-)
+  ver_desc VARCHAR(200) NULL
+) stored AS orc;

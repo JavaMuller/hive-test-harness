@@ -1,4 +1,4 @@
-CREATE TABLE if not exists FT_GL_Account (
+CREATE TABLE FT_GL_Account (
   coa_id INT NOT NULL,
   period_id INT NOT NULL,
   bu_id INT NOT NULL,
@@ -7,18 +7,18 @@ CREATE TABLE if not exists FT_GL_Account (
   segment2_id INT NULL,
   user_listing_id INT NULL,
   approved_by_id INT NULL,
-  ey_period varchar (50) NULL,
-  year_flag varchar (4) NULL,
-  period_flag varchar (4) NULL,
+  ey_period VARCHAR(50) NULL,
+  year_flag VARCHAR(4) NULL,
+  period_flag VARCHAR(4) NULL,
   dr_cr_ind CHAR(1) NULL,
   reversal_ind CHAR(1) NULL,
   Sys_man_ind CHAR(1) NULL,
-  journal_type varchar (25) NULL,
+  journal_type VARCHAR(25) NULL,
   entry_date_id INT NULL,
   effective_date_id INT NULL,
-  amount_curr_cd varchar (50) NULL,
-  reporting_amount_curr_cd varchar (50) NULL,
-  functional_curr_cd varchar (50) NULL,
+  amount_curr_cd VARCHAR(50) NULL,
+  reporting_amount_curr_cd VARCHAR(50) NULL,
+  functional_curr_cd VARCHAR(50) NULL,
   net_amount FLOAT NULL,
   net_amount_credit FLOAT NULL,
   net_amount_debit FLOAT NULL,
@@ -29,4 +29,4 @@ CREATE TABLE if not exists FT_GL_Account (
   net_functional_amount_debit FLOAT NULL,
   net_functional_amount_credit FLOAT NULL,
   count_je_id INT NULL
-)
+) stored AS orc;

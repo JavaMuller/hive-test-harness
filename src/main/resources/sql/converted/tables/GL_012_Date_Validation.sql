@@ -1,4 +1,4 @@
-CREATE TABLE if not exists GL_012_Date_Validation (
+CREATE TABLE GL_012_Date_Validation (
   coa_id INT NULL,
   bu_id INT NULL,
   segment1_id INT NULL,
@@ -6,19 +6,19 @@ CREATE TABLE if not exists GL_012_Date_Validation (
   source_id INT NULL,
   user_listing_id INT NULL,
   approver_by_id INT NULL,
-  year_flag varchar (25) NULL,
-  period_flag varchar (25) NULL,
-  ey_period varchar (100) NULL,
+  year_flag VARCHAR(25) NULL,
+  period_flag VARCHAR(25) NULL,
+  ey_period VARCHAR(100) NULL,
   entry_date DATETIME NULL,
   Effective_date DATETIME NULL,
   min_max_ent_eff_date DATETIME NULL,
-  category varchar (100) NULL,
+  category VARCHAR(100) NULL,
   je_id_count INT NULL,
   days_lag INT NULL,
   sys_manual_ind CHAR(1) NULL,
-  journal_type varchar (25) NULL,
-  functional_curr_cd varchar (100) NULL,
-  reporting_amount_curr_cd varchar (100) NULL,
+  journal_type VARCHAR(25) NULL,
+  functional_curr_cd VARCHAR(100) NULL,
+  reporting_amount_curr_cd VARCHAR(100) NULL,
   net_reporting_amount FLOAT NULL,
   net_reporting_amount_credit FLOAT NULL,
   net_reporting_amount_debit FLOAT NULL,
@@ -28,4 +28,4 @@ CREATE TABLE if not exists GL_012_Date_Validation (
   net_amount FLOAT NULL,
   net_amount_credit FLOAT NULL,
   net_amount_debit FLOAT NULL
-)
+) stored AS orc;

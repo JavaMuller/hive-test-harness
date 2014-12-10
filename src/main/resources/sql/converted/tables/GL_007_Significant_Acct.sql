@@ -1,4 +1,4 @@
-CREATE TABLE if not exists GL_007_Significant_Acct (
+CREATE TABLE GL_007_Significant_Acct (
   coa_id INT NULL,
   bu_id INT NULL,
   source_id INT NULL,
@@ -6,13 +6,13 @@ CREATE TABLE if not exists GL_007_Significant_Acct (
   segment2_id INT NULL,
   user_listing_id INT NULL,
   approved_by_id INT NULL,
-  year_flag VARCHAR (25) NULL,
-  period_flag VARCHAR (25) NULL,
-  EY_period VARCHAR (50) NULL,
-  journal_type VARCHAR (25) NULL,
-  reporting_curr_cd VARCHAR (25) NULL,
-  functional_curr_cd VARCHAR (25) NULL,
-  source_type VARCHAR (25) NULL,
+  year_flag VARCHAR(25) NULL,
+  period_flag VARCHAR(25) NULL,
+  EY_period VARCHAR(50) NULL,
+  journal_type VARCHAR(25) NULL,
+  reporting_curr_cd VARCHAR(25) NULL,
+  functional_curr_cd VARCHAR(25) NULL,
+  source_type VARCHAR(25) NULL,
   current_amount FLOAT NULL,
   prior_amount FLOAT NULL,
   count_of_je_line_items INT NULL,
@@ -36,4 +36,4 @@ CREATE TABLE if not exists GL_007_Significant_Acct (
   net_functional_amount_prior FLOAT NULL,
   net_reporting_amount_current FLOAT NULL,
   net_reporting_amount_prior FLOAT NULL
-)
+) stored AS orc;

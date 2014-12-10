@@ -1,4 +1,4 @@
-CREATE TABLE if not exists GL_002_Income_Statement (
+CREATE TABLE GL_002_Income_Statement (
   COA_Id INT NULL,
   Period_Id INT NULL,
   BU_ID INT NULL,
@@ -7,15 +7,15 @@ CREATE TABLE if not exists GL_002_Income_Statement (
   Source_id INT NULL,
   user_listing_id INT NULL,
   approved_by_id INT NULL,
-  Year_flag varchar (50) NULL,
-  Period_flag varchar (50) NULL,
-  Accounting_period varchar (100) NULL,
-  Accounting_sub_period varchar (100) NULL,
-  YEAR varchar (100) NULL,
-  Fiscal_period varchar (100) NULL,
-  Journal_type varchar (25) NULL,
-  Functional_Currency_Code varchar (50) NULL,
-  Reporting_currency_code varchar (50) NULL,
+  Year_flag VARCHAR(50) NULL,
+  Period_flag VARCHAR(50) NULL,
+  Accounting_period VARCHAR(100) NULL,
+  Accounting_sub_period VARCHAR(100) NULL,
+  YEAR VARCHAR(100) NULL,
+  Fiscal_period VARCHAR(100) NULL,
+  Journal_type VARCHAR(25) NULL,
+  Functional_Currency_Code VARCHAR(50) NULL,
+  Reporting_currency_code VARCHAR(50) NULL,
   Net_reporting_amount FLOAT NULL,
   Net_reporting_amount_credit FLOAT NULL,
   Net_reporting_amount_debit FLOAT NULL,
@@ -42,4 +42,4 @@ CREATE TABLE if not exists GL_002_Income_Statement (
   Net_functional_amount_debit_prior FLOAT NULL,
   Source_type VARCHAR(17) NULL,
   Period_end_date DATE NULL
-)
+) stored AS orc;

@@ -1,13 +1,13 @@
-CREATE TABLE if not exists Dim_Preparer (
+CREATE TABLE Dim_Preparer (
   user_listing_id INT NOT NULL,
-  client_user_id varchar (25) NULL,
-  first_name varchar (100) NULL,
-  last_name varchar (100) NULL,
-  full_name varchar (100) NULL,
-  preparer_ref varchar (200) NULL,
-  department varchar (100) NULL,
-  title varchar (100) NULL,
-  role_resp varchar (100) NULL,
+  client_user_id VARCHAR(25) NULL,
+  first_name VARCHAR(100) NULL,
+  last_name VARCHAR(100) NULL,
+  full_name VARCHAR(100) NULL,
+  preparer_ref VARCHAR(200) NULL,
+  department VARCHAR(100) NULL,
+  title VARCHAR(100) NULL,
+  role_resp VARCHAR(100) NULL,
   sys_manual_ind CHAR(1) NULL,
   active_ind CHAR(1) NULL,
   active_ind_change_date_id INT NULL,
@@ -18,4 +18,4 @@ CREATE TABLE if not exists Dim_Preparer (
   last_modified_date_id INT NULL,
   ver_start_date_id INT NULL,
   ver_end_date_id INT NULL
-)
+) stored AS orc;
