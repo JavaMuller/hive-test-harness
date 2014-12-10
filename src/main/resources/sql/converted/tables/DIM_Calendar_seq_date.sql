@@ -1,6 +1,6 @@
-
-	CREATE TABLE [DIM_Calendar_seq_date]
-	(
-		Calendar_date DATETIME NULL
-		,Sequence INT NULL
-	)
+CREATE TABLE
+    [DIM_Calendar_seq_date]
+    (
+        Calendar_date DATETIME NULL ,
+        Sequence INT NULL
+    )
