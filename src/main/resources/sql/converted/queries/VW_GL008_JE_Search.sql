@@ -1,15 +1,15 @@
 	SELECT
-		 FT_GL.Journal_entry_id AS [Journal Entry Id]
-		,FT_GL.Journal_entry_line AS [Journal Entry Line]
-		,FT_GL.Journal_entry_description AS [Journal Entry Header Description]
-		,FT_GL.Journal_entry_type AS [Journal Entry Type]
-		,FT_GL.Journal_line_description as [Journal Entry Line Desciption]
+		 FT_GL.Journal_entry_id 
+		,FT_GL.Journal_entry_line 
+		,FT_GL.Journal_entry_description 
+		,FT_GL.Journal_entry_type 
+		,FT_GL.Journal_line_description 
 		,ul.preparer_ref as   [Preparer]
 		,ul.department as  [Preparer department]
-		,SL.source_ref  as [Source]
+		,SL.source_ref  
 		,SL.source_group  as  [Source group]
-		,bu.bu_ref AS [Business Unit]
-		,bu.bu_group AS [Business unit group]
+		,bu.bu_ref 
+		,bu.bu_group 
 		,SG1.ey_segment_group as  [Segment 1 group]
 		,SG2.ey_segment_group as  [Segment 2 group]
 		,SG1.ey_segment_ref as  [Segment 1]
@@ -20,7 +20,7 @@
 			WHEN FT_GL.year_flag = 'PY' THEN 'Prior'
 			WHEN FT_GL.year_flag = 'SP' THEN 'Subsequent'
 			ELSE PP.year_flag_desc
-		END  as [Accounting period]
+		END  
 
 	FROM dbo.GL_008_JE_Search FT_GL
 	INNER JOIN dbo.Parameters_period PP on PP.period_flag = FT_GL.period_flag AND PP.year_flag = FT_GL.year_flag

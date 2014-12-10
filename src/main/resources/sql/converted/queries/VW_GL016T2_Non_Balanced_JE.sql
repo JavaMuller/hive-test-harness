@@ -1,7 +1,7 @@
 	SELECT
-		je_id as [JE Id]
-		,year_flag_desc AS [Accounting period]
-		,COUNT(je_id) AS [Number of journal entries]
+		je_id 
+		,year_flag_desc 
+		,COUNT(je_id) 
 	FROM
 		(
 			SELECT     je_id,SUM(Net_reporting_amount) AS Net_Amount,pp.year_flag_desc

@@ -4,7 +4,7 @@
 				WHEN pp.year_flag ='PY' THEN 'Prior'
 				WHEN pp.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [year_flag_desc]
+		END 
 		,PP.period_flag_desc	-- AS 	[Accounting sub period]
 		,pp.year_flag	-- AS 	[Year flag]
 		,PP.period_flag -- AS 	[Period Flag]
@@ -34,7 +34,7 @@
 		--,Dp1.Preparer_Ref		-- AS 	[Approver]
 		,F.reporting_amount_curr_cd		-- AS 	[Reporting currency code]
 		,F.functional_curr_cd		-- AS 	[Functional currency code]
-		 ,'Inactive' AS [Category]
+		 ,'Inactive' 
 
  FROM dbo.FT_GL_Account F--dbo.Ft_JE_Amounts F
 		INNER JOIN dbo.Parameters_period PP on PP.year_flag  = f.year_flag and PP.period_flag = f.period_flag

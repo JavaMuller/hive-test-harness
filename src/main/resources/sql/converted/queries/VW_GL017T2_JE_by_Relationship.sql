@@ -1,42 +1,42 @@
 	SELECT
-		--year_flag_desc	AS	[Accounting period]
+		--year_flag_desc	
 		CASE	WHEN f.year_flag ='CY' THEN 'Current'
 				WHEN f.year_flag ='PY' THEN 'Prior'
 				WHEN f.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
-		,pp.period_flag_desc	AS	[Accounting sub period]
-		,F.year_flag	AS	[Year flag]
-		,F.period_flag as	[Period Flag]
+		END 
+		,pp.period_flag_desc	
+		,F.year_flag	
+		,F.period_flag 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-		--,F.bu_group	AS	[Business unit group]
-		--,F.bu_ref	AS	[Business unit]
-		--,F.segment1_ref	AS	[Segement 1]
-		--,F.segment2_ref	AS	[Segement 2]
-		--,F.segment1_group AS	[Segment 1 group]
-		--,F.segment2_group 	AS	[Segment 2 group]
-		--,F.source_group		AS	[Source group]
-		--,F.Source_ref		AS	[Source]
-		,bu.bu_group	AS	[Business unit group]
-		,bu.bu_ref	AS	[Business unit]
-		,s1.ey_segment_ref	AS	[Segement 1]
-		,s2.ey_segment_ref	AS	[Segement 2]
-		,s1.ey_segment_group AS	[Segment 1 group]
-		,s2.ey_segment_group 	AS	[Segment 2 group]
-		,src.source_group		AS	[Source group]
-		,src.Source_ref		AS	[Source]
+		--,F.bu_group	
+		--,F.bu_ref	
+		--,F.segment1_ref	
+		--,F.segment2_ref	
+		--,F.segment1_group 
+		--,F.segment2_group 	
+		--,F.source_group		
+		--,F.Source_ref		
+		,bu.bu_group	
+		,bu.bu_ref	
+		,s1.ey_segment_ref	
+		,s2.ey_segment_ref	
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 	
+		,src.source_group		
+		,src.Source_ref		
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-		,F.Ey_period		AS	[Fiscal period]
-		--,F.sys_manual_ind		AS	[Journal type]
-		,f.journal_type AS	[Journal type]
-		,ul.preparer_ref AS [Preparer]
-		,ul.department		AS	[Preparer department]
-		--,F.approver_department		AS	[Approver department]
-		--,F.approver_ref		AS	[Approver]
-		,F.reporting_amount_curr_cd		AS	[Reporting currency code]
-		,F.functional_curr_cd		AS	[Functional currency code]
-		,sum(f.count_je_id) as [JE_Id_Count]
-		--,COUNT(F.je_id) AS [JE_Id_Count]
+		,F.Ey_period		
+		--,F.sys_manual_ind		
+		,f.journal_type 
+		,ul.preparer_ref 
+		,ul.department		
+		--,F.approver_department		
+		--,F.approver_ref		
+		,F.reporting_amount_curr_cd		
+		,F.functional_curr_cd		
+		,sum(f.count_je_id) 
+		--,COUNT(F.je_id) 
 		--,F.[audit_year]
 
 	FROM dbo.FT_GL_Account F--dbo.Flat_JE F

@@ -1,31 +1,31 @@
 	SELECT
-		coa.ey_account_type AS [Account Type]
-		,bu.bu_ref AS [Business Unit]
-		,bu.bu_group as [Business unit group]
+		coa.ey_account_type 
+		,bu.bu_ref 
+		,bu.bu_group 
 
 		/* Added  below dynamic views to bring the data of bu, segment, source by Prabakar -- begin */
-		--,s1.segment_ref AS [Segment 1]
-		--,s2.segment_ref AS [Segment 2]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
+		--,s1.segment_ref 
+		--,s2.segment_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
 
 		/* Added  below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 
-		,pp.year_flag as [Year flag]
-		,pp.period_flag as [Period flag]
+		,pp.year_flag 
+		,pp.period_flag 
 		,CASE WHEN pp.year_flag = 'CY' THEN 'Current'
 			WHEN pp.year_flag ='PY' THEN 'Prior'
 			WHEN pp.year_flag ='SP' THEN 'Subsequent'
-			ELSE pp.year_flag_desc END AS [Accounting period]
-		,pp.period_flag_desc AS [Accounting sub period]
-		,pp.fiscal_period_seq_end AS [Fiscal period sequence end]
-		,tb.reporting_curr_cd AS [Reporting currency code]
-		,tb.functional_curr_cd AS [Functional currency code]
+			ELSE pp.year_flag_desc END 
+		,pp.period_flag_desc 
+		,pp.fiscal_period_seq_end 
+		,tb.reporting_curr_cd 
+		,tb.functional_curr_cd 
 
-		,SUM(tb.reporting_ending_balance) AS [Net reporting ending balance]
-		,SUM(tb.functional_ending_balance) AS [Net functional ending balance]
+		,SUM(tb.reporting_ending_balance) 
+		,SUM(tb.functional_ending_balance) 
 	FROM  dbo.TrialBalance tb
 
 		INNER JOIN dbo.DIM_Chart_of_Accounts coa on coa.Coa_id = tb.coa_id

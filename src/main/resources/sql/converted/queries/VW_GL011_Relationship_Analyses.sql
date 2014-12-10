@@ -4,57 +4,57 @@
 				WHEN f.year_flag ='PY' THEN 'Prior'
 				WHEN f.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
-		,PP.Period_flag_desc AS [Accounting sub period]
-		,F.year_flag as [Year flag]
-		,F.period_flag as [Period flag]
-		,F.ey_period AS [Fiscal period]
-		,C.ey_account_type AS [Account Type]
-		,C.ey_account_sub_type AS [Account Sub-type]
-		,C.ey_account_class AS [Account Class]
-		,C.ey_account_sub_class AS [Account Sub-class]
-		,C.gl_account_name AS [GL Account Name]
-		,C.gl_account_cd AS [GL Account Cd]
-		,C.ey_gl_account_name AS [GL Account]
-		,c.ey_account_group_I as [Account Group]
-		,Dp.preparer_ref AS [Preparer]
-		,DP.department AS [Preparer department]
-		,DP1.department AS [Approver department]
-		,DP1.preparer_ref AS [Approver]
+		END 
+		,PP.Period_flag_desc 
+		,F.year_flag 
+		,F.period_flag 
+		,F.ey_period 
+		,C.ey_account_type 
+		,C.ey_account_sub_type 
+		,C.ey_account_class 
+		,C.ey_account_sub_class 
+		,C.gl_account_name 
+		,C.gl_account_cd 
+		,C.ey_gl_account_name 
+		,c.ey_account_group_I 
+		,Dp.preparer_ref 
+		,DP.department 
+		,DP1.department 
+		,DP1.preparer_ref 
 
-		,B.bu_group AS [Business unit group]
-		,b.bu_ref AS [Business unit]
+		,B.bu_group 
+		,b.bu_ref 
 
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 		--Commented and added the dynamic view by prabakar on july 1st -- begin
-		--,s1.segment_ref AS [Segment 1]
-		--,s2.segment_ref AS [Segment 2]
-		--,src.ey_source_group AS [Source group]
+		--,s1.segment_ref 
+		--,s2.segment_ref 
+		--,src.ey_source_group 
 
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,src.source_group AS [Source group]
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,src.source_group 
 		--Commented and added the dynamic view by prabakar on july 1st -- END
-		,src.source_Ref AS [Source]
+		,src.source_Ref 
 		--,f.sys_manual_ind AS 'Journal type'
-		,f.journal_type AS [Journal type]
-		,f.reporting_amount_curr_cd AS [Reporting currency code]
+		,f.journal_type 
+		,f.reporting_amount_curr_cd 
 		,f.functional_curr_cd AS   [Functional currency code]
 
-		,sum(f.Net_reporting_amount) AS [Net reporting amount]
-		,sum(f.Net_reporting_amount_credit) AS [Net reporting amount credit]
-		,sum(f.Net_reporting_amount_debit) AS [Net reporting amount debit]
+		,sum(f.Net_reporting_amount) 
+		,sum(f.Net_reporting_amount_credit) 
+		,sum(f.Net_reporting_amount_debit) 
 
-		,sum(f.Net_functional_amount) AS [Net functional amount]
-		,sum(f.Net_functional_amount_credit) AS [Net functional amount credit]
-		,sum(f.Net_functional_amount_debit) AS [Net functional amount debit]
-		, 'Activity' AS [Source type]
+		,sum(f.Net_functional_amount) 
+		,sum(f.Net_functional_amount_credit) 
+		,sum(f.Net_functional_amount_debit) 
+		, 'Activity' 
 
 		-- Added 3 columns: Amod Oak on 6-26-2013
-		, NULL AS [Period end date]
-		, NULL AS [Fiscal period sequence]
-		, NULL AS [Fiscal period sequence end]
+		, NULL 
+		, NULL 
+		, NULL 
 
 
 	FROM dbo.FT_GL_Account F --dbo.Ft_JE_Amounts F
@@ -123,55 +123,55 @@ UNION
 				WHEN pp.year_flag ='PY' THEN 'Prior'
 				WHEN pp.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
-		,pp.Period_flag_desc AS [Accounting sub period]
-		,pp.year_flag as [Year flag]
-		,pp.period_flag as [Period flag]
-		,fc.fiscal_period_cd AS [Fiscal period]
-		,coa.ey_account_type AS [Account Type]
-		,coa.ey_account_sub_type AS [Account Sub-type]
-		,coa.ey_account_class AS [Account Class]
-		,coa.ey_account_sub_class AS [Account Sub-class]
-		,coa.gl_account_name AS [GL Account Name]
-		,coa.gl_account_cd AS [GL Account Cd]
-		,coa.ey_gl_account_name AS [GL Account]
-		,coa.ey_account_group_I as [Account Group]
-		,'N/A for balances' AS [Preparer]
-		,'N/A for balances'  AS [Preparer department]
-		,'N/A for balances'  AS [Approver department]
-		,'N/A for balances'  AS [Approver]
+		END 
+		,pp.Period_flag_desc 
+		,pp.year_flag 
+		,pp.period_flag 
+		,fc.fiscal_period_cd 
+		,coa.ey_account_type 
+		,coa.ey_account_sub_type 
+		,coa.ey_account_class 
+		,coa.ey_account_sub_class 
+		,coa.gl_account_name 
+		,coa.gl_account_cd 
+		,coa.ey_gl_account_name 
+		,coa.ey_account_group_I 
+		,'N/A for balances' 
+		,'N/A for balances'  
+		,'N/A for balances'  
+		,'N/A for balances'  
 
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref AS [Business unit]
+		,bu.bu_group 
+		,bu.bu_ref 
 
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 		--Commented and added the dynamic view by prabakar on july 1st -- BEGIN
-		--,s1.segment_ref AS [Segment 1]
-		--,s2.segment_ref AS [Segment 2]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
+		--,s1.segment_ref 
+		--,s2.segment_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
 		--Commented and added the dynamic view by prabakar on july 1st -- end
-		,'N/A for balances'  AS [Source group]
-		,'N/A for balances'  AS [Source]
+		,'N/A for balances'  
+		,'N/A for balances'  
 
-		,'N/A for balances'  AS [Journal type]
-		,tb.reporting_curr_cd AS [Reporting currency code]
+		,'N/A for balances'  
+		,tb.reporting_curr_cd 
 		,tb.functional_curr_cd AS   [Functional currency code]
 
-		,tb.reporting_ending_balance AS [Net reporting amount]
-		,0.0 AS [Net reporting amount credit]
-		,0.0 AS [Net reporting amount debit]
+		,tb.reporting_ending_balance 
+		,0.0 
+		,0.0 
 
-		,tb.functional_ending_balance AS [Net functional amount]
-		,0.0 AS [Net functional amount credit]
-		,0.0 AS [Net functional amount debit]
-		, 'Balance' AS [Source type]
+		,tb.functional_ending_balance 
+		,0.0 
+		,0.0 
+		, 'Balance' 
 
 		-- Added 3 columns: Amod Oak on 6-26-2013
-		, pp.end_date AS [Period end date]
-		, fc.fiscal_period_seq AS [Fiscal period sequence]
-		, pp.fiscal_period_seq_END AS [Fiscal period sequence end]
+		, pp.end_date 
+		, fc.fiscal_period_seq 
+		, pp.fiscal_period_seq_END 
 
 
 		-- Changed FROM clause: Amod Oak on 6-26-2013

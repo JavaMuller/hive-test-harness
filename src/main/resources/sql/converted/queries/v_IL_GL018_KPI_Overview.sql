@@ -1,45 +1,45 @@
 
 	SELECT
 		coa.ey_account_type AS 'Category'
-		--,fj.fiscal_period_cd AS [Fiscal period]
-		,fj.ey_period AS [Fiscal period]
+		--,fj.fiscal_period_cd 
+		,fj.ey_period 
 		,CASE	WHEN fj.year_flag ='CY' THEN 'Current'
 				WHEN fj.year_flag ='PY' THEN 'Prior'
 				WHEN fj.year_flag ='SP' THEN 'Subsequent'
 				ELSE PP.year_flag_desc
-		END AS [Accounting period]
-		,PP.period_flag_desc AS [Accounting sub period]
-		,fj.year_flag as [Year flag]
-		,fj.period_flag as [Period flag]
+		END 
+		,PP.period_flag_desc 
+		,fj.year_flag 
+		,fj.period_flag 
 
 		--Commented and Added by prabakar on july 1st to pull bu,segment,soruce from dynamic view -- begin
-		--,fj.bu_group AS [Business unit group]
-		--,fj.bu_ref as [Business Unit]
-		--,fj.segment1_ref AS [Segment 1]
-		--,fj.segment2_ref AS [Segment 2]
-		--,fj.segment1_group AS [Segment 1 group]
-		--,fj.segment2_group AS [Segment 2 group]
+		--,fj.bu_group 
+		--,fj.bu_ref 
+		--,fj.segment1_ref 
+		--,fj.segment2_ref 
+		--,fj.segment1_group 
+		--,fj.segment2_group 
 
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref as [Business Unit]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
+		,bu.bu_group 
+		,bu.bu_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 
-		--,src.source_group AS [Source group]
-		--,src.source_ref	AS [Source]
+		--,src.source_group 
+		--,src.source_ref	
 		--Commented and Added by prabakar on july 1st to pull bu,segment,soruce from dynamic view -- end
 
-		,fj.reporting_amount_curr_cd AS [Reporting currency code]
-		,fj.functional_curr_cd AS [Functional currency code]
-		,ROUND(SUM (fj.net_reporting_amount),2) AS [Net reporting amount]
-		,ROUND(SUM (fj.net_functional_amount),2) AS [Net functional amount]
-		, 'Activity' AS [Source Type]
-		, pp.end_date AS [Period end date]
-		, NULL AS [Fiscal period sequence]
-		, NULL AS [Fiscal period sequence end]
-		, NULL AS [Adjustment period]
+		,fj.reporting_amount_curr_cd 
+		,fj.functional_curr_cd 
+		,ROUND(SUM (fj.net_reporting_amount),2) 
+		,ROUND(SUM (fj.net_functional_amount),2) 
+		, 'Activity' 
+		, pp.end_date 
+		, NULL 
+		, NULL 
+		, NULL 
 	FROM dbo.FT_GL_Account FJ --FLAT_JE fj
 		INNER JOIN dbo.Parameters_period PP on pp.period_flag = fj.period_flag and PP.year_flag = FJ.year_flag
 		INNER JOIN dbo.v_Chart_of_accounts coa on coa.coa_id = fj.coa_id and coa.bu_id = FJ.bu_id
@@ -85,42 +85,42 @@
 
 	SELECT
 		coa.ey_account_sub_type AS 'Category'
-		,fj.ey_period AS [Fiscal period]
+		,fj.ey_period 
 		,CASE	WHEN fj.year_flag ='CY' THEN 'Current'
 				WHEN fj.year_flag ='PY' THEN 'Prior'
 				WHEN fj.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
-		,PP.period_flag_desc AS [Accounting sub period]
-		,fj.year_flag as [Year flag]
-		,fj.period_flag as [Period flag]
+		END 
+		,PP.period_flag_desc 
+		,fj.year_flag 
+		,fj.period_flag 
 		--Commented and Added by prabakar on july 1st to pull bu,segment,soruce from dynamic view -- begin
-		--,fj.bu_group AS [Business unit group]
-		--,fj.bu_ref as [Business Unit]
-		--,fj.segment1_ref AS [Segment 1]
-		--,fj.segment2_ref AS [Segment 2]
-		--,fj.segment1_group AS [Segment 1 group]
-		--,fj.segment2_group AS [Segment 2 group]
+		--,fj.bu_group 
+		--,fj.bu_ref 
+		--,fj.segment1_ref 
+		--,fj.segment2_ref 
+		--,fj.segment1_group 
+		--,fj.segment2_group 
 
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref as [Business Unit]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
+		,bu.bu_group 
+		,bu.bu_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 
-		--,src.source_group AS [Source group]
-		--,src.source_ref	AS [Source]
+		--,src.source_group 
+		--,src.source_ref	
 		--Commented and Added by prabakar on july 1st to pull bu,segment,soruce from dynamic view -- end
-		,fj.reporting_amount_curr_cd AS [Reporting currency code]
-		,fj.functional_curr_cd AS [Functional currency code]
-		,ROUND(SUM (fj.net_reporting_amount),2) AS [Net reporting amount]
-		,ROUND(SUM (fj.net_functional_amount),2) AS [Net functional amount]
-		, 'Activity' AS [Source Type]
-		, pp.end_date AS [Period end date]
-		, NULL AS [Fiscal period sequence]
-		, NULL AS [Fiscal period sequence end]
-		, NULL AS [Adjustment period]
+		,fj.reporting_amount_curr_cd 
+		,fj.functional_curr_cd 
+		,ROUND(SUM (fj.net_reporting_amount),2) 
+		,ROUND(SUM (fj.net_functional_amount),2) 
+		, 'Activity' 
+		, pp.end_date 
+		, NULL 
+		, NULL 
+		, NULL 
 	FROM dbo.FT_GL_Account FJ --FLAT_JE fj
 		INNER JOIN dbo.Parameters_period PP on pp.period_flag = fj.period_flag and PP.year_flag = FJ.year_flag
 		INNER JOIN dbo.v_Chart_of_accounts coa on coa.coa_id = fj.coa_id and coa.bu_id = FJ.bu_id
@@ -166,42 +166,42 @@
 
 		SELECT
 		coa.ey_account_group_I AS 'Category'
-		,fj.ey_period AS [Fiscal period]
+		,fj.ey_period 
 		,CASE	WHEN fj.year_flag ='CY' THEN 'Current'
 				WHEN fj.year_flag ='PY' THEN 'Prior'
 				WHEN fj.year_flag ='SP' THEN 'Subsequent'
 				ELSE PP.year_flag_desc
-		END AS [Accounting period]
-		,PP.period_flag_desc AS [Accounting sub period]
-		,fj.year_flag as [Year flag]
-		,fj.period_flag as [Period flag]
+		END 
+		,PP.period_flag_desc 
+		,fj.year_flag 
+		,fj.period_flag 
 		--Commented and Added by prabakar on july 1st to pull bu,segment,soruce from dynamic view -- begin
-		--,fj.bu_group AS [Business unit group]
-		--,fj.bu_ref as [Business Unit]
-		--,fj.segment1_ref AS [Segment 1]
-		--,fj.segment2_ref AS [Segment 2]
-		--,fj.segment1_group AS [Segment 1 group]
-		--,fj.segment2_group AS [Segment 2 group]
+		--,fj.bu_group 
+		--,fj.bu_ref 
+		--,fj.segment1_ref 
+		--,fj.segment2_ref 
+		--,fj.segment1_group 
+		--,fj.segment2_group 
 
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref as [Business Unit]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
+		,bu.bu_group 
+		,bu.bu_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 
-		--,src.source_group AS [Source group]
-		--,src.source_ref	AS [Source]
+		--,src.source_group 
+		--,src.source_ref	
 		--Commented and Added by prabakar on july 1st to pull bu,segment,soruce from dynamic view -- end
-		,fj.reporting_amount_curr_cd AS [Reporting currency code]
-		,fj.functional_curr_cd AS [Functional currency code]
-		,ROUND(SUM (fj.net_reporting_amount),2) AS [Net reporting amount]
-		,ROUND(SUM (fj.net_functional_amount),2) AS [Net functional amount]
-		, 'Activity' AS [Source Type]
-		, pp.end_date AS [Period end date]
-		, NULL AS [Fiscal period sequence]
-		, NULL AS [Fiscal period sequence end]
-		, NULL AS [Adjustment period]
+		,fj.reporting_amount_curr_cd 
+		,fj.functional_curr_cd 
+		,ROUND(SUM (fj.net_reporting_amount),2) 
+		,ROUND(SUM (fj.net_functional_amount),2) 
+		, 'Activity' 
+		, pp.end_date 
+		, NULL 
+		, NULL 
+		, NULL 
 	FROM dbo.FT_GL_Account FJ --FLAT_JE fj
 		INNER JOIN dbo.Parameters_period PP on pp.period_flag = fj.period_flag and PP.year_flag = FJ.year_flag
 		INNER JOIN dbo.v_Chart_of_accounts coa on coa.coa_id = fj.coa_id and coa.bu_id = FJ.bu_id
@@ -246,37 +246,37 @@
 
 	SELECT
 		coa.ey_account_type AS 'Category'
-		,fc.fiscal_period_cd AS [Fiscal period]
+		,fc.fiscal_period_cd 
 		,CASE	WHEN pp.year_flag ='CY' THEN 'Current'
 				WHEN pp.year_flag ='PY' THEN 'Prior'
 				WHEN pp.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
-		,pp.period_flag_desc AS [Accounting sub period]
-		,pp.year_flag as [Year flag]
-		,pp.period_flag as [Period flag]
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref as [Business Unit]
+		END 
+		,pp.period_flag_desc 
+		,pp.year_flag 
+		,pp.period_flag 
+		,bu.bu_group 
+		,bu.bu_ref 
 		-- commented and added column by prabakar on july 1st to refer rdm table -- begin
-		--,s1.segment_ref AS [Segment 1]
-		--,s2.segment_ref AS [Segment 2]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
+		--,s1.segment_ref 
+		--,s2.segment_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
 		-- commented and added column by prabakar on july 1st to refer rdm table -- end
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
-		--,'N/A Balances' AS [Source group]
-		--,'N/A Balances'	AS [Source]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
+		--,'N/A Balances' 
+		--,'N/A Balances'	
 
-		,tb.reporting_curr_cd AS [Reporting currency code]
-		,tb.functional_curr_cd AS [Functional currency code]
-		,ROUND(SUM (tb.reporting_ending_balance),2) AS [Net reporting amount]
-		,ROUND(SUM (tb.functional_ending_balance),2) AS [Net functional amount]
-		, 'Balance' AS [Source Type]
-		, pp.END_date AS [Period end date]
-		, fc.fiscal_period_seq AS [Fiscal period sequence]
-		, pp.fiscal_period_seq_END AS [Fiscal period sequence end]
-		, fc.adjustment_period AS [Adjustment period]
+		,tb.reporting_curr_cd 
+		,tb.functional_curr_cd 
+		,ROUND(SUM (tb.reporting_ending_balance),2) 
+		,ROUND(SUM (tb.functional_ending_balance),2) 
+		, 'Balance' 
+		, pp.END_date 
+		, fc.fiscal_period_seq 
+		, pp.fiscal_period_seq_END 
+		, fc.adjustment_period 
 	FROM dbo.TrialBalance tb
 
 		INNER JOIN dbo.DIM_Chart_of_Accounts coa on coa.Coa_id = tb.coa_id
@@ -327,37 +327,37 @@
 
 	SELECT
 		coa.ey_account_sub_type AS 'Category'
-		,fc.fiscal_period_cd AS [Fiscal period]
+		,fc.fiscal_period_cd 
 		,CASE	WHEN pp.year_flag ='CY' THEN 'Current'
 				WHEN pp.year_flag ='PY' THEN 'Prior'
 				WHEN pp.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
-		,pp.period_flag_desc AS [Accounting sub period]
-		,pp.year_flag as [Year flag]
-		,pp.period_flag as [Period flag]
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref as [Business Unit]
+		END 
+		,pp.period_flag_desc 
+		,pp.year_flag 
+		,pp.period_flag 
+		,bu.bu_group 
+		,bu.bu_ref 
 		-- commented and added column by prabakar on july 1st to refer rdm table -- begin
-		--,s1.segment_ref AS [Segment 1]
-		--,s2.segment_ref AS [Segment 2]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
+		--,s1.segment_ref 
+		--,s2.segment_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
 		-- commented and added column by prabakar on july 1st to refer rdm table -- end
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
-		--,'N/A Balances' AS [Source group]
-		--,'N/A Balances'	AS [Source]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
+		--,'N/A Balances' 
+		--,'N/A Balances'	
 
-		,tb.reporting_curr_cd AS [Reporting currency code]
-		,tb.functional_curr_cd AS [Functional currency code]
-		,ROUND(SUM (tb.reporting_ending_balance),2) AS [Net reporting amount]
-		,ROUND(SUM (tb.functional_ending_balance),2) AS [Net functional amount]
-		, 'Balance' AS [Source Type]
-		, pp.END_date AS [Period end date]
-		, fc.fiscal_period_seq AS [Fiscal period sequence]
-		, pp.fiscal_period_seq_END AS [Fiscal period sequence end]
-		, fc.adjustment_period AS [Adjustment period]
+		,tb.reporting_curr_cd 
+		,tb.functional_curr_cd 
+		,ROUND(SUM (tb.reporting_ending_balance),2) 
+		,ROUND(SUM (tb.functional_ending_balance),2) 
+		, 'Balance' 
+		, pp.END_date 
+		, fc.fiscal_period_seq 
+		, pp.fiscal_period_seq_END 
+		, fc.adjustment_period 
 	FROM dbo.TrialBalance tb
 
 		INNER JOIN dbo.DIM_Chart_of_Accounts coa on coa.Coa_id = tb.coa_id
@@ -407,38 +407,38 @@
 
 		SELECT
 		coa.ey_account_group_I AS 'Category'
-		,fc.fiscal_period_cd AS [Fiscal period]
+		,fc.fiscal_period_cd 
 		,CASE	WHEN pp.year_flag ='CY' THEN 'Current'
 				WHEN pp.year_flag ='PY' THEN 'Prior'
 				WHEN pp.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
-		,pp.period_flag_desc AS [Accounting sub period]
-		,pp.year_flag as [Year flag]
-		,pp.period_flag as [Period flag]
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref as [Business Unit]
+		END 
+		,pp.period_flag_desc 
+		,pp.year_flag 
+		,pp.period_flag 
+		,bu.bu_group 
+		,bu.bu_ref 
 		-- commented and added column by prabakar on july 1st to refer rdm table -- begin
-		--,s1.segment_ref AS [Segment 1]
-		--,s2.segment_ref AS [Segment 2]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
+		--,s1.segment_ref 
+		--,s2.segment_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
 		-- commented and added column by prabakar on july 1st to refer rdm table -- end
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 
-		--,'N/A Balances' AS [Source group]
-		--,'N/A Balances'	AS [Source]
+		--,'N/A Balances' 
+		--,'N/A Balances'	
 
-		,tb.reporting_curr_cd AS [Reporting currency code]
-		,tb.functional_curr_cd AS [Functional currency code]
-		,ROUND(SUM (tb.reporting_ending_balance),2) AS [Net reporting amount]
-		,ROUND(SUM (tb.functional_ending_balance),2) AS [Net functional amount]
-		, 'Balance' AS [Source Type]
-		, pp.END_date AS [Period end date]
-		, fc.fiscal_period_seq AS [Fiscal period sequence]
-		, pp.fiscal_period_seq_END AS [Fiscal period sequence end]
-		, fc.adjustment_period AS [Adjustment period]
+		,tb.reporting_curr_cd 
+		,tb.functional_curr_cd 
+		,ROUND(SUM (tb.reporting_ending_balance),2) 
+		,ROUND(SUM (tb.functional_ending_balance),2) 
+		, 'Balance' 
+		, pp.END_date 
+		, fc.fiscal_period_seq 
+		, pp.fiscal_period_seq_END 
+		, fc.adjustment_period 
 	FROM dbo.TrialBalance tb
 
 		INNER JOIN dbo.DIM_Chart_of_Accounts coa on coa.Coa_id = tb.coa_id

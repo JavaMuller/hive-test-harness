@@ -1,17 +1,17 @@
 
 	SELECT
-		fj.coa_id AS [Coa Id]
-		,coa.gl_account_cd AS [GL account code]
+		fj.coa_id 
+		,coa.gl_account_cd 
 		,CASE WHEN fj.year_flag = 'CY' THEN 'Current'
 			WHEN fj.year_flag = 'PY' THEN 'Prior'
 			WHEN fj.year_flag = 'SP' THEN 'Subsequent'
 			ELSE pp.year_flag_desc
-		END	AS [Accounting period]
-		,NULL AS [Functional beginning balance]
-		,NULL AS [Functional ending balance]
-		,NULL AS [Reporting beginning balance]
-		,NULL AS [Reporting ending balance]
-		,'Journal entries with GL accounts not in trial balance' AS [Type]
+		END	
+		,NULL 
+		,NULL 
+		,NULL 
+		,NULL 
+		,'Journal entries with GL accounts not in trial balance' 
 		, NULL AS 'FPS'
 	FROM dbo.FT_GL_Account FJ--dbo.flat_je fj
 		INNER JOIN  dbo.v_Chart_of_accounts coa  on coa.coa_id = fj.coa_id
@@ -27,17 +27,17 @@
 	UNION
 
 		SELECT
-			tb.coa_id AS [Coa Id]
-			,coa.gl_account_cd AS [GL account code]
+			tb.coa_id 
+			,coa.gl_account_cd 
 			,CASE WHEN pp.year_flag = 'CY' THEN 'Current'
 				WHEN pp.year_flag = 'PY' THEN 'Prior'
 				WHEN pp.year_flag = 'SP' THEN 'Subsequent'
-			END	AS [Accounting period]
-			,ROUND(tb.functional_beginning_balance,2) AS [Functional beginning balance]
-			,ROUND(tb.functional_ending_balance,2) AS [Functional ending balance]
-			,ROUND(tb.reporting_beginning_balance,2) AS [Reporting beginning balance]
-			,ROUND(tb.reporting_ending_balance,2) AS [Reporting ending balance]
-			,'Active GL accounts with no balance' AS [Type]
+			END	
+			,ROUND(tb.functional_beginning_balance,2) 
+			,ROUND(tb.functional_ending_balance,2) 
+			,ROUND(tb.reporting_beginning_balance,2) 
+			,ROUND(tb.reporting_ending_balance,2) 
+			,'Active GL accounts with no balance' 
 			,fc.fiscal_period_seq AS 'FPS'
 		FROM dbo.TrialBalance tb
 			INNER JOIN dbo.DIM_Chart_of_Accounts coa on coa.Coa_id = tb.coa_id

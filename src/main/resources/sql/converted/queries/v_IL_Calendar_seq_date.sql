@@ -1,4 +1,4 @@
 	SELECT
-		Calendar_date as [Calendar date]
-		,Sequence as [Sequence]
+		Calendar_date 
+		,Sequence 
 	FROM         dbo.DIM_Calendar_seq_date

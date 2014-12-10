@@ -1,72 +1,72 @@
 	SELECT
-		--COUNT(FJ.je_id) as [JE COUNT]
-		--,COUNT(FJ.[je_line_id]) AS [Line Count]
+		--COUNT(FJ.je_id) 
+		--,COUNT(FJ.[je_line_id]) 
 
-		SUM(FJ.COUNT_JE_ID) as [JE COUNT]
-		,SUM(FJ.COUNT_JE_ID) AS [Line Count]
+		SUM(FJ.COUNT_JE_ID) 
+		,SUM(FJ.COUNT_JE_ID) 
 
-		,ROUND(SUM(FJ.[net_amount]),2) as [Amount]
-		,COA.[ey_account_class] AS [Account Class]
-		,COA.ey_gl_account_name AS [GL Account]
+		,ROUND(SUM(FJ.[net_amount]),2) 
+		,COA.[ey_account_class] 
+		,COA.ey_gl_account_name 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-		--,FJ.bu_ref	as [Business Unit]
-		--,FJ.bu_group AS [Business unit group]
-		--,FJ.segment1_group AS [Segment 1 group]
-		--,FJ.segment1_ref AS [Segment 1]
-		--,FJ.segment2_group  AS [Segment 2 group]
-		--,FJ.segment2_ref  AS [Segment 2]
-		--,FJ.source_group AS [Source group]
-		--,FJ.source_ref AS [Source]
+		--,FJ.bu_ref	
+		--,FJ.bu_group 
+		--,FJ.segment1_group 
+		--,FJ.segment1_ref 
+		--,FJ.segment2_group  
+		--,FJ.segment2_ref  
+		--,FJ.source_group 
+		--,FJ.source_ref 
 
-		,bu.bu_ref	as [Business Unit]
-		,bu.bu_group AS [Business unit group]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_group  AS [Segment 2 group]
-		,s2.ey_segment_ref  AS [Segment 2]
-		,src.source_group AS [Source group]
-		,src.source_ref AS [Source]
+		,bu.bu_ref	
+		,bu.bu_group 
+		,s1.ey_segment_group 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_group  
+		,s2.ey_segment_ref  
+		,src.source_group 
+		,src.source_ref 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-		--,FJ.year_flag_desc AS [Accounting period]
+		--,FJ.year_flag_desc 
 		,CASE	WHEN FJ.year_flag ='CY' THEN 'Current'
 				WHEN FJ.year_flag ='PY' THEN 'Prior'
 				WHEN FJ.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
+		END 
 
-		,PP.period_flag_desc AS [Accounting sub period]
-		,FJ.EY_period AS [Fiscal period]
+		,PP.period_flag_desc 
+		,FJ.EY_period 
 
-		--,FJ.sys_manual_ind AS [Journal type]
-		,FJ.journal_type AS [Journal type]
-		,ul.department AS [Preparer department]
-		,ul.preparer_ref as [Preparer]
-		,aul.department AS [Approver department]
-		,aul.preparer_ref AS [Approver]
-		,FJ.functional_curr_cd as [Functional Currency Code]
-		,FJ.reporting_amount_curr_cd AS [Reporting currency code]
+		--,FJ.sys_manual_ind 
+		,FJ.journal_type 
+		,ul.department 
+		,ul.preparer_ref 
+		,aul.department 
+		,aul.preparer_ref 
+		,FJ.functional_curr_cd 
+		,FJ.reporting_amount_curr_cd 
 
-		,FJ.journal_type as [System Manual Indicator]
+		,FJ.journal_type 
 
-		--,ROUND(SUM(FJ.functional_amount),2) AS [Functional Amount]
-		--,ROUND(SUM(FJ.functional_credit_amount),2) AS [Functional Amount Credit]
-		--,ROUND(SUM(FJ.functional_debit_amount),2) AS [Functional Amount Debit]
+		--,ROUND(SUM(FJ.functional_amount),2) 
+		--,ROUND(SUM(FJ.functional_credit_amount),2) 
+		--,ROUND(SUM(FJ.functional_debit_amount),2) 
 
-		,FJ.reversal_ind AS [Reversal indicator flag]  -- changed by Amod
+		,FJ.reversal_ind   -- changed by Amod
 		,CASE WHEN FJ.reversal_ind='Y' THEN 'Reversal'
 			WHEN FJ.reversal_ind='N' THEN 'Non-Reversal'
 			ELSE 'None'
-		END AS [Reversal Indicator]
+		END 
 
 
 
-		,SUM(FJ.NET_reporting_amount) AS [Net reporting amount]
-		,SUM(FJ.NET_reporting_amount_credit) AS [Net reporting amount credit]
-		,SUM(FJ.NET_reporting_amount_debit) AS [Net reporting amount debit]
+		,SUM(FJ.NET_reporting_amount) 
+		,SUM(FJ.NET_reporting_amount_credit) 
+		,SUM(FJ.NET_reporting_amount_debit) 
 
-		,SUM(FJ.NET_functional_amount) AS [Net functional amount]
-		,SUM(FJ.NET_functional_amount_credit) AS [Net functional amount credit]
-		,SUM(FJ.NET_functional_amount_debit) AS [Net functional amount debit]
+		,SUM(FJ.NET_functional_amount) 
+		,SUM(FJ.NET_functional_amount_credit) 
+		,SUM(FJ.NET_functional_amount_debit) 
 
 
 	FROM dbo.FT_GL_Account FJ--dbo.FLAT_JE FJ

@@ -1,15 +1,15 @@
 	Select
-		C.ey_account_type AS [Account Type]
-		,C.ey_account_sub_type AS [Account Sub-type]
-		,C.ey_account_class AS [Account Class]
-		,C.ey_account_sub_class AS [Account Sub-class]
-		,C.gl_account_name AS [GL Account Name]
-		,C.gl_account_cd AS [GL Account Cd]
-		,C.ey_gl_account_name AS [GL Account]
-		,C.ey_account_group_I as [Account Group]
+		C.ey_account_type 
+		,C.ey_account_sub_type 
+		,C.ey_account_class 
+		,C.ey_account_sub_class 
+		,C.gl_account_name 
+		,C.gl_account_cd 
+		,C.ey_gl_account_name 
+		,C.ey_account_group_I 
 
-		,F.year_flag as [Year flag]
-		,F.period_flag as [Period flag]
+		,F.year_flag 
+		,F.period_flag 
 		,CASE WHEN pp.year_flag = 'CY' THEN 'Current'
 			WHEN pp.year_flag = 'PY' THEN 'Prior'
 			WHEN pp.year_flag = 'SP' THEN 'Subsequent'
@@ -17,40 +17,40 @@
 		,pp.period_flag_desc as  [Accounting sub period]
 		,F.ey_period as  [Fiscal period]
 
-		,Dp.preparer_ref AS [Preparer]
-		,Dp.department as [Preparer department]
-		,Dp1.department AS [Approver department]
-		,Dp1.preparer_ref AS [Approver]
+		,Dp.preparer_ref 
+		,Dp.department 
+		,Dp1.department 
+		,Dp1.preparer_ref 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-		,Src.source_ref AS [Source]
+		,Src.source_ref 
 		--,Src.ey_source_group as  [Source group]
 		,src.source_group as  [Source group]
-		--,S1.segment_ref as [Segment 1]
-		,s1.ey_segment_ref as [Segment 1]
+		--,S1.segment_ref 
+		,s1.ey_segment_ref 
 		,S1.ey_segment_group as  [Segment 1 group]
-		--,S2.segment_ref as [Segment 2]
-		,s2.ey_segment_ref as [Segment 2]
+		--,S2.segment_ref 
+		,s2.ey_segment_ref 
 		,S2.ey_segment_group as  [Segment 2 group]
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
 
 		,Bu.bu_group as  [Business unit group]
 		,Bu.bu_ref as  [Business unit]
 
-		--,F.sys_manual_ind as [Journal type]
-		,F.journal_type as [Journal type]
+		--,F.sys_manual_ind 
+		,F.journal_type 
 
 		,F.reporting_amount_curr_cd as  [Reporting currency code]
-		,F.functional_curr_cd AS [Functional Currency Code]
+		,F.functional_curr_cd 
 
 		,SUM(F.Net_reporting_amount) as  [Net reporting amount]
-		,SUM (Case When c.ey_account_type = 'Revenue' THEN F.Net_reporting_amount ELSE 0 End) AS [Net reporting sales]
-		,SUM (Case When c.ey_account_sub_type = 'Cost of sales' THEN F.Net_reporting_amount ELSE 0 End) AS [Net reporting cost of sales]
+		,SUM (Case When c.ey_account_type = 'Revenue' THEN F.Net_reporting_amount ELSE 0 End) 
+		,SUM (Case When c.ey_account_sub_type = 'Cost of sales' THEN F.Net_reporting_amount ELSE 0 End) 
 		,SUM(F.Net_reporting_amount_credit) as  [Net reporting credit amount]
 		,SUM(F.Net_reporting_amount_debit) as  [Net reporting debit amount]
 
 		,SUM(F.Net_functional_amount) as  [Net functional amount]
-		,SUM (Case When c.ey_account_type = 'Revenue' THEN F.Net_functional_amount ELSE 0 End) AS [Net functional sales]
-		,SUM (Case When c.ey_account_sub_type = 'Cost of sales' THEN F.Net_functional_amount ELSE 0 End) AS [Net functional cost of sales]
+		,SUM (Case When c.ey_account_type = 'Revenue' THEN F.Net_functional_amount ELSE 0 End) 
+		,SUM (Case When c.ey_account_sub_type = 'Cost of sales' THEN F.Net_functional_amount ELSE 0 End) 
 
 		,sum(F.Net_functional_amount_credit) as  [Net functional credit amount]
 		,sum(F.Net_functional_amount_debit) as  [Net functional debit amount]

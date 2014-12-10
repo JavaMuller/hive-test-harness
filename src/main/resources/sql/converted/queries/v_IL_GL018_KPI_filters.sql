@@ -4,40 +4,40 @@
 		,f.segment2_id
 		-- commented and Added below dynamic views to pull bu,segment, source by prabakar on 1st july begin
 		--,f.bu_ref AS  [Business Unit]
-		--,f.bu_group AS [Business unit group]
-		--,f.segment1_group AS [Segment 1 group]
-		--,f.segment1_ref AS [Segment 1]
-		--,f.segment2_group AS [Segment 2 group]
-		--,f.segment2_ref AS [Segment 2]
-		--,f.source_group AS [Source group]
-		--,f.source_ref AS [Source]
-		--,f.year_flag_desc AS [Accounting period]
-		--,f.sys_manual_ind AS [Journal type]
+		--,f.bu_group 
+		--,f.segment1_group 
+		--,f.segment1_ref 
+		--,f.segment2_group 
+		--,f.segment2_ref 
+		--,f.source_group 
+		--,f.source_ref 
+		--,f.year_flag_desc 
+		--,f.sys_manual_ind 
 		,bu.bu_ref AS  [Business Unit]
-		,bu.bu_group AS [Business unit group]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_group AS [Segment 2 group]
-		,s2.ey_segment_ref AS [Segment 2]
-		,src.source_group AS [Source group]
-		,src.source_ref AS [Source]
+		,bu.bu_group 
+		,s1.ey_segment_group 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_group 
+		,s2.ey_segment_ref 
+		,src.source_group 
+		,src.source_ref 
 
 		,CASE	WHEN f.year_flag ='CY' THEN 'Current'
 				WHEN f.year_flag ='PY' THEN 'Prior'
 				WHEN f.year_flag ='SP' THEN 'Subsequent'
 				ELSE f.year_flag_desc
-		END AS [Accounting period]
-		,f.journal_type AS [Journal type]
+		END 
+		,f.journal_type 
 		-- commented and Added below dynamic views to pull bu,segment, source by prabakar on 1st july end
 
 
-		,f.period_flag_desc AS [Accounting sub-period]
-		,f.fiscal_period_cd AS [Fiscal period]
+		,f.period_flag_desc 
+		,f.fiscal_period_cd 
 		,f.period_id
 
 
-		,f.department AS [Preparer department]
-		,f.preparer_ref AS [Preparer]
+		,f.department 
+		,f.preparer_ref 
 	FROM
 		dbo.FLAT_JE AS f
 		-- Added below dynamic views to pull bu,segment, source by prabakar on 1st july begin

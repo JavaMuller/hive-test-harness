@@ -1,27 +1,27 @@
-	SELECT
-		Source_ID     AS     [Source ID]
-		,Source_Cd     AS     [Source Cd]
-		,Source_Desc     AS     [Source Desc]
-		--,Source_Ref     AS     [Source Ref]
-		,preparer_ref     AS     [Preparer]
-		,Preparer_Name     AS     [Preparer Name]
-		,Preparer_department     AS     [Preparer department]
-		,Source_group     AS     [Source group]
-		,Source_Ref     AS     [Source]
-		--,bu_id     AS     [BU]
-		,Journal_Type     AS     [Journal Type]
-		,Segment1_Group     AS     [Segment 1 Group]
-		,Segment2_Group     AS     [Segment 2 Group]
-		,Segment1_ref     AS     [Segment 1]
-		,Segment2_ref     AS     [Segment 2]
-		,bu_ref     AS     [Business Unit]
-		,bu_group     AS     [Business Unit Group]
-		,Year_flag_desc     AS     [Accounting period]
-		,period_flag_desc    AS     [Accounting sub period]
-		,ey_period     AS     [Fiscal period]
-		,Ratio_type     AS     [Ratio type]
-		,Ratio     AS     [Ratio]
-		,Amount     AS     [Amount]
-		,Multiplier     AS     [Multiplier]
+SELECT
+  Source_ID,
+  Source_Cd,
+  Source_Desc
+--,Source_Ref,
+  preparer_ref,
+  Preparer_Name,
+  Preparer_department,
+  Source_group,
+  Source_Ref
+--,bu_id,
+  Journal_Type,
+  Segment1_Group,
+  Segment2_Group,
+  Segment1_ref,
+  Segment2_ref,
+  bu_ref,
+  bu_group,
+  Year_flag_desc,
+  period_flag_desc,
+  ey_period,
+  Ratio_type,
+  Ratio,
+  Amount,
+  Multiplier
 
-	FROM dbo.GL_018_KPIs_unpivot
+FROM dbo.GL_018_KPIs_unpivot

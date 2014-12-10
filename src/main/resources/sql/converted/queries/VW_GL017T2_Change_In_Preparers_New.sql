@@ -1,4 +1,3 @@
-
 	Select
 
 		--PP.year_flag_desc	-- AS 	[Accounting period]
@@ -6,7 +5,7 @@
 				WHEN pp.year_flag ='PY' THEN 'Prior'
 				WHEN pp.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [year_flag_desc]
+		END 
 		,PP.period_flag_desc	-- AS 	[Accounting sub period]
 		,pp.year_flag	-- AS 	[Year flag]
 		,PP.period_flag -- AS 	[Period Flag]

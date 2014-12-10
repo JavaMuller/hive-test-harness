@@ -44,60 +44,60 @@
 	)
 
 	SELECT
-		AGG.coa_id							AS	[COA Id]
-		,COA.ey_account_type					AS	[Account Type]
-		,COA.ey_account_sub_type				AS	[Account Sub-type]
-		,COA.ey_account_class					AS	[Account Class]
-		,COA.ey_account_sub_class				AS	[Account Sub-class]
-		--,COA.gl_account_cd					AS	[GL Account Code]
-		,COA.gl_account_name				AS	[GL Account Name]
-		,COA.ey_gl_account_name				AS	[GL Account]
-		,COA.ey_gl_account_name				AS	[EY GL Account Name] -- should be removed as it's not standard
-		,COA.gl_account_cd					AS	[GL Account Cd] -- added as per standard by prabakar on july 30
-		,COA.ey_account_group_I				AS	[Account group] -- added as per standard by prabakar on july 30
-		,COA.ey_account_group_II			AS	[Account sub group] -- added as per standard by prabakar on july 30
+		AGG.coa_id							
+		,COA.ey_account_type					
+		,COA.ey_account_sub_type				
+		,COA.ey_account_class					
+		,COA.ey_account_sub_class				
+		--,COA.gl_account_cd					
+		,COA.gl_account_name				
+		,COA.ey_gl_account_name				
+		,COA.ey_gl_account_name				 -- should be removed as it's not standard
+		,COA.gl_account_cd					 -- added as per standard by prabakar on july 30
+		,COA.ey_account_group_I				 -- added as per standard by prabakar on july 30
+		,COA.ey_account_group_II			 -- added as per standard by prabakar on july 30
 
-		--,Net_amount						AS	[Net Amount]
-		--,Net_amount_credit				AS	[Net Amount Credit]
-		--,Net_amount_debit				AS	[Net Amount Debit]
+		--,Net_amount						
+		--,Net_amount_credit				
+		--,Net_amount_debit				
 
-		,Sys_man_ind					AS	[System-Manual]
-		--,reversal_ind					AS	[Rev-Non_Rev]
-		,UL.preparer_ref					AS	Preparer
-		,UL.department			AS	[Preparer department]
+		,Sys_man_ind					
+		--,reversal_ind					
+		,UL.preparer_ref
+		,UL.department			
 
 		--,Sys_man_ind					AS	'Journal type'
-		,journal_type					AS	[Journal type]
+		,journal_type					
 
-		,AGG.year_flag						AS	[Year flag]
-		,AGG.period_flag					AS	[Period flag]
+		,AGG.year_flag						
+		,AGG.period_flag					
 		,CASE WHEN AGG.year_flag = 'CY' THEN 'Current'
 			WHEN AGG.year_flag = 'PY' THEN 'Prior'
 			WHEN AGG.year_flag = 'SP' THEN 'Subsequent'
 			ELSE PP.year_flag_desc
 		END  as [Accounting period]
-		,PP.period_flag_desc				AS	[Accounting sub period]
-		,Ey_period						AS	[Fiscal period]
+		,PP.period_flag_desc				
+		,Ey_period						
 
 
-		,reporting_amount_curr_cd		AS	[Reporting currency code]
-		,Net_reporting_amount			AS	[Net reporting amount]
-		,Net_reporting_amount_credit	AS	[Net reporting credit amount]
-		,Net_reporting_amount_debit		AS	[Net reporting debit amount]
-		,functional_curr_cd				AS	[Functional currency code]
-		,net_functional_amount			AS	[Net functional amount]
-		,net_functional_amount_credit	AS	[Net functional credit amount]
-		,net_functional_amount_debit	AS	[Net functional debit amount]
+		,reporting_amount_curr_cd		
+		,Net_reporting_amount			
+		,Net_reporting_amount_credit	
+		,Net_reporting_amount_debit		
+		,functional_curr_cd				
+		,net_functional_amount			
+		,net_functional_amount_credit	
+		,net_functional_amount_debit	
 
-		,Bu.bu_group						AS	[Business unit group]
-		,Bu.bu_ref							AS	[Business Unit]
-		,DS.source_ref						AS	[Source]
-		,DS.source_group					AS	[Source group]
-		,SEG1.ey_segment_ref					AS	[Segment 1]
-		,SEG2.ey_segment_ref					AS	[Segment 2]
-		,SEG1.ey_segment_group					AS	[Segment 1 group]
-		,SEG2.ey_segment_group					AS	[Segment 2 group]
-		,agg.dr_cr_ind					[Indicator]
+		,Bu.bu_group						
+		,Bu.bu_ref							
+		,DS.source_ref						
+		,DS.source_group					
+		,SEG1.ey_segment_ref					
+		,SEG2.ey_segment_ref					
+		,SEG1.ey_segment_group					
+		,SEG2.ey_segment_group					
+		,agg.dr_cr_ind
 		-- commented below columns and added columns as part of the dyanmic changes by prabakar on july 1st -- end
 	FROM	agg_acct  AGG
 		INNER JOIN dbo.v_Chart_of_accounts COA on COA.coa_id = AGG.coa_id and COA.bu_id = AGG.bu_id

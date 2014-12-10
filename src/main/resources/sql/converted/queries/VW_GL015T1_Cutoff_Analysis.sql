@@ -3,54 +3,54 @@
 				WHEN FJ.year_flag = 'PY' THEN 'Prior'
 				WHEN FJ.year_flag = 'SP' THEN 'Subsequent'
 				ELSE PP.year_flag_desc
-			END	AS [Accounting period]
-			,PP.period_flag_desc AS [Accounting sub period]
-			,FJ.EY_period AS [Fiscal period]
-			,coa.ey_account_type AS [Account Type]
-			,coa.ey_account_sub_type AS [Account Sub-type]
-			,coa.ey_account_class AS [Account Class]
-			,coa.ey_account_sub_class AS [Account Sub-class]
-			,coa.gl_account_name AS [Account Name]
-			,coa.gl_account_cd AS [Account Number]
-			,coa.gl_account_cd  AS [GL Account Cd]
-			,coa.ey_gl_account_name AS [GL Account]
-			,coa.ey_account_group_I  AS [Account group]
-			,Ul.preparer_ref  AS [Preparer]
-			,ul.department  AS [Preparer department]
-			,aul.department AS [Approver department]
-			,aul.preparer_ref AS [Approver]
+			END	
+			,PP.period_flag_desc 
+			,FJ.EY_period 
+			,coa.ey_account_type 
+			,coa.ey_account_sub_type 
+			,coa.ey_account_class 
+			,coa.ey_account_sub_class 
+			,coa.gl_account_name 
+			,coa.gl_account_cd 
+			,coa.gl_account_cd  
+			,coa.ey_gl_account_name 
+			,coa.ey_account_group_I  
+			,Ul.preparer_ref  
+			,ul.department  
+			,aul.department 
+			,aul.preparer_ref 
 			/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
 			--,FJ.bu_group  AS  [Business unit group]
-			--,FJ.bu_ref  AS [Business Unit]
-			--,FJ.segment1_group AS [Segment 1 group]
-			--,FJ.segment1_ref AS [Segment 1]
-			--,FJ.segment2_group AS [Segment 2 group]
-			--,FJ.segment2_ref  AS [Segment 2]
+			--,FJ.bu_ref  
+			--,FJ.segment1_group 
+			--,FJ.segment1_ref 
+			--,FJ.segment2_group 
+			--,FJ.segment2_ref  
 			--,FJ.source_group  AS  [Source group]
-			--,FJ.source_ref  AS [Source]
+			--,FJ.source_ref  
 			,bu.bu_group  AS  [Business unit group]
-			,bu.bu_ref  AS [Business Unit]
-			,s1.ey_segment_group AS [Segment 1 group]
-			,s1.ey_segment_ref AS [Segment 1]
-			,s2.ey_segment_group AS [Segment 2 group]
-			,s2.ey_segment_ref  AS [Segment 2]
+			,bu.bu_ref  
+			,s1.ey_segment_group 
+			,s1.ey_segment_ref 
+			,s2.ey_segment_group 
+			,s2.ey_segment_ref  
 			,src.source_group  AS  [Source group]
-			,src.source_ref  AS [Source]
+			,src.source_ref  
 			/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-			,FJ.journal_type  AS [Journal type]
-			,FJ.functional_curr_cd AS [Functional Currency Code]
-			,FJ.reporting_amount_curr_cd  AS [Reporting Currency Code]
-			,'Activity' AS [Source Type]
-			--,CAST(FJ.Entry_Date AS nvarchar(11)) AS [Entry Date]
-			--,CAST(FJ.Effective_Date AS nvarchar(11)) AS [Effective Date]
-			--,FJ.Entry_Date AS [Entry Date]
-			--,FJ.Effective_Date AS [Effective Date]
-			,CONVERT(DATETIME,CONVERT(VARCHAR(10),Fj.entry_date_id,101),101) AS [Entry Date]
-			,CONVERT(DATETIME,CONVERT(VARCHAR(10),Fj.effective_date_id,101),101) AS [Effective Date]
+			,FJ.journal_type  
+			,FJ.functional_curr_cd 
+			,FJ.reporting_amount_curr_cd  
+			,'Activity' 
+			--,CAST(FJ.Entry_Date AS nvarchar(11)) 
+			--,CAST(FJ.Effective_Date AS nvarchar(11)) 
+			--,FJ.Entry_Date 
+			--,FJ.Effective_Date 
+			,CONVERT(DATETIME,CONVERT(VARCHAR(10),Fj.entry_date_id,101),101) 
+			,CONVERT(DATETIME,CONVERT(VARCHAR(10),Fj.effective_date_id,101),101) 
 
 			,sum(FJ.net_reporting_amount)  AS  [Net reporting amount]
-			,sum(FJ.net_reporting_amount_credit) AS [Net reporting credit amount]
-			,sum(FJ.net_reporting_amount_debit) AS [Net reporting debit amount]
+			,sum(FJ.net_reporting_amount_credit) 
+			,sum(FJ.net_reporting_amount_debit) 
 			,sum(FJ.net_functional_amount) AS  [Net functional amount]
 			,sum(FJ.net_functional_amount_credit) AS  [Net functional credit amount]
 			,sum(FJ.net_functional_amount_debit)  AS  [Net functional debit amount]
@@ -124,44 +124,44 @@
 					WHEN pp.year_flag = 'PY' THEN 'Prior'
 					WHEN pp.year_flag = 'SP' THEN 'Subsequent'
 					ELSE pp.year_flag_desc
-				END	AS [Accounting period]
-				,pp.period_flag_desc AS [Accounting sub period]
-				,fc.fiscal_period_cd AS [Fiscal period]
-				,coa.ey_account_type AS [Account Type]
-				,coa.ey_account_sub_type AS [Account Sub-type]
-				,coa.ey_account_class AS [Account Class]
-				,coa.ey_account_sub_class AS [Account Sub-class]
-				,coa.gl_account_name AS [Account Name]
-				,coa.gl_account_cd AS [Account Number]
-				,coa.gl_account_cd AS [GL Account Cd]
-				,coa.ey_gl_account_name AS [GL Account]
-				,coa.ey_account_group_I AS [Account Group]
-				,'N/A for balances' AS [Preparer]
-				,'N/A for balances' AS [Preparer department]
-				,'N/A for balances' AS [Approver department]
-				,'N/A for balances' AS [Approver]
+				END	
+				,pp.period_flag_desc 
+				,fc.fiscal_period_cd 
+				,coa.ey_account_type 
+				,coa.ey_account_sub_type 
+				,coa.ey_account_class 
+				,coa.ey_account_sub_class 
+				,coa.gl_account_name 
+				,coa.gl_account_cd 
+				,coa.gl_account_cd 
+				,coa.ey_gl_account_name 
+				,coa.ey_account_group_I 
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,'N/A for balances' 
 				/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- begin */
-				,bu.bu_group AS [Business unit group]
-				,bu.bu_REF AS [Business unit]
-				,s1.ey_segment_group AS [Segment 1 group]
-				,s1.ey_segment_ref AS [Segment 1]
-				,s2.ey_segment_group AS [Segment 2 group]
-				,s2.ey_segment_ref  AS [Segment 2]
+				,bu.bu_group 
+				,bu.bu_REF 
+				,s1.ey_segment_group 
+				,s1.ey_segment_ref 
+				,s2.ey_segment_group 
+				,s2.ey_segment_ref  
 				/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-				,'N/A for balances' AS [Source group]
-				,'N/A for balances' AS [Source]
-				,'N/A for balances' AS [Journal type]
-				,tb.functional_curr_cd AS [Functional Currency Code]
-				,tb.reporting_curr_cd AS [Reporting currency code]
-				,'Beginning balance' AS [Source Type]
-				,NULL AS [Entry Date]
-				,NULL AS [Effective Date]
-				,tb.reporting_beginning_balance  AS [Net reporting amount]
-				,0.0 AS [Net reporting credit amount]
-				,0.0 AS [Net reporting credit amount]
-				,tb.functional_beginning_balance  AS [Net functional amount]
-				,0.0 AS [Net functional credit amount]
-				,0.0 AS [Net functional credit amount]
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,tb.functional_curr_cd 
+				,tb.reporting_curr_cd 
+				,'Beginning balance' 
+				,NULL 
+				,NULL 
+				,tb.reporting_beginning_balance  
+				,0.0 
+				,0.0 
+				,tb.functional_beginning_balance  
+				,0.0 
+				,0.0 
 
 			FROM dbo.TrialBalance tb
 
@@ -193,44 +193,44 @@
 					WHEN pp.year_flag = 'PY' THEN 'Prior'
 					WHEN pp.year_flag = 'SP' THEN 'Subsequent'
 					ELSE pp.year_flag_desc
-				END	AS [Accounting period]
-				,pp.period_flag_desc AS [Accounting sub period]
-				,fc.fiscal_period_cd AS [Fiscal period]
-				,coa.ey_account_type AS [Account Type]
-				,coa.ey_account_sub_type AS [Account Sub-type]
-				,coa.ey_account_class AS [Account Class]
-				,coa.ey_account_sub_class AS [Account Sub-class]
-				,coa.gl_account_name AS [Account Name]
-				,coa.gl_account_cd AS [Account Number]
-				,coa.gl_account_cd AS [GL Account Cd]
-				,coa.ey_gl_account_name AS [GL Account]
-				,coa.ey_account_group_I AS [Account Group]
-				,'N/A for balances' AS [Preparer]
-				,'N/A for balances' AS [Preparer department]
-				,'N/A for balances' AS [Approver department]
-				,'N/A for balances' AS [Approver]
-				,bu.bu_group AS [Business unit group]
-				,bu.bu_REF AS [Business unit]
+				END	
+				,pp.period_flag_desc 
+				,fc.fiscal_period_cd 
+				,coa.ey_account_type 
+				,coa.ey_account_sub_type 
+				,coa.ey_account_class 
+				,coa.ey_account_sub_class 
+				,coa.gl_account_name 
+				,coa.gl_account_cd 
+				,coa.gl_account_cd 
+				,coa.ey_gl_account_name 
+				,coa.ey_account_group_I 
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,bu.bu_group 
+				,bu.bu_REF 
 				/* Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-				,s1.ey_segment_group AS [Segment 1 group]
-				,s1.ey_segment_ref AS [Segment 1]
-				,s2.ey_segment_group AS [Segment 2 group]
+				,s1.ey_segment_group 
+				,s1.ey_segment_ref 
+				,s2.ey_segment_group 
 				,s2.ey_segment_ref  AS  [Segment 2]
 				/*  Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-				,'N/A for balances' AS [Source group]
-				,'N/A for balances' AS [Source]
-				,'N/A for balances' AS [Journal type]
-				,tb.functional_curr_cd AS [Functional Currency Code]
-				,tb.reporting_curr_cd AS [Reporting currency code]
-				,'Ending balance' AS [Source Type]
-				,NULL AS [Entry Date]
-				,NULL AS [Effective Date]
-				,TB.reporting_ending_balance  AS [Net reporting amount]
-				,0.0 AS [Net reporting credit amount]
-				,0.0 AS [Net reporting credit amount]
-				,tb.functional_ending_balance AS [Net functional amount]
-				,0.0 AS [Net functional credit amount]
-				,0.0 AS [Net functional credit amount]
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,'N/A for balances' 
+				,tb.functional_curr_cd 
+				,tb.reporting_curr_cd 
+				,'Ending balance' 
+				,NULL 
+				,NULL 
+				,TB.reporting_ending_balance  
+				,0.0 
+				,0.0 
+				,tb.functional_ending_balance 
+				,0.0 
+				,0.0 
 
 			FROM dbo.TrialBalance tb
 

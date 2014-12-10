@@ -1,41 +1,41 @@
 SELECT
-		GL.coa_id as [COA Id]
-		,GL.period_id as [Period Id]
-		,coa.ey_account_type AS [Account Type]
-		,coa.ey_account_sub_type AS [Account Sub-type]
-		,coa.ey_account_class	  AS [Account Class]
-		,coa.ey_account_sub_class	  AS [Account Sub-class]
-		,coa.gl_account_cd AS [GL Account Code]
-		,coa.gl_account_name AS [GL Account Name]
-		,coa.ey_gl_account_name AS [GL Account]
-		,coa.ey_account_group_I AS [Account Group]
-		,bu.bu_ref AS [Business Unit]
-		,bu.bu_group as [Business unit group]
+		GL.coa_id 
+		,GL.period_id 
+		,coa.ey_account_type 
+		,coa.ey_account_sub_type 
+		,coa.ey_account_class	  
+		,coa.ey_account_sub_class	  
+		,coa.gl_account_cd 
+		,coa.gl_account_name 
+		,coa.ey_gl_account_name 
+		,coa.ey_account_group_I 
+		,bu.bu_ref 
+		,bu.bu_group 
 
-		,S1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
-
-
-		,GL.year_flag as [Year flag]
-		,GL.period_flag as [Period flag]
-		,GL.Accounting_period  AS [Accounting period]
-
-		,GL.Accounting_sub_period AS [Accounting sub period]
-		,GL.[YEAR] AS [Year]
-		,GL.[Fiscal_period] AS [Fiscal period]
-
-		,src.source_group AS [Source group]
-		,src.Source_Ref AS [Source]
+		,S1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
 
 
-		,GL.journal_type AS [Journal type]
-		,dp.department AS [Preparer department]
-		,dp.preparer_Ref AS [Preparer]
+		,GL.year_flag 
+		,GL.period_flag 
+		,GL.Accounting_period  
 
-		,dp1.department AS [Approver department]
-		,dp1.preparer_ref AS [Approver]
+		,GL.Accounting_sub_period 
+		,GL.[YEAR] 
+		,GL.[Fiscal_period] 
+
+		,src.source_group 
+		,src.Source_Ref 
+
+
+		,GL.journal_type 
+		,dp.department 
+		,dp.preparer_Ref 
+
+		,dp1.department 
+		,dp1.preparer_ref 
 		,GL.Functional_Currency_Code  AS  [Functional Currency Code]
 		,GL.Reporting_currency_code  AS  [Reporting currency code]
 		,GL.Net_reporting_amount  AS  [Net reporting amount]

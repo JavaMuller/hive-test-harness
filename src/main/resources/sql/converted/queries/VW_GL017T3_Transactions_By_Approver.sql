@@ -1,62 +1,62 @@
 	Select
-		F.ey_period AS [Fiscal Period]
-		--,F.sys_manual_ind AS [Journal Type]
-		,F.journal_type AS [Journal Type]
-		--, F.ey_account_type AS [Account Type]
-		--, F.ey_account_sub_type AS [Account Sub-type]
-		--, F.ey_account_class AS [Account Class]
-		--, F.ey_account_sub_class AS [Account Sub-class]
-		--, F.gl_account_cd AS [Account Code]
-		--, F.ey_gl_account_name AS [GL Account]
+		F.ey_period 
+		--,F.sys_manual_ind 
+		,F.journal_type 
+		--, F.ey_account_type 
+		--, F.ey_account_sub_type 
+		--, F.ey_account_class 
+		--, F.ey_account_sub_class 
+		--, F.gl_account_cd 
+		--, F.ey_gl_account_name 
 		--,F.ey_account_group_I	as 	[Account group]
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-		--,F.segment1_group AS [Segment 1 Group]
-		--,F.segment2_group AS [Segment 2 Group]
-		--,F.source_group AS [Source group]
-		--,F.source_ref AS [Source]
-		--,F.bu_ref AS [Business Unit]
-		--,F.bu_group AS [Business Unit Group]
-		--,F.segment1_ref AS [Segment 1]
-		--,F.segment2_ref AS [Segment 2]
+		--,F.segment1_group 
+		--,F.segment2_group 
+		--,F.source_group 
+		--,F.source_ref 
+		--,F.bu_ref 
+		--,F.bu_group 
+		--,F.segment1_ref 
+		--,F.segment2_ref 
 
-		,s1.ey_segment_group AS [Segment 1 Group]
-		,s2.ey_segment_group AS [Segment 2 Group]
-		,src.source_group AS [Source group]
-		,src.source_ref AS [Source]
-		,bu.bu_ref AS [Business Unit]
-		,bu.bu_group AS [Business Unit Group]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
+		,src.source_group 
+		,src.source_ref 
+		,bu.bu_ref 
+		,bu.bu_group 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-		--,F.transaction_type_group_desc as [Transaction type group]
-		--,F.transaction_type as [Transaction type]
+		--,F.transaction_type_group_desc 
+		--,F.transaction_type 
 
-		,UL.preparer_ref AS [Preparer]
-		,UL.department AS [Preparer department]
-		,AUL.preparer_ref AS [Approver]
-		,AUL.department as [Approver department]
+		,UL.preparer_ref 
+		,UL.department 
+		,AUL.preparer_ref 
+		,AUL.department 
 
-		,F.year_flag as [Year flag]
-		,F.period_flag as [Period flag]
-		--,F.year_flag_desc as [Accounting period]
+		,F.year_flag 
+		,F.period_flag 
+		--,F.year_flag_desc 
 		,CASE	WHEN F.year_flag ='CY' THEN 'Current'
 				WHEN F.year_flag ='PY' THEN 'Prior'
 				WHEN F.year_flag ='SP' THEN 'Subsequent'
 				ELSE PP.year_flag_desc
-		END AS [Accounting period]
+		END 
 
-		,PP.period_flag_desc as [Accounting sub period]
-		,F.reporting_amount_curr_cd		as	[Reporting currency code]
-		,F.functional_curr_cd		as	[Functional currency code]
+		,PP.period_flag_desc 
+		,F.reporting_amount_curr_cd		
+		,F.functional_curr_cd		
 
-		,SUM(F.net_reporting_amount_debit) AS [Credit Amount]
-		,SUM(F.net_reporting_amount_debit) AS [Debit Amount]
-		,ABS(SUM(F.net_reporting_amount_debit))+ABS(SUM(F.net_reporting_amount_debit)) AS [Net Amount]  -- added round function by prabakartr may 19th
-		,ABS(SUM(F.net_functional_amount_credit))+ABS(SUM(F.net_functional_amount_debit)) AS [Functional Amount] -- added functional_amount by Ashish May 20th
+		,SUM(F.net_reporting_amount_debit) 
+		,SUM(F.net_reporting_amount_debit) 
+		,ABS(SUM(F.net_reporting_amount_debit))+ABS(SUM(F.net_reporting_amount_debit))   -- added round function by prabakartr may 19th
+		,ABS(SUM(F.net_functional_amount_credit))+ABS(SUM(F.net_functional_amount_debit))  -- added functional_amount by Ashish May 20th
 
-		--, count(F.je_id) AS [Count of JE ID]
-		--, count(distinct F.user_listing_id) AS [Count of distinct Preparers]
-		--, count(F.je_line_id) AS [Count of JE Line ID]
+		--, count(F.je_id) 
+		--, count(distinct F.user_listing_id) 
+		--, count(F.je_line_id) 
 
 
 	FROM dbo.FT_GL_Account F --dbo.Flat_JE F

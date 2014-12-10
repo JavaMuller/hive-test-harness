@@ -1,31 +1,31 @@
 	SELECT
-		full_result.gl_account_group as [Account Group]
+		full_result.gl_account_group 
 		,CASE	WHEN full_result.year_flag ='CY' THEN 'Current'
 					WHEN full_result.year_flag ='PY' THEN 'Prior'
 					WHEN full_result.year_flag ='SP' THEN 'Subsequent'
 					ELSE PP.year_flag_desc
-		END AS [Accounting period]
-		,PP.period_flag_desc AS [Accounting sub period]
-		,DP.preparer_ref AS [Preparer]
-		,DP.department AS [Preparer department]
-		,full_result.journal_type as [Journal Type]
-		,full_result.EY_period as [Fiscal period] -- added by prabkar on 6/14 as requested by Jonny
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
+		END 
+		,PP.period_flag_desc 
+		,DP.preparer_ref 
+		,DP.department 
+		,full_result.journal_type 
+		,full_result.EY_period  -- added by prabkar on 6/14 as requested by Jonny
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
 
-		,s1.ey_segment_group AS [Segment 1 Group]
-		,s2.ey_segment_group AS [Segment 2 Group]
-		,b.bu_ref AS [Business Unit]
-		,b.bu_group AS [Business Unit Group]
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
+		,b.bu_ref 
+		,b.bu_group 
 
-		,src.source_group  AS [Source group]
+		,src.source_group  
 
-		,src.source_ref AS [Source]
-		,full_result.sum_of_amount AS [Amount]
-		,full_result.sum_of_func_amount AS [Functional Amount]
+		,src.source_ref 
+		,full_result.sum_of_amount 
+		,full_result.sum_of_func_amount 
 		,full_result.count_je_id AS  [Number of Postings]
-		,full_result.reporting_amount_curr_cd		as	[Reporting currency code]
-		,full_result.functional_curr_cd		as	[Functional currency code]
+		,full_result.reporting_amount_curr_cd		
+		,full_result.functional_curr_cd		
 
 
 	FROM

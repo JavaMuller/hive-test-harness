@@ -1,68 +1,68 @@
 	SELECT
 
-		coa.ey_account_type AS [Account Type]
-		,coa.ey_account_class AS [Account Class]
+		coa.ey_account_type 
+		,coa.ey_account_class 
 
-		--,f.ey_account_sub_type AS [Account Sub-type]
-		--,f.ey_account_sub_class AS [Account Sub-class]
-		--,f.gl_account_cd AS [GL Account]
-		--,f.gl_account_name AS [GL Account Name]
+		--,f.ey_account_sub_type 
+		--,f.ey_account_sub_class 
+		--,f.gl_account_cd 
+		--,f.gl_account_name 
 
-		,coa.ey_account_group_I AS [Account group]
-		,f.ey_period AS [Fiscal period]
-		--,f.year_flag_desc AS [Accounting period]
+		,coa.ey_account_group_I 
+		,f.ey_period 
+		--,f.year_flag_desc 
 		,CASE	WHEN f.year_flag ='CY' THEN 'Current'
 				WHEN f.year_flag ='PY' THEN 'Prior'
 				WHEN f.year_flag ='SP' THEN 'Subsequent'
 				ELSE PP.year_flag_desc
-		END AS [Accounting period]
+		END 
 
-		,PP.period_flag_desc AS [Accounting sub period]
-		,f.year_flag as [Year flag]
-		,f.period_flag as [Period flag]
+		,PP.period_flag_desc 
+		,f.year_flag 
+		,f.period_flag 
 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-		--,f.bu_group AS [Business unit group]
-		--,f.bu_ref as [Business Unit]
-		,bu.bu_group AS [Business unit group]
-		,bu.bu_ref as [Business Unit]
+		--,f.bu_group 
+		--,f.bu_ref 
+		,bu.bu_group 
+		,bu.bu_ref 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-		,ul.preparer_ref AS [Preparer]
-		,ul.department AS [Preparer department]
-		,aul.department AS [Approver department]
-		,aul.preparer_ref AS [Approver]
+		,ul.preparer_ref 
+		,ul.department 
+		,aul.department 
+		,aul.preparer_ref 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-		--,f.segment1_ref AS [Segment 1]
-		--,f.segment2_ref AS [Segment 2]
-		--,f.segment1_group AS [Segment 1 group]
-		--,f.segment2_group AS [Segment 2 group]
-		--,f.source_group AS [Source group]
-		--,f.source_ref as [Source]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
-		,src.source_group AS [Source group]
-		,src.source_ref as [Source]
+		--,f.segment1_ref 
+		--,f.segment2_ref 
+		--,f.segment1_group 
+		--,f.segment2_group 
+		--,f.source_group 
+		--,f.source_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
+		,src.source_group 
+		,src.source_ref 
 
 		/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-		--,f.sys_manual_ind as [Journal type]
-		,f.journal_type as [Journal type]
-		,f.reporting_amount_curr_cd AS [Reporting currency code]
-		,f.functional_curr_cd AS [Functional currency code]
+		--,f.sys_manual_ind 
+		,f.journal_type 
+		,f.reporting_amount_curr_cd 
+		,f.functional_curr_cd 
 
-		,ROUND(SUM (f.net_reporting_amount),2) AS [Net reporting amount]
+		,ROUND(SUM (f.net_reporting_amount),2) 
 		,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN f.net_reporting_amount ELSE 0 END),2)
-			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_reporting_amount ELSE 0 END),2) AS [Reporting margin]
+			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_reporting_amount ELSE 0 END),2) 
 		,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN f.net_reporting_amount ELSE 0 END),2)
-			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_reporting_amount ELSE 0 END),2) AS [Reporting net income]
+			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_reporting_amount ELSE 0 END),2) 
 
-		,ROUND(SUM (f.net_functional_amount),2) AS [Net functional amount]
+		,ROUND(SUM (f.net_functional_amount),2) 
 		,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN f.net_functional_amount ELSE 0 END),2)
-			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_functional_amount ELSE 0 END),2) AS [Functional margin]
+			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_functional_amount ELSE 0 END),2) 
 		,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN f.net_functional_amount ELSE 0 END),2)
-			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_functional_amount ELSE 0 END),2) AS [Functional net income]
-		, 'Activity' AS [Source Type]
+			+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN f.net_functional_amount ELSE 0 END),2) 
+		, 'Activity' 
 	FROM dbo.FT_GL_Account F --dbo.FLAT_JE f
 		INNER JOIN dbo.v_Chart_of_accounts coa ON coa.coa_id = F.coa_id and coa.bu_id = f.bu_id
 		INNER JOIN dbo.Parameters_period PP on pp.year_flag = f.year_flag and PP.period_flag = F.period_flag
@@ -119,59 +119,59 @@
 	UNION
 
 		SELECT
-			coa.ey_account_type AS [Account Type]
-			,coa.ey_account_class AS [Account Class]
+			coa.ey_account_type 
+			,coa.ey_account_class 
 
-			--,f.ey_account_sub_type AS [Account Sub-type]
-			--,f.ey_account_sub_class AS [Account Sub-class]
-			--,f.gl_account_cd AS [GL Account]
-			--,f.gl_account_name AS [GL Account Name]
+			--,f.ey_account_sub_type 
+			--,f.ey_account_sub_class 
+			--,f.gl_account_cd 
+			--,f.gl_account_name 
 
-			,coa.ey_account_group_I AS [Account group]
-			,fc.fiscal_period_cd AS [Fiscal period]
-			--,f.year_flag_desc AS [Accounting period]
+			,coa.ey_account_group_I 
+			,fc.fiscal_period_cd 
+			--,f.year_flag_desc 
 			,CASE	WHEN pp.year_flag ='CY' THEN 'Current'
 					WHEN pp.year_flag ='PY' THEN 'Prior'
 					WHEN pp.year_flag ='SP' THEN 'Subsequent'
 					ELSE pp.year_flag_desc
-			END AS [Accounting period]
+			END 
 
-			,pp.period_flag_desc AS [Accounting sub period]
-			,pp.year_flag as [Year flag]
-			,pp.period_flag as [Period flag]
-			,bu.bu_group AS [Business unit group]
-			,bu.bu_ref as [Business Unit]
-			,'N/A for balances' AS [Preparer]
-			,'N/A for balances' AS [Preparer department]
-			,'N/A for balances' AS [Approver department]
-			,'N/A for balances' AS [Approver]
+			,pp.period_flag_desc 
+			,pp.year_flag 
+			,pp.period_flag 
+			,bu.bu_group 
+			,bu.bu_ref 
+			,'N/A for balances' 
+			,'N/A for balances' 
+			,'N/A for balances' 
+			,'N/A for balances' 
 			/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
-			--,s1.segment_ref AS [Segment 1]
-			--,s2.segment_ref AS [Segment 2]
-			,s1.ey_segment_ref AS [Segment 1]
-			,s2.ey_segment_ref AS [Segment 2]
+			--,s1.segment_ref 
+			--,s2.segment_ref 
+			,s1.ey_segment_ref 
+			,s2.ey_segment_ref 
 			/* Commented and Added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
-			,s1.ey_segment_group AS [Segment 1 group]
-			,s2.ey_segment_group AS [Segment 2 group]
-			,'N/A for balances' AS [Source group]
-			,'N/A for balances' as [Source]
-			--,f.sys_manual_ind as [Journal type]
-			,'N/A for balances' as [Journal type]
-			,tb.reporting_curr_cd AS [Reporting currency code]
-			,tb.functional_curr_cd AS [Functional currency code]
+			,s1.ey_segment_group 
+			,s2.ey_segment_group 
+			,'N/A for balances' 
+			,'N/A for balances' 
+			--,f.sys_manual_ind 
+			,'N/A for balances' 
+			,tb.reporting_curr_cd 
+			,tb.functional_curr_cd 
 
-			,ROUND(SUM (tb.reporting_ending_balance),2) AS [Net reporting amount]
+			,ROUND(SUM (tb.reporting_ending_balance),2) 
 			,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN tb.reporting_ending_balance ELSE 0 END),2)
-				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.reporting_ending_balance ELSE 0 END),2) AS [Reporting margin]
+				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.reporting_ending_balance ELSE 0 END),2) 
 			,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN tb.reporting_ending_balance ELSE 0 END),2)
-				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.reporting_ending_balance ELSE 0 END),2) AS [Reporting net income]
+				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.reporting_ending_balance ELSE 0 END),2) 
 
-			,ROUND(SUM (tb.functional_ending_balance),2) AS [Net functional amount]
+			,ROUND(SUM (tb.functional_ending_balance),2) 
 			,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN tb.functional_ending_balance ELSE 0 END),2)
-				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.functional_ending_balance ELSE 0 END),2) AS [Functional margin]
+				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.functional_ending_balance ELSE 0 END),2) 
 			,ROUND(SUM(CASE WHEN coa.ey_account_type = 'Revenue' THEN tb.functional_ending_balance ELSE 0 END),2)
-				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.functional_ending_balance ELSE 0 END),2) AS [Functional net income]
-			, 'Ending balance' AS [Source Type]
+				+ ROUND(SUM(CASE WHEN coa.ey_account_type = 'Expenses' THEN tb.functional_ending_balance ELSE 0 END),2) 
+			, 'Ending balance' 
 		FROM dbo.TrialBalance tb
 			INNER JOIN dbo.DIM_Chart_of_Accounts coa on coa.Coa_id = tb.coa_id
 			INNER JOIN dbo.Dim_Fiscal_calendar fc ON tb.period_id = fc.period_id

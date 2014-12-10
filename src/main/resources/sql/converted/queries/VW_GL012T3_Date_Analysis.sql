@@ -1,65 +1,65 @@
 	SELECT
-		--FJ.[je_id]  AS [Je Id]
-		--,FJ.[je_line_id] AS [Je Line Id]
-		NULL  AS [Je Id]
-		,NULL AS [Je Line Id]
+		--FJ.[je_id]  
+		--,FJ.[je_line_id] 
+		NULL  
+		,NULL 
 
-		,coa.gl_account_cd AS [Account Code]
-		,coa.ey_gl_account_name AS [GL Account]
-		,coa.ey_account_class AS [Account Class]
-		,FJ.EY_period AS [Fiscal period]
-		,FJ.year_flag AS [Year flag]
-		,FJ.period_flag AS [Period flag]
-		--,FJ.year_flag_desc  as [Accounting period]
+		,coa.gl_account_cd 
+		,coa.ey_gl_account_name 
+		,coa.ey_account_class 
+		,FJ.EY_period 
+		,FJ.year_flag 
+		,FJ.period_flag 
+		--,FJ.year_flag_desc  
 		,CASE	WHEN FJ.year_flag ='CY' THEN 'Current'
 				WHEN FJ.year_flag ='PY' THEN 'Prior'
 				WHEN FJ.year_flag ='SP' THEN 'Subsequent'
 				ELSE PP.year_flag_desc
-		END AS [Accounting period]
-		,PP.period_flag_desc AS [Accounting sub period]
-		,bu.bu_ref AS [Business unit]
-		,bu.bu_group AS [Business unit group]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,s1.ey_segment_group AS [Segment 1 group]
-		,s2.ey_segment_group AS [Segment 2 group]
-		,src.Source_ref AS [Source]
-		,src.source_group AS [Source group]
-		,FJ.journal_type AS [Journal type]
-		,UL.preparer_ref as [Preparer]
-		,UL.department AS [Preparer department]
-		--,AUL.department AS [Approver department]
-		--,AUL.preparer_ref AS [Approver]
-		,NULL AS [Approver department]
-		,NULL AS [Approver]
+		END 
+		,PP.period_flag_desc 
+		,bu.bu_ref 
+		,bu.bu_group 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
+		,src.Source_ref 
+		,src.source_group 
+		,FJ.journal_type 
+		,UL.preparer_ref 
+		,UL.department 
+		--,AUL.department 
+		--,AUL.preparer_ref 
+		,NULL 
+		,NULL 
 
-		,FJ.reporting_amount_curr_cd AS [Reporting currency code]
+		,FJ.reporting_amount_curr_cd 
 		,FJ.functional_curr_cd [Functional Currency Code]
 
-		,FJ.net_reporting_amount AS [Net reporting amount]
-		,FJ.Net_reporting_amount_credit AS [Net reporting amount credit]
-		,FJ.Net_reporting_amount_debit   AS [Net reporting amount debit]
-		,FJ.net_functional_amount  AS [Net functional amount]
-		,FJ.Net_functional_amount_debit  AS [Net functional amount debit]
-		,FJ.Net_functional_amount_credit AS [Net functional amount credit]
+		,FJ.net_reporting_amount 
+		,FJ.Net_reporting_amount_credit 
+		,FJ.Net_reporting_amount_debit   
+		,FJ.net_functional_amount  
+		,FJ.Net_functional_amount_debit  
+		,FJ.Net_functional_amount_credit 
 
-		----,FJ.adjusted_fiscal_period AS [Adjusted fiscal period]
+		----,FJ.adjusted_fiscal_period 
 		--(	SELECT  fc1.fiscal_period_cd
 		--	FROM dbo.v_Fiscal_calendar FC1
 		--	WHERE FJ.bu_id = FC1.bu_id
 		--		AND FJ.ENTRY_DATE BETWEEN FC1.fiscal_period_start AND FC1.fiscal_period_end
 		--		and Fc1.adjustment_period = 'N'
 		--)
-		, FC.fiscal_period_cd AS [Adjusted fiscal period]
-		,EntCal.day_number_of_week   AS [Day number of week]
-		,EntCal.day_of_week_desc AS [Day Of Week]
+		, FC.fiscal_period_cd 
+		,EntCal.day_number_of_week   
+		,EntCal.day_of_week_desc 
 		,EFFCAL.day_number_of_month AS  [Day of month]  --(entyr id , but in flat_je its effective date)
 
-		,Net_Amount as [Amount]
-		,Net_Amount_Credit as [Amount_Credit]
-		,Net_Amount_Debit as [Amount_Debit]
-		,EntCal.calendar_date  AS [Calendar date]
-		,cd.Sequence  AS [Sequence number]
+		,Net_Amount 
+		,Net_Amount_Credit 
+		,Net_Amount_Debit 
+		,EntCal.calendar_date  
+		,cd.Sequence  
 
 	FROM dbo.FT_GL_Account FJ
 		INNER JOIN Gregorian_calendar EntCal ON FJ.entry_date_id = EntCal.date_id

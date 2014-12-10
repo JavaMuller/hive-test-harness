@@ -1,62 +1,62 @@
 	SELECT
-		F.EY_period AS [Fiscal Period]
-		,coa.coa_id as [COA ID]
-		,coa.ey_account_type AS [Account Type]
-		,coa.ey_account_sub_type AS [Account Sub-type]
-		,coa.ey_account_class AS [Account Class]
-		,coa.ey_account_sub_class AS [Account Sub-class]
-		,coa.gl_account_cd AS [Account Code]
-		,coa.ey_gl_account_name AS [GL Account]
-		,coa.ey_account_group_I as [Account group]
-		,UL.preparer_ref AS [Preparer]
-		,UL.department AS [Preparer department]
-		--,F.sys_manual_ind AS [Journal Type]
-		,F.journal_type AS [Journal Type]
-		,AUL.preparer_ref AS [Approver]
-		,AUL.department AS [Approver Department]
+		F.EY_period 
+		,coa.coa_id 
+		,coa.ey_account_type 
+		,coa.ey_account_sub_type 
+		,coa.ey_account_class 
+		,coa.ey_account_sub_class 
+		,coa.gl_account_cd 
+		,coa.ey_gl_account_name 
+		,coa.ey_account_group_I 
+		,UL.preparer_ref 
+		,UL.department 
+		--,F.sys_manual_ind 
+		,F.journal_type 
+		,AUL.preparer_ref 
+		,AUL.department 
 		/* commented and  Added below dynamic views to bring the data of bu, segment, source by Prabakar -- Begin */
 
-		--,F.source_ref AS [Source Ref]
-		--,F.segment1_ref AS [Segment 1]
-		--,F.segment2_ref AS [Segment 2]
-		--,f.segment1_group AS [Segment 1 Group]
-		--,f.segment2_group AS [Segment 2 Group]
-		--,f.source_group AS [Source group]
-		--,F.bu_ref AS [Business Unit]
-		--,f.bu_group AS [Business Unit Group]
-		,src.source_ref AS [Source Ref]
-		,s1.ey_segment_ref AS [Segment 1]
-		,s2.ey_segment_ref AS [Segment 2]
-		,s1.ey_segment_group AS [Segment 1 Group]
-		,s2.ey_segment_group AS [Segment 2 Group]
-		,src.source_group AS [Source group]
-		,bu.bu_ref AS [Business Unit]
-		,bu.bu_group AS [Business Unit Group]
+		--,F.source_ref 
+		--,F.segment1_ref 
+		--,F.segment2_ref 
+		--,f.segment1_group 
+		--,f.segment2_group 
+		--,f.source_group 
+		--,F.bu_ref 
+		--,f.bu_group 
+		,src.source_ref 
+		,s1.ey_segment_ref 
+		,s2.ey_segment_ref 
+		,s1.ey_segment_group 
+		,s2.ey_segment_group 
+		,src.source_group 
+		,bu.bu_ref 
+		,bu.bu_group 
 		/* commented and added below dynamic views to bring the data of bu, segment, source by Prabakar -- end */
 
-		--,f.transaction_type_group_desc as [Transaction type group]
-		--,f.transaction_type as [Transaction type]
-		,f.year_flag as [Year flag]
-		,f.period_flag as [Period flag]
-		--,f.year_flag_desc as [Accounting period]
+		--,f.transaction_type_group_desc 
+		--,f.transaction_type 
+		,f.year_flag 
+		,f.period_flag 
+		--,f.year_flag_desc 
 		,CASE	WHEN f.year_flag ='CY' THEN 'Current'
 				WHEN f.year_flag ='PY' THEN 'Prior'
 				WHEN f.year_flag ='SP' THEN 'Subsequent'
 				ELSE pp.year_flag_desc
-		END AS [Accounting period]
+		END 
 
-		,pp.period_flag_desc as [Accounting sub period]
+		,pp.period_flag_desc 
 		,F.reporting_amount_curr_cd		as	[Reporting currency code]
 		,F.functional_curr_cd		as	[Functional currency code]
-		--,count(F.je_id) AS [Count of JE ID]
-		,sum(f.count_je_id) AS [Count of JE ID]
-		,count(distinct F.user_listing_id) AS [Count of distinct Preparers]
-		--,count(F.je_line_id) AS [Count of JE Line ID]
-		,sum(f.count_je_id)  AS [Count of JE Line ID]
-		,sum(F.net_reporting_amount_credit) AS [Credit Amount]
-		,sum(F.net_reporting_amount_debit) AS [Debit Amount]
-		,abs(sum(F.net_reporting_amount_credit))+abs(sum(F.net_reporting_amount_debit)) AS [Net Amount]  -- added round function by prabakartr may 19th
-		,abs(sum(F.net_functional_amount_credit))+abs(sum(F.net_functional_amount_debit)) AS [Functional Amount] -- added functional_amount by Ashish May 20th
+		--,count(F.je_id) 
+		,sum(f.count_je_id) 
+		,count(distinct F.user_listing_id) 
+		--,count(F.je_line_id) 
+		,sum(f.count_je_id)  
+		,sum(F.net_reporting_amount_credit) 
+		,sum(F.net_reporting_amount_debit) 
+		,abs(sum(F.net_reporting_amount_credit))+abs(sum(F.net_reporting_amount_debit))   -- added round function by prabakartr may 19th
+		,abs(sum(F.net_functional_amount_credit))+abs(sum(F.net_functional_amount_debit))  -- added functional_amount by Ashish May 20th
 
 
 	FROM dbo.FT_GL_Account F --dbo.Flat_JE F
