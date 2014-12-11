@@ -19,6 +19,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
+import org.springframework.util.StopWatch;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -54,9 +55,19 @@ public class Application {
 
             Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/tables"), extensions, false);
 
+            int count =0;
+
+            StopWatch sw = new StopWatch();
+            sw.start();
+
             for (File file : files) {
                 executeSqlScript(file.getPath(), connection);
+                count++;
             }
+
+            sw.stop();
+
+            log.info("CREATED " + count + " TABLES ON DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
