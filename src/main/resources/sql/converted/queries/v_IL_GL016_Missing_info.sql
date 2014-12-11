@@ -54,4 +54,4 @@ WHERE
     OR bu_id IS NULL
     OR approver_department IS NULL
     OR approver_ref IS NULL)
-  AND ver_end_date_id IS NULL
+  AND ver_end_date_id IS NULL;

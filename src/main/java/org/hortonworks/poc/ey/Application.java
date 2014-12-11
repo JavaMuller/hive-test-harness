@@ -51,13 +51,34 @@ public class Application {
 
         try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
 
-            buildTables(databaseName, connection);
-            buildViews(databaseName, connection);
+            //buildTables(databaseName, connection);
+            //buildViews(databaseName, connection);
+            executeQueries(databaseName, connection);
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
 
+    }
+
+    private static void executeQueries(String databaseName, Connection connection) {
+        String[] extensions = {"sql"};
+
+        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
+
+        int count =0;
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+
+        for (File file : files) {
+            executeSqlScript(file.getPath(), connection);
+            count++;
+        }
+
+        sw.stop();
+
+        log.info("EXECUTED " + count + " QUERIES AGAINST DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
     }
 
     private static void buildTables(String databaseName, Connection connection) {

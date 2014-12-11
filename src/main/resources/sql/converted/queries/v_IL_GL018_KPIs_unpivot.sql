@@ -20,4 +20,4 @@ SELECT
   Amount,
   Multiplier
 FROM
-  GL_018_KPIs_unpivot
+  GL_018_KPIs_unpivot;

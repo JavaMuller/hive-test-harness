@@ -279,4 +279,4 @@ ON
     S2.ey_segment_id = tb.segment2_id
 WHERE
     pp.period_flag = 'IP'
-AND tb.ver_end_date_id IS NULL
+AND tb.ver_end_date_id IS NULL;

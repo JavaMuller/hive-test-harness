@@ -82,4 +82,4 @@ GROUP BY
     PP.year_flag_desc ,
     PP.period_flag_desc ,
     F.reporting_amount_curr_cd ,
-    F.functional_curr_cd
+    F.functional_curr_cd;

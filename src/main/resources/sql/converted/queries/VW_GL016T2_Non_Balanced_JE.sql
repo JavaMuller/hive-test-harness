@@ -23,4 +23,4 @@ FROM
         SUM(ROUND(Net_reporting_amount, 2)) <> 0)) AS sub1
 GROUP BY
   year_flag_desc,
-  je_id
+  je_id;

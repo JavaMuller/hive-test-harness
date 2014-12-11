@@ -274,4 +274,4 @@ WHERE
     WHERE
       PP1.year_flag = PP.year_flag
       AND pp1.fiscal_year_cd = pp.fiscal_year_cd)
-  AND tb.ver_end_date_id IS NULL
+  AND tb.ver_end_date_id IS NULL;

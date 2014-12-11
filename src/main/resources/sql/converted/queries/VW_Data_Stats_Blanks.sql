@@ -7,4 +7,4 @@ SELECT
   Start_Date,
   End_Date
 FROM
-  GL_016_Data_stats_blanks
+  GL_016_Data_stats_blanks;

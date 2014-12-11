@@ -104,4 +104,4 @@ GROUP BY
   aul.preparer_ref,
   FJ.functional_curr_cd,
   FJ.reporting_amount_curr_cd,
-  FJ.reversal_ind
+  FJ.reversal_ind;

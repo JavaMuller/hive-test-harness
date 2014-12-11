@@ -102,4 +102,4 @@ GROUP BY
     f.approver_department ,
     f.approver_ref ,
     f.functional_curr_cd ,
-    f.reporting_amount_curr_cd
+    f.reporting_amount_curr_cd;

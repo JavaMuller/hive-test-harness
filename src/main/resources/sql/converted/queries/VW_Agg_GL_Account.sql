@@ -117,4 +117,4 @@ ON
 LEFT OUTER JOIN
     v_Segment02_listing Seg2
 ON
-    seg2.ey_segment_id = AGG.segment2_id
+    seg2.ey_segment_id = AGG.segment2_id;

@@ -71,4 +71,4 @@ GROUP BY
     ul.preparer_ref ,
     ul.department ,
     F.reporting_amount_curr_cd ,
-    F.functional_curr_cd
+    F.functional_curr_cd;

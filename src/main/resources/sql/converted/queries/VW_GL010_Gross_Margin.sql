@@ -130,4 +130,4 @@ Bu.bu_ref,
 f.journal_type ,
 F.reporting_amount_curr_cd,
 F.functional_curr_cd,
-pp.year_flag
+pp.year_flag;

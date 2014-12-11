@@ -65,4 +65,4 @@ GROUP BY
   f.year_flag_desc,
   f.period_flag_desc,
   f.department,
-  f.preparer_ref
+  f.preparer_ref;

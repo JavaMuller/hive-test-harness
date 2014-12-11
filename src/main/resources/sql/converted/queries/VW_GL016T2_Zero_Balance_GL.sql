@@ -94,4 +94,4 @@ WHERE
     fj.coa_id
     FROM
     FT_GL_Account FJ )
-    AND TB.ver_end_date_id IS NULL
+    AND TB.ver_end_date_id IS NULL;

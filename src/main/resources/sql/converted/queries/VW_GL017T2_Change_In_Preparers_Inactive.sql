@@ -35,4 +35,4 @@ INNER JOIN
 ON
     DP.user_listing_id = f.user_listing_id
 WHERE
-    DP.active_ind<>'A'
+    DP.active_ind<>'A';

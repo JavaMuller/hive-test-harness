@@ -458,4 +458,4 @@ GROUP BY
   pp.END_date,
   fc.fiscal_period_seq,
   pp.fiscal_period_seq_END,
-  fc.adjustment_period
+  fc.adjustment_period;

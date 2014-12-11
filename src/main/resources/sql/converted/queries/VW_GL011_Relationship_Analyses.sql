@@ -193,4 +193,4 @@ AND ( ( (
                 pp.period_flag = 'RP'
             OR  pp.period_flag = 'PRP') )
     OR  (
-            pp.period_flag = 'SP') )
+            pp.period_flag = 'SP') );

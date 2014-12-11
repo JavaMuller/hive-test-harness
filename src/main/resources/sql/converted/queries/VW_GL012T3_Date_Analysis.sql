@@ -95,4 +95,4 @@ ON
 LEFT OUTER JOIN
     v_Segment02_listing S2
 ON
-    S2.ey_segment_id = fJ.segment2_id
+    S2.ey_segment_id = fJ.segment2_id;
