@@ -72,7 +72,9 @@ public class Application {
         try {
             client = getHCatClient();
 
-            final String databaseName = "POC_" + System.currentTimeMillis();
+            final String databaseName = "HIVE_POC";
+
+            client.dropDatabase(databaseName, true, HCatClient.DropDBMode.CASCADE);
 
             HCatCreateDBDesc dbDesc = HCatCreateDBDesc.create(databaseName)
                     .ifNotExists(true)

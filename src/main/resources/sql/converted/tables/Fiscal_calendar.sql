@@ -1,0 +1,22 @@
+CREATE TABLE Fiscal_calendar (
+  period_id INT,
+  bu_id INT,
+  engagement_id string,
+  fiscal_period_cd VARCHAR(50),
+  fiscal_period_desc VARCHAR(100),
+  fiscal_period_seq INT,
+  fiscal_period_start VARCHAR(50),
+  fiscal_period_end VARCHAR(50),
+  fiscal_quarter_cd VARCHAR(50),
+  fiscal_quarter_desc VARCHAR(100),
+  fiscal_quarter_start VARCHAR(50),
+  fiscal_quarter_end VARCHAR(50),
+  fiscal_year_cd VARCHAR(50),
+  fiscal_year_desc VARCHAR(100),
+  fiscal_year_start VARCHAR(50),
+  fiscal_year_end VARCHAR(50),
+  adjustment_period VARCHAR(1),
+  ver_start_date_id INT,
+  ver_end_date_id INT,
+  ver_desc VARCHAR(100)
+) stored AS orc;

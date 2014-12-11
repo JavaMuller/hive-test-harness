@@ -1,0 +1,23 @@
+CREATE TABLE User_listing (
+  user_listing_id INT,
+  bu_id INT,
+  engagement_id string,
+  client_user_id VARCHAR(25),
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  full_name VARCHAR(100),
+  department VARCHAR(100),
+  title VARCHAR(100),
+  role_resp VARCHAR(100),
+  sys_manual_ind CHAR(1),
+  active_ind CHAR(1),
+  active_ind_change_date_id INT,
+  created_by_id INT,
+  created_date_id INT,
+  created_time_id INT,
+  last_modified_by_id INT,
+  last_modified_date_id INT,
+  ver_start_date_id INT,
+  ver_end_date_id INT,
+  ver_desc VARCHAR(100)
+) stored AS orc;
