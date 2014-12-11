@@ -40,7 +40,7 @@ SELECT
     latest_version.ver_end_date_id,
     latest_version.ver_desc,
     latest_version.ey_related_party,
-    ISNULL(latest_version.customer_account_cd, '') + ' - ' + ISNULL
+    COALESCE(latest_version.customer_account_cd, '') + ' - ' + ISNULL
     (latest_version.customer_account_name, '') AS customer_ref,
     bu_latest.bu_cd
 FROM

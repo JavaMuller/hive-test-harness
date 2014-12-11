@@ -10,7 +10,7 @@ SELECT
   latest_version.ver_start_date_id,
   latest_version.ver_end_date_id,
   latest_version.ver_desc,
-  CONVERT(VARCHAR(100), ISNULL(latest_version.ey_source_group, SOURCE_MAPPING.source_group)) AS
+  CONVERT(VARCHAR(100), COALESCE(latest_version.ey_source_group, SOURCE_MAPPING.source_group)) AS
                                                                                                 source_group,
   latest_version.source_cd + ' - ' + latest_version.source_desc                              AS source_ref
 FROM

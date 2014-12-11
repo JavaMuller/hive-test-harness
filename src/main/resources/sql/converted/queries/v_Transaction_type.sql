@@ -15,7 +15,7 @@ SELECT
   latest_version.ver_end_date_id,
   latest_version.ver_desc,
   latest_version.ey_transaction_type         AS ey_trans_type,
-  ISNULL(latest_version.Transaction_type_cd, '') + ' - ' + ISNULL
+  COALESCE(latest_version.Transaction_type_cd, '') + ' - ' + ISNULL
   (latest_version.transaction_type_desc, '') AS transaction_type_ref
 FROM
   Transaction_type all_version

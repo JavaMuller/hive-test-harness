@@ -14,12 +14,12 @@ FROM
     SELECT
       pab1.band                                        AS band,
       pab1.ey_band_threshold_lower                     AS ey_band_threshold_lower,
-      ISNULL(pab2.ey_band_threshold_lower - 1, 999999) AS ey_band_threshold_higher,
+      COALESCE(pab2.ey_band_threshold_lower - 1, 999999) AS ey_band_threshold_higher,
       CASE
       WHEN (pab2.ey_band_threshold_lower - 1) IS NULL
       THEN ' >=' + CONVERT(VARCHAR(10), pab1.ey_band_threshold_lower) + ' days'
       ELSE CONVERT(VARCHAR(10), pab1.ey_band_threshold_lower) + '-' + CONVERT(VARCHAR(10)
-      , ISNULL(pab2.ey_band_threshold_lower - 1, 999999)) + ' days'
+      , COALESCE(pab2.ey_band_threshold_lower - 1, 999999)) + ' days'
       END
     FROM
       parameters_aging_bands pab1

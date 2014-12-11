@@ -21,7 +21,7 @@ SELECT
   coa.gl_account_cd,
   coa.ey_gl_account_name,
   coa.ey_account_group_I,
-  ISNULL(F.user_listing_id, 0),
+  COALESCE(F.user_listing_id, 0),
   CASE
   WHEN f.source_type <> 'Activity'
   THEN 'N/A for balances'
@@ -70,10 +70,10 @@ SELECT
   f.net_functional_amount,
   f.net_functional_amount_credit,
   f.net_functional_amount_debit,
-  ISNULL(f.source_id, 0),
-  ISNULL(f.segment1_id, 0),
-  ISNULL(f.segment2_id, 0),
-  ISNULL(f.approved_by_id, 0)
+  COALESCE(f.source_id, 0),
+  COALESCE(f.segment1_id, 0),
+  COALESCE(f.segment2_id, 0),
+  COALESCE(f.approved_by_id, 0)
 FROM
   GL_016_Balance_by_GL F
   INNER JOIN

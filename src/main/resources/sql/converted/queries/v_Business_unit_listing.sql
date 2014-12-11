@@ -22,8 +22,8 @@ SELECT
     latest_version.ver_start_date_id,
     latest_version.ver_end_date_id,
     latest_version.ver_desc,
-    CONVERT(VARCHAR(100), ISNULL(latest_version.bu_hier_01_desc, BU_MAPPING.bu_group)) AS bu_group,
-    ISNULL(latest_version.bu_cd, '') + ' - ' + ISNULL(latest_version.bu_desc, '')      AS bu_ref
+    cast(COALESCE(latest_version.bu_hier_01_desc, BU_MAPPING.bu_group) as varchar) AS bu_group,
+    COALESCE(latest_version.bu_cd, '') + ' - ' + COALESCE(latest_version.bu_desc, '')      AS bu_ref
 FROM
     Business_unit_listing all_version
 LEFT OUTER JOIN
