@@ -1,5 +1,4 @@
-WITH
-    SEGMENT_CTE AS
+CREATE VIEW v_segment02_listing AS WITH SEGMENT_CTE AS
     (
         SELECT
             'Segment01' AS table_identifier ,
@@ -8,7 +7,7 @@ WITH
             SL.segment_desc ,
             SL.ey_segment_group
         FROM
-            [Segment01_listing] SL
+            Segment01_listing SL
         UNION ALL
         SELECT
             'Segment02' AS table_identifier ,
@@ -17,7 +16,7 @@ WITH
             SL.segment_desc ,
             SL.ey_segment_group
         FROM
-            [Segment02_listing] SL
+            Segment02_listing SL
         UNION ALL
         SELECT
             'Segment03' AS table_identifier ,
@@ -26,7 +25,7 @@ WITH
             SL.segment_desc ,
             SL.ey_segment_group
         FROM
-            [Segment03_listing] SL
+            Segment03_listing SL
         UNION ALL
         SELECT
             'Segment04' AS table_identifier ,
@@ -35,7 +34,7 @@ WITH
             SL.segment_desc ,
             SL.ey_segment_group
         FROM
-            [Segment04_listing] SL
+            Segment04_listing SL
         UNION ALL
         SELECT
             'Segment05' AS table_identifier ,
@@ -44,7 +43,7 @@ WITH
             SL.segment_desc ,
             SL.ey_segment_group
         FROM
-            [Segment05_listing] SL
+            Segment05_listing SL
     )
 SELECT
     CASE
@@ -75,6 +74,6 @@ SELECT
 FROM
     SEGMENT_CTE SEGMENT
 INNER JOIN
-    [Parameters_engagement] PE
+    Parameters_engagement PE
 ON
-    SEGMENT.table_identifier = PE.segment_selection2
+    SEGMENT.table_identifier = PE.segment_selection2;

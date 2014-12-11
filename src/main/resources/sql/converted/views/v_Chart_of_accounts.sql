@@ -1,4 +1,5 @@
-SELECT
+CREATE VIEW v_chart_of_accounts AS
+  SELECT
     all_version.coa_id,
     latest_version.bu_id,
     latest_version.engagement_id,
@@ -28,20 +29,20 @@ SELECT
     latest_version.ver_end_date_id,
     latest_version.ver_desc,
     latest_version.gl_account_cd + ' - ' + latest_version.gl_account_name AS ey_gl_account_name
-FROM
+  FROM
     Chart_of_accounts all_version
-LEFT OUTER JOIN
+    LEFT OUTER JOIN
     Chart_of_accounts latest_version
-ON
-    all_version.gl_account_cd = latest_version.gl_account_cd
-LEFT OUTER JOIN
+      ON
+        all_version.gl_account_cd = latest_version.gl_account_cd
+    LEFT OUTER JOIN
     Business_unit_listing bu_all
-ON
-    all_version.bu_id = bu_all.bu_id
-LEFT OUTER JOIN
+      ON
+        all_version.bu_id = bu_all.bu_id
+    LEFT OUTER JOIN
     Business_unit_listing bu_latest
-ON
-    latest_version.bu_id = bu_latest.bu_id
-WHERE
+      ON
+        latest_version.bu_id = bu_latest.bu_id
+  WHERE
     latest_version.ver_end_date_id IS NULL
-AND bu_latest.bu_cd = bu_all.bu_cd
+    AND bu_latest.bu_cd = bu_all.bu_cd;

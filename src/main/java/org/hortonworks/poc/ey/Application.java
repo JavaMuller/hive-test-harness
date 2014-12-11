@@ -51,28 +51,53 @@ public class Application {
 
         try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
 
-            String[] extensions = {"sql"};
-
-            Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/tables"), extensions, false);
-
-            int count =0;
-
-            StopWatch sw = new StopWatch();
-            sw.start();
-
-            for (File file : files) {
-                executeSqlScript(file.getPath(), connection);
-                count++;
-            }
-
-            sw.stop();
-
-            log.info("CREATED " + count + " TABLES ON DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
+            buildTables(databaseName, connection);
+            buildViews(databaseName, connection);
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
 
+    }
+
+    private static void buildTables(String databaseName, Connection connection) {
+        String[] extensions = {"sql"};
+
+        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/tables"), extensions, false);
+
+        int count =0;
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+
+        for (File file : files) {
+            executeSqlScript(file.getPath(), connection);
+            count++;
+        }
+
+        sw.stop();
+
+        log.info("CREATED " + count + " TABLES ON DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
+    }
+
+    private static void buildViews(String databaseName, Connection connection) {
+        String[] extensions = {"sql"};
+
+        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/views"), extensions, false);
+
+        int count =0;
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+
+        for (File file : files) {
+            executeSqlScript(file.getPath(), connection);
+            count++;
+        }
+
+        sw.stop();
+
+        log.info("CREATED " + count + " VIEWS ON DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
     }
 
     public static String createDatabase() throws IOException, InterruptedException {
