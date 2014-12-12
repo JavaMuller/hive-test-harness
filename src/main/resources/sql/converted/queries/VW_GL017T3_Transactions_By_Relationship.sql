@@ -1,3 +1,7 @@
+/*
+FAILED: ParseException line 82:34 mismatched input 'INTERSECT' expecting ) near ')' in expression specification
+ */
+
 SELECT
     full_result.gl_account_group ,
     CASE

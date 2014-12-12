@@ -1,3 +1,7 @@
+/*
+FAILED: SemanticException [Error 10001]: Line 48:4 Table not found 'agg_acct'
+ */
+
 WITH
     agg_acct AS
     (

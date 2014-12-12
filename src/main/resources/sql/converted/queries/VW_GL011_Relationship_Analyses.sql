@@ -1,3 +1,7 @@
+/*
+FAILED: ParseException line 113:0 missing ALL at 'SELECT' near '<EOF>'
+ */
+
 SELECT
   CASE
   WHEN f.year_flag = 'CY'

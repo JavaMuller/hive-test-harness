@@ -1,3 +1,7 @@
+/*
+FAILED: ParseException line 43:4 missing ALL at 'SELECT' near '(' in expression specification
+ */
+
 SELECT
   fj.coa_id,
   coa.gl_account_cd,

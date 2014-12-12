@@ -1,3 +1,7 @@
+/*
+  FAILED: SemanticException Line 0:-1 Both left and right aliases encountered in JOIN 'fiscal_period_end'
+ */
+
 SELECT
   NULL,
   NULL,

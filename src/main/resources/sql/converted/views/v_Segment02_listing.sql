@@ -52,24 +52,24 @@ SELECT
   CASE
   WHEN table_identifier = 'Segment01'
   THEN segment_id
-  END                               AS Segment01,
+  END AS Segment01,
   CASE
   WHEN table_identifier = 'Segment02'
   THEN segment_id
-  END                               AS Segment02,
+  END AS Segment02,
   CASE
   WHEN table_identifier = 'Segment03'
   THEN segment_id
-  END                               AS Segment03,
+  END AS Segment03,
   CASE
   WHEN table_identifier = 'Segment04'
   THEN segment_id
-  END                               AS Segment04,
+  END AS Segment04,
   CASE
   WHEN table_identifier = 'Segment05'
   THEN segment_id
-  END                               AS Segment05,
-  segment_id                        AS ey_segment_id,
+  END AS Segment05,
+  segment_id AS ey_segment_id,
   segment_cd,
   segment_desc,
   ey_segment_group,

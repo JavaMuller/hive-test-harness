@@ -1,3 +1,7 @@
+/*
+  FAILED: ParseException line 38:28 cannot recognize input near 'VARCHAR' '(' '10' in function specification
+ */
+
 SELECT
   CASE
   WHEN FJ.year_flag = 'CY'

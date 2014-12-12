@@ -1,3 +1,7 @@
+/*
+  FAILED: ParseException line 82:0 missing ALL at 'SELECT' near '<EOF>'
+ */
+
 SELECT
   fj.coa_id,
   fj.ey_account_type,

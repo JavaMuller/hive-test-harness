@@ -1,3 +1,7 @@
+/*
+  FAILED: ParseException line 75:0 missing ALL at 'SELECT' near '<EOF>'
+ */
+
 SELECT
   coa.ey_account_type,
   fj.ey_period,
