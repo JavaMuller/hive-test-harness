@@ -49,7 +49,7 @@ SELECT
     DV.net_functional_credit_amount ,
     DV.net_functional_debit_amount
 FROM
-    [GL_012_Date_Validation] DV
+    GL_012_Date_Validation DV
 INNER JOIN
     v_Chart_of_accounts coa
 ON

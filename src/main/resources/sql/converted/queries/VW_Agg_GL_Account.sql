@@ -66,7 +66,7 @@ SELECT
         WHEN AGG.year_flag = 'SP'
         THEN 'Subsequent'
         ELSE PP.year_flag_desc
-    END AS [Accounting period] ,
+    END AS accounting_period ,
     PP.period_flag_desc ,
     Ey_period ,
     reporting_amount_curr_cd ,
@@ -103,7 +103,7 @@ LEFT OUTER JOIN
 ON
     UL.user_listing_id = AGG.user_listing_id
 LEFT OUTER JOIN
-    [v_Source_listing] DS
+    v_Source_listing DS
 ON
     DS.source_id = AGG.Source_Id
 LEFT OUTER JOIN

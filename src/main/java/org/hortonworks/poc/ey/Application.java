@@ -51,8 +51,8 @@ public class Application {
 
         try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
 
-            //buildTables(databaseName, connection);
-            //buildViews(databaseName, connection);
+            buildTables(databaseName, connection);
+            buildViews(databaseName, connection);
             executeQueries(databaseName, connection);
 
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class Application {
 
         Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
 
-        int count =0;
+        int count = 0;
 
         StopWatch sw = new StopWatch();
         sw.start();
@@ -86,7 +86,7 @@ public class Application {
 
         Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/tables"), extensions, false);
 
-        int count =0;
+        int count = 0;
 
         StopWatch sw = new StopWatch();
         sw.start();
@@ -106,7 +106,7 @@ public class Application {
 
         Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/views"), extensions, false);
 
-        int count =0;
+        int count = 0;
 
         StopWatch sw = new StopWatch();
         sw.start();
@@ -181,17 +181,13 @@ public class Application {
     }
 
     private static void executeSqlScript(String location, Connection connection) {
-        try {
 
-            log.debug("attempting to load file from [" + location + "]");
+        log.debug("attempting to load file from [" + location + "]");
 
-            Resource resource = new FileSystemResource(location);
+        Resource resource = new FileSystemResource(location);
 
-            ScriptUtils.executeSqlScript(connection, resource);
+        ScriptUtils.executeSqlScript(connection, resource);
 
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
     }
 
 }

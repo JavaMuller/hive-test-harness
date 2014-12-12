@@ -11,6 +11,26 @@
     <name>hive-poc</name>
     <description>Hive POC</description>
 
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+            <id>HDPReleases</id>
+            <name>HDP Releases</name>
+            <url>http://repo.hortonworks.com/content/repositories/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -99,7 +119,7 @@
         <dependency>
             <groupId>org.apache.hive.hcatalog</groupId>
             <artifactId>hive-webhcat-java-client</artifactId>
-            <version>0.14.0</version>
+            <version>${hive.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.mortbay.jetty</groupId>
@@ -131,8 +151,8 @@
         <start-class>org.hortonworks.poc.ey.Application</start-class>
         <java.version>1.7</java.version>
 
-        <hive.version>0.14.0</hive.version>
-        <hadoop.version>2.6.0</hadoop.version>
+        <hive.version>0.14.0.2.2.0.0-2041</hive.version>
+        <hadoop.version>2.6.0.2.2.0.0-2041</hadoop.version>
     </properties>
 
     <build>

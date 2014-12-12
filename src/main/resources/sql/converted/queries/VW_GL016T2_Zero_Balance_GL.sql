@@ -56,42 +56,40 @@ WHERE
       ROUND(tb.reporting_beginning_balance, 2),
       ROUND(tb.reporting_ending_balance, 2),
       'Active GL accounts with no balance',
-      fc.fiscal_period_seq AS 'FPS'
+      fc.fiscal_period_seq
     FROM
-    TrialBalance tb
-    INNER JOIN
-    DIM_Chart_of_Accounts coa
-  ON
-  coa.Coa_id = tb.coa_id
-    INNER JOIN
-    Dim_Fiscal_calendar fc
-    ON
-    tb.period_id = fc.period_id
-  INNER JOIN
-  Parameters_period pp
-    ON
-    fc.fiscal_period_seq = pp.fiscal_period_seq_end
-    AND fc.fiscal_year_cd = pp.fiscal_year_cd
-  WHERE
-  fc.fiscal_period_seq =
-    (
-    SELECT
-    MAX(pp1.fiscal_period_seq_end)
-    FROM
-    Parameters_period pp1
+      TrialBalance tb
+      INNER JOIN
+      DIM_Chart_of_Accounts coa
+        ON
+          coa.Coa_id = tb.coa_id
+      INNER JOIN
+      Dim_Fiscal_calendar fc
+        ON
+          tb.period_id = fc.period_id
+      INNER JOIN
+      Parameters_period pp
+        ON
+          fc.fiscal_period_seq = pp.fiscal_period_seq_end
+          AND fc.fiscal_year_cd = pp.fiscal_year_cd
     WHERE
-    pp1.fiscal_year_cd = pp.fiscal_year_cd
-    AND pp1.year_flag = pp.year_flag )
-    AND ( (
-  ROUND(functional_beginning_balance, 2) = 0
-  AND ROUND(functional_ending_balance, 2) = 0)
-  OR  (
-  ROUND(reporting_beginning_balance, 2) = 0
-  AND ROUND(reporting_ending_balance, 2) = 0) )
-    AND tb.coa_id IN
-    (
-    SELECT DISTINCT
-    fj.coa_id
-    FROM
-    FT_GL_Account FJ )
-    AND TB.ver_end_date_id IS NULL;
+      fc.fiscal_period_seq =
+      (
+        SELECT MAX(pp1.fiscal_period_seq_end)
+        FROM
+          Parameters_period pp1
+        WHERE
+          pp1.fiscal_year_cd = pp.fiscal_year_cd
+          AND pp1.year_flag = pp.year_flag)
+      AND ((
+             ROUND(functional_beginning_balance, 2) = 0
+             AND ROUND(functional_ending_balance, 2) = 0)
+           OR (
+        ROUND(reporting_beginning_balance, 2) = 0
+        AND ROUND(reporting_ending_balance, 2) = 0))
+      AND tb.coa_id IN
+          (
+            SELECT DISTINCT fj.coa_id
+            FROM
+              FT_GL_Account FJ)
+      AND TB.ver_end_date_id IS NULL;

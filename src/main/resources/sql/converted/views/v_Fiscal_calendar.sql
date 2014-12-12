@@ -1,4 +1,5 @@
-SELECT
+CREATE VIEW v_fiscal_calendar AS
+  SELECT
     all_version.period_id,
     latest_version.bu_id,
     latest_version.engagement_id,
@@ -19,20 +20,20 @@ SELECT
     latest_version.ver_start_date_id,
     latest_version.ver_end_date_id,
     latest_version.ver_desc
-FROM
+  FROM
     Fiscal_calendar all_version
-LEFT OUTER JOIN
+    LEFT OUTER JOIN
     Fiscal_calendar latest_version
-ON
-    all_version.fiscal_period_cd = latest_version.fiscal_period_cd
-LEFT OUTER JOIN
+      ON
+        all_version.fiscal_period_cd = latest_version.fiscal_period_cd
+    LEFT OUTER JOIN
     Business_unit_listing bu_all
-ON
-    all_version.bu_id = bu_all.bu_id
-LEFT OUTER JOIN
+      ON
+        all_version.bu_id = bu_all.bu_id
+    LEFT OUTER JOIN
     Business_unit_listing bu_latest
-ON
-    latest_version.bu_id = bu_latest.bu_id
-WHERE
+      ON
+        latest_version.bu_id = bu_latest.bu_id
+  WHERE
     latest_version.ver_end_date_id IS NULL
-AND bu_latest.bu_cd = bu_all.bu_cd
+    AND bu_latest.bu_cd = bu_all.bu_cd;
