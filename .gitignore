@@ -63,3 +63,7 @@ crashlytics.properties
 crashlytics-build.properties
 
 
+
+src/main/resources/data/converted/FLAT_JE.csv
+src/main/resources/data/original/FLAT_JE.xlsx
+src/main/resources/data/original/FLAT_JE.csv
