@@ -1,6 +1,12 @@
 package org.hortonworks.poc.ey;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.permission.FsAction;
+import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hive.hcatalog.api.HCatClient;
@@ -13,17 +19,21 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.util.StopWatch;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.security.PrivilegedExceptionAction;
 import java.sql.Connection;
 import java.util.Collection;
@@ -35,9 +45,16 @@ public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-    public static final String HIVE_USERNAME = "hive";
-    public static final String HIVE_URL = "jdbc:hive2://c6401.ambari.apache.org:10000";
-    public static final String HIVE_METASTORE_URL = "thrift://c6401.ambari.apache.org:9083";
+    private static final String HIVE_USERNAME = "hive";
+    private static final String HIVE_URL = "jdbc:hive2://c6401.ambari.apache.org:10000";
+    private static final String HIVE_METASTORE_URL = "thrift://c6401.ambari.apache.org:9083";
+
+    private static final String HDFS_USERNAME = "hdfs";
+    private static final String HDFS_URL = "hdfs://c6401.ambari.apache.org:8020";
+    private static final String DATA_PATH = "/poc/data/ey";
+    private static final String DATA_PATH_ROOT = "/poc";
+
+    private static enum ScriptType {table, view, query}
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -53,15 +70,70 @@ public class Application {
 
             buildTables(databaseName, connection);
             buildViews(databaseName, connection);
-            executeQueries(databaseName, connection);
+            loadData(databaseName, connection);
+
+            executeQueries(databaseName, connection, true);
+
+            executeQueries(databaseName, connection, false);
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    private static FileSystem buildFileSystem() throws IOException, InterruptedException {
+        org.apache.hadoop.conf.Configuration conf = new org.apache.hadoop.conf.Configuration();
+        conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
+        conf.set("fs.webhdfs.impl", "org.apache.hadoop.hdfs.web.WebHdfsFileSystem");
+        conf.set("fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem");
+
+        return FileSystem.get(URI.create(HDFS_URL), conf, HDFS_USERNAME);
+    }
+
+    private static void loadData(String databaseName, Connection connection) throws IOException, InterruptedException {
+
+        FileSystem fs = buildFileSystem();
+        createDirectory(DATA_PATH, fs);
+
+        DataSource dataSource = getDataSource(databaseName);
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        String[] extensions = {"csv"};
+
+        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/data/converted"), extensions, false);
+
+        int count = 0;
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+
+        for (File file : files) {
+
+            writeFile(file, fs);
+
+            String tableName = StringUtils.replace(file.getName(), ".csv", "");
+            String tableNameCsv = tableName + "_csv";
+
+            String loadFile = "load data inpath '" + DATA_PATH + "/" + file.getName() + "' into table " + tableNameCsv;
+            log.debug("running: " + loadFile);
+            jdbcTemplate.execute(loadFile);
+
+            String loadOrc = "insert overwrite table " + tableName + " select * from " + tableNameCsv;
+            log.debug("running: " + loadOrc);
+            jdbcTemplate.execute(loadOrc);
+
+            count++;
+        }
+
+        sw.stop();
+
+        log.info("LOADED " + count + " FILES INTO DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
 
     }
 
-    private static void executeQueries(String databaseName, Connection connection) {
+
+    private static void executeQueries(String databaseName, Connection connection, boolean warmup) {
         String[] extensions = {"sql"};
 
         Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
@@ -72,7 +144,7 @@ public class Application {
         sw.start();
 
         for (File file : files) {
-            executeSqlScript(file.getPath(), connection);
+            executeSqlScript(file.getPath(), connection, ScriptType.query);
             count++;
         }
 
@@ -92,7 +164,7 @@ public class Application {
         sw.start();
 
         for (File file : files) {
-            executeSqlScript(file.getPath(), connection);
+            executeSqlScript(file.getPath(), connection, ScriptType.table);
             count++;
         }
 
@@ -112,7 +184,7 @@ public class Application {
         sw.start();
 
         for (File file : files) {
-            executeSqlScript(file.getPath(), connection);
+            executeSqlScript(file.getPath(), connection, ScriptType.view);
             count++;
         }
 
@@ -143,7 +215,6 @@ public class Application {
 
             return databaseName;
 
-
         } finally {
 
             if (client != null) {
@@ -154,7 +225,6 @@ public class Application {
                 }
             }
         }
-
     }
 
     private static HCatClient getHCatClient() throws IOException, InterruptedException {
@@ -168,7 +238,6 @@ public class Application {
                 HiveConf hiveConf = new HiveConf(conf, HiveConf.class);
                 hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS, HIVE_METASTORE_URL);
 
-
                 return HCatClient.create(hiveConf);
             }
         });
@@ -180,13 +249,110 @@ public class Application {
         return new SimpleDriverDataSource(new HiveDriver(), hiveUrl, HIVE_USERNAME, null);
     }
 
-    private static void executeSqlScript(String location, Connection connection) {
+    private static void executeSqlScript(String location, Connection connection, ScriptType scriptType) {
 
         log.debug("attempting to load file from [" + location + "]");
 
-        Resource resource = new FileSystemResource(location);
+        Resource originalResource = new FileSystemResource(location);
 
-        ScriptUtils.executeSqlScript(connection, resource);
+        ScriptUtils.executeSqlScript(connection, originalResource);
+
+        if (scriptType.equals(ScriptType.table)) {
+
+            Resource tmpResource = new FileSystemResource(location);
+
+            try {
+                String tempContents = IOUtils.toString(tmpResource.getInputStream());
+
+                tempContents = StringUtils.replace(tempContents, "stored AS orc", "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\054' stored AS textfile");
+                String filename = StringUtils.replace(tmpResource.getFilename(), ".sql", "");
+                tempContents = StringUtils.replace(tempContents, filename, filename + "_csv");
+
+                ScriptUtils.executeSqlScript(connection, new ByteArrayResource(tempContents.getBytes()));
+
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+    }
+
+
+    public static String createDirectory(final String directory, final FileSystem fs) throws IOException, InterruptedException {
+
+        UserGroupInformation ugi = UserGroupInformation.createRemoteUser(HDFS_USERNAME);
+
+
+        return ugi.doAs(new PrivilegedExceptionAction<String>() {
+
+            public String run() throws Exception {
+
+                Path path = new Path(directory);
+
+                boolean exists = fs.exists(path);
+
+                log.debug("path [" + path.toString() + "] exists? " + exists);
+
+                if (!exists) {
+                    fs.mkdirs(path);
+                    fs.setPermission(path, new FsPermission(FsAction.ALL, FsAction.ALL, FsAction.ALL));
+                } else {
+                    deleteDirectory(DATA_PATH_ROOT, fs);
+                }
+
+                return path.toString();
+            }
+        });
+
+    }
+
+    public static boolean deleteDirectory(final String directory, final FileSystem fs) throws IOException, InterruptedException {
+
+        UserGroupInformation ugi = UserGroupInformation.createRemoteUser(HDFS_USERNAME);
+
+
+        return ugi.doAs(new PrivilegedExceptionAction<Boolean>() {
+
+            public Boolean run() throws Exception {
+                Path path = new Path(directory);
+
+                return fs.delete(path, true);
+            }
+        });
+
+
+    }
+
+    public static void writeFile(final File file, final FileSystem fs) throws IOException, InterruptedException {
+
+        UserGroupInformation ugi = UserGroupInformation.createRemoteUser(HDFS_USERNAME);
+
+
+        ugi.doAs(new PrivilegedExceptionAction<Void>() {
+
+            public Void run() throws Exception {
+
+                byte[] chunk = new byte[1024];
+
+                Path path = new Path(DATA_PATH + "/" + file.getName());
+
+                log.debug("writing file to path [" + path.toString() + "]");
+
+                FSDataOutputStream outputStream = fs.create(path, true);
+
+                InputStream inputStream = new FileInputStream(file);
+
+                while (inputStream.read(chunk) != -1) {
+                    outputStream.write(chunk);
+                }
+
+                outputStream.close();
+
+                log.debug("file written successfully!");
+
+                return null;
+            }
+        });
+
 
     }
 

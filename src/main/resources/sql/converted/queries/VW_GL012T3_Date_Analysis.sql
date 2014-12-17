@@ -78,7 +78,7 @@ FROM
   v_Fiscal_calendar FC
     ON
       FJ.bu_id = FC.bu_id
-      AND ENTCAL.calendar_date BETWEEN FC.fiscal_period_start AND FC.fiscal_period_end
+      AND ENTCAL.calendar_date > FC.fiscal_period_start AND ENTCAL.calendar_date <= FC.fiscal_period_end
       AND FC.adjustment_period = 'N'
   LEFT OUTER JOIN
   v_User_listing UL
