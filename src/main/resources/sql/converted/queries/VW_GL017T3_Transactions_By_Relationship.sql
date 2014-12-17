@@ -1,66 +1,62 @@
-/*
-FAILED: ParseException line 82:34 mismatched input 'INTERSECT' expecting ) near ')' in expression specification
- */
-
 SELECT
-    full_result.gl_account_group ,
+    full_result.gl_account_group,
     CASE
-        WHEN full_result.year_flag ='CY'
+        WHEN full_result.year_flag = 'CY'
         THEN 'Current'
-        WHEN full_result.year_flag ='PY'
+        WHEN full_result.year_flag = 'PY'
         THEN 'Prior'
-        WHEN full_result.year_flag ='SP'
+        WHEN full_result.year_flag = 'SP'
         THEN 'Subsequent'
         ELSE PP.year_flag_desc
-    END ,
-    PP.period_flag_desc ,
-    DP.preparer_ref ,
-    DP.department ,
-    full_result.journal_type ,
-    full_result.EY_period ,
-    s1.ey_segment_ref ,
-    s2.ey_segment_ref ,
-    s1.ey_segment_group ,
-    s2.ey_segment_group ,
-    b.bu_ref ,
-    b.bu_group ,
-    src.source_group ,
-    src.source_ref ,
-    full_result.sum_of_amount ,
-    full_result.sum_of_func_amount ,
-    full_result.count_je_id  ,
-    full_result.reporting_amount_curr_cd ,
+    END,
+    PP.period_flag_desc,
+    DP.preparer_ref,
+    DP.department,
+    full_result.journal_type,
+    full_result.EY_period,
+    s1.ey_segment_ref,
+    s2.ey_segment_ref,
+    s1.ey_segment_group,
+    s2.ey_segment_group,
+    b.bu_ref,
+    b.bu_group,
+    src.source_group,
+    src.source_ref,
+    full_result.sum_of_amount,
+    full_result.sum_of_func_amount,
+    full_result.count_je_id,
+    full_result.reporting_amount_curr_cd,
     full_result.functional_curr_cd
 FROM
     (
         SELECT
-            f.user_listing_id ,
-            f.bu_id ,
-            f.source_id ,
-            f.year_flag ,
-            f.period_flag ,
-            f.segment1_id ,
-            f.segment2_id ,
-            f.sys_man_ind ,
-            F.journal_type ,
-            'Cash & Revenue' AS gl_account_group ,
-            f.EY_period ,
-            f.reporting_amount_curr_cd ,
-            f.functional_curr_cd ,
+            f.user_listing_id,
+            f.bu_id,
+            f.source_id,
+            f.year_flag,
+            f.period_flag,
+            f.segment1_id,
+            f.segment2_id,
+            f.sys_man_ind,
+            F.journal_type,
+            'Cash & Revenue' AS gl_account_group,
+            f.EY_period,
+            f.reporting_amount_curr_cd,
+            f.functional_curr_cd,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_type = 'Revenue'
-                        OR  Pa.ey_account_group_I = 'Cash' )
+                        OR  Pa.ey_account_group_I = 'Cash')
                     THEN ABS(F.NET_reporting_amount_credit) + ABS(f.NET_reporting_amount_debit)
                     ELSE 0
-                END)sum_of_amount ,
+                END) sum_of_amount,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_type = 'Revenue'
-                        OR  Pa.ey_account_group_I = 'Cash' )
+                        OR  Pa.ey_account_group_I = 'Cash')
                     THEN ABS(F.NET_functional_amount_credit) + ABS(f.NET_functional_amount_debit)
                     ELSE 0
-                END)              sum_of_func_amount ,
+                END)              sum_of_func_amount,
             SUM(f.count_je_id) AS count_je_id
         FROM
             FT_GL_Account F
@@ -71,7 +67,7 @@ FROM
         WHERE
             (
                 Pa.ey_account_type = 'Revenue'
-            OR  Pa.ey_account_group_I = 'Cash' )
+            OR  Pa.ey_account_group_I = 'Cash')
         AND f.user_listing_id IN
                                   (
                                   SELECT DISTINCT
@@ -83,16 +79,18 @@ FROM
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_type IN ('Revenue')
-                                  INTERSECT
-                                  SELECT DISTINCT
-                                      f1.user_listing_id
-                                  FROM
-                                      FT_GL_Account F1
-                                  INNER JOIN
-                                      DIM_Chart_of_Accounts Pa1
-                                  ON
-                                      f1.coa_id = pa1.coa_id
-                                  AND pa1.ey_account_group_I IN ('Cash') )
+                                  AND f1.user_listing_id IN
+                                                             (
+                                                             SELECT DISTINCT
+                                                                 f1.user_listing_id
+                                                             FROM
+                                                                 FT_GL_Account F1
+                                                             INNER JOIN
+                                                                 DIM_Chart_of_Accounts Pa1
+                                                             ON
+                                                                 f1.coa_id = pa1.coa_id
+                                                             AND pa1.ey_account_group_I IN ('Cash')
+                                                             ) )
         GROUP BY
             f.user_listing_id ,
             f.bu_id ,
@@ -108,33 +106,33 @@ FROM
             f.functional_curr_cd
         UNION
         SELECT
-            f.user_listing_id ,
-            f.bu_id ,
-            f.source_id ,
-            f.year_flag ,
-            f.period_flag ,
-            f.segment1_id ,
-            f.segment2_id ,
-            f.sys_man_ind ,
-            F.journal_type ,
-            'Receivables & Payables' AS gl_account_group ,
-            f.EY_period ,
-            f.reporting_amount_curr_cd ,
-            f.functional_curr_cd ,
+            f.user_listing_id,
+            f.bu_id,
+            f.source_id,
+            f.year_flag,
+            f.period_flag,
+            f.segment1_id,
+            f.segment2_id,
+            f.sys_man_ind,
+            F.journal_type,
+            'Receivables & Payables' AS gl_account_group,
+            f.EY_period,
+            f.reporting_amount_curr_cd,
+            f.functional_curr_cd,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_group_I = 'Accounts receivable'
-                        OR  Pa.ey_account_group_I = 'Accounts payable' )
+                        OR  Pa.ey_account_group_I = 'Accounts payable')
                     THEN ABS(F.net_reporting_amount_credit) + ABS(f.net_reporting_amount_debit)
                     ELSE 0
-                END)sum_of_amount ,
+                END) sum_of_amount,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_group_I = 'Accounts receivable'
-                        OR  Pa.ey_account_group_I = 'Accounts payable' )
+                        OR  Pa.ey_account_group_I = 'Accounts payable')
                     THEN ABS(F.net_functional_amount_credit) + ABS(f.net_functional_amount_debit)
                     ELSE 0
-                END)              sum_of_func_amount ,
+                END)              sum_of_func_amount,
             SUM(f.count_je_id) AS count_je_id
         FROM
             FT_GL_Account f
@@ -157,16 +155,20 @@ FROM
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_group_I IN ('Accounts receivable')
-                                  INTERSECT
-                                  SELECT DISTINCT
-                                      f1.user_listing_id
-                                  FROM
-                                      FT_GL_Account F1
-                                  INNER JOIN
-                                      DIM_Chart_of_Accounts Pa1
-                                  ON
-                                      f1.coa_id = pa1.coa_id
-                                  AND pa1.ey_account_group_I IN ('Accounts payable') )
+                                  AND f1.user_listing_id IN
+                                                             (
+                                                             SELECT DISTINCT
+                                                                 f1.user_listing_id
+                                                             FROM
+                                                                 FT_GL_Account F1
+                                                             INNER JOIN
+                                                                 DIM_Chart_of_Accounts Pa1
+                                                             ON
+                                                                 f1.coa_id = pa1.coa_id
+                                                             AND pa1.ey_account_group_I IN
+                                                                                            (
+                                                                                            'Accounts payable'
+                                                                                            )) )
         GROUP BY
             f.user_listing_id ,
             f.bu_id ,
@@ -183,33 +185,33 @@ FROM
             f.functional_curr_cd
         UNION
         SELECT
-            f.user_listing_id ,
-            f.bu_id ,
-            f.source_id ,
-            f.year_flag ,
-            f.period_flag ,
-            f.segment1_id ,
-            f.segment2_id ,
-            f.sys_man_ind ,
-            F.journal_type ,
-            'Cash & Cost of sales' AS gl_account_group ,
-            f.EY_period ,
-            f.reporting_amount_curr_cd ,
-            f.functional_curr_cd ,
+            f.user_listing_id,
+            f.bu_id,
+            f.source_id,
+            f.year_flag,
+            f.period_flag,
+            f.segment1_id,
+            f.segment2_id,
+            f.sys_man_ind,
+            F.journal_type,
+            'Cash & Cost of sales' AS gl_account_group,
+            f.EY_period,
+            f.reporting_amount_curr_cd,
+            f.functional_curr_cd,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_sub_type = 'Cost of sales'
-                        OR  Pa.ey_account_group_I = 'Cash' )
+                        OR  Pa.ey_account_group_I = 'Cash')
                     THEN ABS(F.NET_reporting_amount_credit) + ABS(f.NET_reporting_amount_debit)
                     ELSE 0
-                END)sum_of_amount ,
+                END) sum_of_amount,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_sub_type = 'Cost of sales'
-                        OR  Pa.ey_account_group_I = 'Cash' )
+                        OR  Pa.ey_account_group_I = 'Cash')
                     THEN ABS(F.net_functional_amount_credit) + ABS(f.net_functional_amount_debit)
                     ELSE 0
-                END)              sum_of_func_amount ,
+                END)              sum_of_func_amount,
             SUM(f.count_je_id) AS count_je_id
         FROM
             FT_GL_Account F
@@ -220,7 +222,7 @@ FROM
         WHERE
             (
                 Pa.ey_account_sub_type = 'Cost of sales'
-            OR  Pa.ey_account_group_I = 'Cash' )
+            OR  Pa.ey_account_group_I = 'Cash')
         AND f.user_listing_id IN
                                   (
                                   SELECT DISTINCT
@@ -232,16 +234,18 @@ FROM
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_sub_type IN ('Cost of sales')
-                                  INTERSECT
-                                  SELECT DISTINCT
-                                      f1.user_listing_id
-                                  FROM
-                                      FT_GL_Account F1
-                                  INNER JOIN
-                                      DIM_Chart_of_Accounts Pa1
-                                  ON
-                                      f1.coa_id = pa1.coa_id
-                                  AND pa1.ey_account_group_I IN ('Cash') )
+                                  AND f.user_listing_id IN
+                                                            (
+                                                            SELECT DISTINCT
+                                                                f1.user_listing_id
+                                                            FROM
+                                                                FT_GL_Account F1
+                                                            INNER JOIN
+                                                                DIM_Chart_of_Accounts Pa1
+                                                            ON
+                                                                f1.coa_id = pa1.coa_id
+                                                            AND pa1.ey_account_group_I IN ('Cash'))
+                                  )
         GROUP BY
             f.user_listing_id ,
             f.bu_id ,
@@ -257,33 +261,33 @@ FROM
             f.functional_curr_cd
         UNION
         SELECT
-            f.user_listing_id ,
-            f.bu_id ,
-            f.source_id ,
-            f.year_flag ,
-            f.period_flag ,
-            f.segment1_id ,
-            f.segment2_id ,
-            f.sys_man_ind ,
-            F.journal_type ,
-            'Revenue & Cost of sales' AS gl_account_group ,
-            f.EY_period ,
-            f.reporting_amount_curr_cd ,
-            f.functional_curr_cd ,
+            f.user_listing_id,
+            f.bu_id,
+            f.source_id,
+            f.year_flag,
+            f.period_flag,
+            f.segment1_id,
+            f.segment2_id,
+            f.sys_man_ind,
+            F.journal_type,
+            'Revenue & Cost of sales' AS gl_account_group,
+            f.EY_period,
+            f.reporting_amount_curr_cd,
+            f.functional_curr_cd,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_sub_type = 'Cost of sales'
-                        OR  Pa.ey_account_type = 'Revenue' )
+                        OR  Pa.ey_account_type = 'Revenue')
                     THEN ABS(F.net_reporting_amount_credit) + ABS(f.net_reporting_amount_debit)
                     ELSE 0
-                END)sum_of_amount ,
+                END) sum_of_amount,
             SUM(
                 CASE
                     WHEN (Pa.ey_account_sub_type = 'Cost of sales'
-                        OR  Pa.ey_account_type = 'Revenue' )
+                        OR  Pa.ey_account_type = 'Revenue')
                     THEN ABS(F.net_functional_amount_credit) + ABS(f.net_functional_amount_debit)
                     ELSE 0
-                END)              sum_of_func_amount ,
+                END)              sum_of_func_amount,
             SUM(f.count_je_id) AS count_je_id
         FROM
             FT_GL_Account F
@@ -294,7 +298,7 @@ FROM
         WHERE
             (
                 Pa.ey_account_sub_type = 'Cost of sales'
-            OR  Pa.ey_account_type = 'Revenue' )
+            OR  Pa.ey_account_type = 'Revenue')
         AND f.user_listing_id IN
                                   (
                                   SELECT DISTINCT
@@ -306,16 +310,18 @@ FROM
                                   ON
                                       f1.coa_id = pa1.coa_id
                                   AND pa1.ey_account_sub_type IN ('Cost of sales')
-                                  INTERSECT
-                                  SELECT DISTINCT
-                                      f1.user_listing_id
-                                  FROM
-                                      FT_GL_Account F1
-                                  INNER JOIN
-                                      DIM_Chart_of_Accounts Pa1
-                                  ON
-                                      f1.coa_id = pa1.coa_id
-                                  AND pa1.ey_account_type IN ('Revenue') )
+                                  AND f.user_listing_id IN
+                                                            (
+                                                            SELECT DISTINCT
+                                                                f1.user_listing_id
+                                                            FROM
+                                                                FT_GL_Account F1
+                                                            INNER JOIN
+                                                                DIM_Chart_of_Accounts Pa1
+                                                            ON
+                                                                f1.coa_id = pa1.coa_id
+                                                            AND pa1.ey_account_type IN ('Revenue'))
+                                  )
         GROUP BY
             f.user_listing_id ,
             f.bu_id ,
