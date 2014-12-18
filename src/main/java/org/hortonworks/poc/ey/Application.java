@@ -45,6 +45,8 @@ public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+    private static final String HIVE_DATABASE_NAME = "HIVE_POC";
+
     private static final String HIVE_USERNAME = "hive";
     private static final String HIVE_URL = "jdbc:hive2://c6401.ambari.apache.org:10000";
     private static final String HIVE_METASTORE_URL = "thrift://c6401.ambari.apache.org:9083";
@@ -58,23 +60,29 @@ public class Application {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        boolean buildAndLoad = args == null || args.length == 0;
+
         SpringApplication.run(Application.class, args);
 
-        String databaseName = createDatabase();
+        if (buildAndLoad) {
+            createDatabase(HIVE_DATABASE_NAME);
+        }
 
-        DataSource dataSource = getDataSource(databaseName);
+        DataSource dataSource = getDataSource(HIVE_DATABASE_NAME);
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
 
-            buildTables(databaseName, connection);
-            buildViews(databaseName, connection);
-            loadData(databaseName, connection);
+            if (buildAndLoad) {
+                buildTables(HIVE_DATABASE_NAME, connection);
+                buildViews(HIVE_DATABASE_NAME, connection);
+                loadData(HIVE_DATABASE_NAME, jdbcTemplate);
+            }
 
-            executeQueries(databaseName, connection, true);
+            executeQueries(HIVE_DATABASE_NAME, connection, true);
 
-            executeQueries(databaseName, connection, false);
+            //executeQueries(databaseName, connection, false);
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -90,14 +98,10 @@ public class Application {
         return FileSystem.get(URI.create(HDFS_URL), conf, HDFS_USERNAME);
     }
 
-    private static void loadData(String databaseName, Connection connection) throws IOException, InterruptedException {
+    private static void loadData(String databaseName, JdbcTemplate jdbcTemplate) throws IOException, InterruptedException {
 
         FileSystem fs = buildFileSystem();
         createDirectory(DATA_PATH, fs);
-
-        DataSource dataSource = getDataSource(databaseName);
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         String[] extensions = {"csv"};
 
@@ -140,17 +144,27 @@ public class Application {
 
         int count = 0;
 
+        int countFails = 0;
+
         StopWatch sw = new StopWatch();
         sw.start();
 
         for (File file : files) {
-            executeSqlScript(file.getPath(), connection, ScriptType.query);
-            count++;
+
+            try {
+
+                executeSqlScript(file.getPath(), connection, ScriptType.query);
+                count++;
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                countFails++;
+            }
+
         }
 
         sw.stop();
 
-        log.info("EXECUTED " + count + " QUERIES AGAINST DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
+        log.info("EXECUTED " + count + " QUERIES AGAINST DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms; " + countFails + " failed!");
     }
 
     private static void buildTables(String databaseName, Connection connection) {
@@ -193,7 +207,7 @@ public class Application {
         log.info("CREATED " + count + " VIEWS ON DATABASE [" + databaseName + "] IN " + sw.getTotalTimeMillis() + "ms");
     }
 
-    public static String createDatabase() throws IOException, InterruptedException {
+    public static void createDatabase(String databaseName) throws IOException, InterruptedException {
 
 
         HCatClient client = null;
@@ -201,7 +215,6 @@ public class Application {
         try {
             client = getHCatClient();
 
-            final String databaseName = "HIVE_POC";
 
             client.dropDatabase(databaseName, true, HCatClient.DropDBMode.CASCADE);
 
@@ -213,7 +226,6 @@ public class Application {
 
             client.createDatabase(dbDesc);
 
-            return databaseName;
 
         } finally {
 
@@ -290,14 +302,13 @@ public class Application {
 
                 boolean exists = fs.exists(path);
 
-                log.debug("path [" + path.toString() + "] exists? " + exists);
-
-                if (!exists) {
-                    fs.mkdirs(path);
-                    fs.setPermission(path, new FsPermission(FsAction.ALL, FsAction.ALL, FsAction.ALL));
-                } else {
+                if (exists) {
+                    log.debug("path [" + path.toString() + "] exists so it shall be deleted!");
                     deleteDirectory(DATA_PATH_ROOT, fs);
                 }
+
+                fs.mkdirs(path);
+                fs.setPermission(path, new FsPermission(FsAction.ALL, FsAction.ALL, FsAction.ALL));
 
                 return path.toString();
             }
