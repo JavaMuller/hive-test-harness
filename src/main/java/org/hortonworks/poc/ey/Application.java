@@ -57,13 +57,15 @@ public class Application {
     private static final String DATA_PATH = "/poc/data/ey";
     private static final String DATA_PATH_ROOT = "/poc";
 
-    private static final String[] special = new String[]{"v_IL_GL016T1_Balance_by_GL.sql"};
-    //private static final String[] special = null;
+    // uncomment this if you want to run just a single query instead of all queries in the directory
+    //private static final String[] special = new String[]{"v_IL_GL016T1_Balance_by_GL.sql"};
+    private static final String[] special = null;
 
     private static enum ScriptType {table, view, query}
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        // set anything as an arg if you just want to execute queries (set buildAndLoad to FALSE)
         boolean buildAndLoad = args == null || args.length == 0;
 
         SpringApplication.run(Application.class, args);
@@ -302,7 +304,6 @@ public class Application {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(HDFS_USERNAME);
 
-
         return ugi.doAs(new PrivilegedExceptionAction<String>() {
 
             public String run() throws Exception {
@@ -329,7 +330,6 @@ public class Application {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(HDFS_USERNAME);
 
-
         return ugi.doAs(new PrivilegedExceptionAction<Boolean>() {
 
             public Boolean run() throws Exception {
@@ -345,7 +345,6 @@ public class Application {
     public static void writeFile(final File file, final FileSystem fs) throws IOException, InterruptedException {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(HDFS_USERNAME);
-
 
         ugi.doAs(new PrivilegedExceptionAction<Void>() {
 
