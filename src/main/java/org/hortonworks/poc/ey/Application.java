@@ -36,6 +36,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.security.PrivilegedExceptionAction;
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Configuration
@@ -55,6 +56,9 @@ public class Application {
     private static final String HDFS_URL = "hdfs://c6401.ambari.apache.org:8020";
     private static final String DATA_PATH = "/poc/data/ey";
     private static final String DATA_PATH_ROOT = "/poc";
+
+    private static final String[] special = new String[]{"v_IL_GL016T1_Balance_by_GL.sql"};
+    //private static final String[] special = null;
 
     private static enum ScriptType {table, view, query}
 
@@ -142,14 +146,19 @@ public class Application {
 
         Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
 
-        int count = 0;
+        boolean filtered = special != null && special.length > 0;
 
+        int count = 0;
         int countFails = 0;
 
         StopWatch sw = new StopWatch();
         sw.start();
 
         for (File file : files) {
+
+            if ( filtered && !Arrays.asList(special).contains(file.getName())) {
+                continue;
+            }
 
             try {
 
