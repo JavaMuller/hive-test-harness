@@ -81,7 +81,8 @@ public class Proof {
     }
 
 
-    public void executeQueries(String[] filter, boolean warmup) {
+
+    public void executeQueries(String[] filter) {
         String[] extensions = {"sql"};
 
         Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
@@ -155,4 +156,5 @@ public class Proof {
 
         log.info("CREATED " + count + " VIEWS ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
     }
+
 }

@@ -2,12 +2,10 @@ package org.hortonworks.poc.ey.config;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.hive.conf.HiveConf;
-import org.apache.hive.jdbc.HiveDriver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -32,6 +30,7 @@ public class HadoopConfig implements EnvironmentAware {
         conf.set("fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem");
 
         return FileSystem.get(URI.create(environment.getProperty("hdfs.url")), conf, environment.getProperty("hdfs.username"));
+
     }
 
     @Bean
@@ -46,11 +45,7 @@ public class HadoopConfig implements EnvironmentAware {
 
     @Bean
     public DataSource buildDataSource() {
-
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(environment.getProperty("hive.jdbc.url"), environment.getProperty("hive.username"), null);
-        driverManagerDataSource.setDriverClassName(HiveDriver.class.getName());
-
-        return driverManagerDataSource;
+        return new HiveDataSource(environment.getProperty("hive.jdbc.url"), environment.getProperty("hive.username"), null);
     }
 
 

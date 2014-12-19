@@ -86,7 +86,6 @@ public class HiveService {
 
     public void createDatabase() throws IOException, InterruptedException {
 
-
         HCatClient client = null;
 
         final String databaseName = environment.getProperty("hive.db.name");
