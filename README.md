@@ -29,7 +29,7 @@ The test can be executed in two modes by passing or not passing `args` to the `m
 
 You can further refine the test by updating `String[] filter` in `RunTest.java`.  If `filter` is not null, then only queries listed will be executed.  This is a great way to test individual queries.
 
-```
+```java
 String[] filter = null;
 
 filter = new String[]{"v_IL_GL018_KPI_Overview.sql"};
