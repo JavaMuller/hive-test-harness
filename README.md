@@ -21,9 +21,9 @@ The main method of `RunTest.java` can do the following:
 * Load Test Data from Files
 * Execute Queries
 
-The test can be executed in two modes by passing or not passing `args`:
+The test can be executed in two modes by passing or not passing `args` to the `main(String[] args)` method of `Application.java`:
 
-1) When run without `args`, the application will execute all steps listed above.
+1) When run without `args` (null or empty), the application will execute all steps listed above.
 
 2) When run with `args` (any value will do), the application will only execute queries and not attempt to build and load
 
