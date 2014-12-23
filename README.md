@@ -7,7 +7,7 @@ Requirements
 To execute you'll need the following:
 * Java 1.7 installed
 * Maven installed (use latest)
-* A HDP 2.2 cluster.  I like to use (Ambari Vagrant)[https://cwiki.apache.org/confluence/display/AMBARI/Quick+Start+Guide] to install my cluster locally instead of the sandbox.  Make sure you update `src/main/resources/application.properties` with your cluster info.
+* A HDP 2.2 cluster.  I like to use [Ambari Vagrant](https://cwiki.apache.org/confluence/display/AMBARI/Quick+Start+Guide) to install my cluster locally instead of the sandbox.  Make sure you update `src/main/resources/application.properties` with your cluster info.
 
 NOTE:  This POC requires Java and Maven.  It is most easily executed from IntelliJ.
 
