@@ -1,7 +1,7 @@
 EY Hive Performance POC
 ===========
 
-NOTE:  This POC requires Java and Maven.  It is most easily executed from IntelliJ.  If you want to use some other shitty IDE, first take a long hard look at yourself in the mirror and reflect on your life choices.
+NOTE:  This POC requires Java and Maven.  It is most easily executed from IntelliJ.
 
 This POC is a simple SpringBoot application.  The entry point is `Application.java`.  Once Spring has fully started, the `run(String... args)` method of `RunTest.java` is called.
 
