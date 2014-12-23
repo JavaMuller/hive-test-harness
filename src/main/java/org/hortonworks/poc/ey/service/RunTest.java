@@ -34,7 +34,7 @@ public class RunTest implements CommandLineRunner {
 
         String[] filter = null;
 
-        filter = new String[]{"v_IL_GL018_KPI_Overview.sql"};
+        //filter = new String[]{"v_IL_GL018_KPI_Overview.sql"};
 
         proof.executeQueries(filter);
     }
