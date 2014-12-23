@@ -38,7 +38,22 @@ filter = new String[]{"v_IL_GL018_KPI_Overview.sql"};
 
 Current Problems
 ----------
+The following queries are not currently working:
 
+- VW_GL012T3_Date_Analysis.sql.broken
+```
+FAILED: SemanticException Line 0:-1 Both left and right aliases encountered in JOIN 'fiscal_period_end'
+```
+
+- VW_GL015T1_Cutoff_Analysis.sql.broken
+```
+FAILED: ParseException line 38:28 cannot recognize input near 'VARCHAR' '(' '10' in function specification
+```
+
+- VW_GL016T2_Zero_Balance_GL.sql.broken
+```
+FAILED: ParseException line 43:4 missing ALL at 'SELECT' near '(' in expression specification
+```
 
 Results
 ----------
