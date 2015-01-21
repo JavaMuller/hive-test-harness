@@ -1,6 +1,8 @@
 package org.hortonworks.poc.ey.config;
 
 
+import org.springframework.util.StopWatch;
+
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -10,6 +12,8 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
 public class HiveDataSource implements DataSource {
+
+    private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
     private String username;
     private String password;
@@ -29,13 +33,24 @@ public class HiveDataSource implements DataSource {
     @Override
     public Connection getConnection(String username, String password) throws SQLException {
 
+        StopWatch sw = new StopWatch("opened connection to " + url);
+        sw.start();
+
         try {
             Class.forName("org.apache.hive.jdbc.HiveDriver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        return DriverManager.getConnection(url, username, password);
+        final Connection connection = DriverManager.getConnection(url, username, password);
+
+        sw.stop();
+
+        if (log.isDebugEnabled()) {
+            log.debug(sw.shortSummary());
+        }
+
+        return connection;
     }
 
     @Override

@@ -24,18 +24,23 @@ public class HadoopConfig implements EnvironmentAware {
 
     @Bean
     public FileSystem buildFileSystem() throws IOException, InterruptedException {
-        org.apache.hadoop.conf.Configuration conf = new org.apache.hadoop.conf.Configuration();
-        conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
-        conf.set("fs.webhdfs.impl", "org.apache.hadoop.hdfs.web.WebHdfsFileSystem");
-        conf.set("fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem");
+        org.apache.hadoop.conf.Configuration conf = buildConfiguration();
 
         return FileSystem.get(URI.create(environment.getProperty("hdfs.url")), conf, environment.getProperty("hdfs.username"));
 
     }
 
+    private org.apache.hadoop.conf.Configuration buildConfiguration() {
+        org.apache.hadoop.conf.Configuration conf = new org.apache.hadoop.conf.Configuration();
+        conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
+        conf.set("fs.webhdfs.impl", "org.apache.hadoop.hdfs.web.WebHdfsFileSystem");
+        conf.set("fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem");
+        return conf;
+    }
+
     @Bean
     public HiveConf buildHiveConf() {
-        org.apache.hadoop.conf.Configuration conf = new org.apache.hadoop.conf.Configuration();
+        org.apache.hadoop.conf.Configuration conf = buildConfiguration();
 
         HiveConf hiveConf = new HiveConf(conf, HiveConf.class);
         hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS, environment.getProperty("hive.metastore.url"));

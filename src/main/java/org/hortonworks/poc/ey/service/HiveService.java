@@ -16,6 +16,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
@@ -60,12 +61,18 @@ public class HiveService {
 
             Resource originalResource = new FileSystemResource(location);
 
+            StopWatch sw = new StopWatch("executed sql script: " + location);
+            sw.start();
+
             ScriptUtils.executeSqlScript(connection, originalResource);
+
+            sw.stop();
+
+            log.debug(sw.shortSummary());
 
             if (scriptType.equals(ScriptType.table)) {
 
                 Resource tmpResource = new FileSystemResource(location);
-
 
                 String tempContents = IOUtils.toString(tmpResource.getInputStream());
 

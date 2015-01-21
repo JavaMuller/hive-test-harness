@@ -1,6 +1,7 @@
 package org.hortonworks.poc.ey.service;
 
 import org.apache.commons.io.FileUtils;
+import org.hortonworks.poc.ey.domain.QueryResult;
 import org.hortonworks.poc.ey.domain.ScriptType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,10 @@ import org.springframework.util.StringUtils;
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class Proof {
@@ -81,19 +84,14 @@ public class Proof {
     }
 
 
-
-    public void executeQueries(String[] filter) {
+    public List<QueryResult> executeQueries(String[] filter) {
         String[] extensions = {"sql"};
 
         Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
 
         boolean filtered = filter != null && filter.length > 0;
 
-        int count = 0;
-        int countFails = 0;
-
-        StopWatch sw = new StopWatch();
-        sw.start();
+        List<QueryResult> results = new ArrayList<>(files.size());
 
         for (File file : files) {
 
@@ -101,20 +99,28 @@ public class Proof {
                 continue;
             }
 
-            try {
 
+            StopWatch sw = new StopWatch();
+            sw.start();
+
+            String errorMessage = null;
+
+            try {
                 hiveService.executeSqlScript(file.getPath(), ScriptType.query);
-                count++;
             } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                countFails++;
+                errorMessage = e.getMessage();
+                log.error(errorMessage, e);
             }
+
+            sw.stop();
+
+            results.add(new QueryResult(file.getName(), sw.getTotalTimeMillis(), errorMessage));
 
         }
 
-        sw.stop();
+        return results;
 
-        log.info("EXECUTED " + count + " QUERIES AGAINST DATABASE IN " + sw.getTotalTimeMillis() + "ms; " + countFails + " failed!");
+
     }
 
     public void buildTables() {
