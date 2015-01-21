@@ -54,7 +54,7 @@ public class HiveService {
 
     public void executeSqlScript(String location, ScriptType scriptType) {
 
-        log.debug("attempting to load file from [" + location + "]");
+        log.debug("attempting to load sql script from [" + location + "]");
 
 
         try (Connection connection = dataSource.getConnection()) {
