@@ -66,7 +66,7 @@ From the project's base directory execute the following from the command line
 
 ### IntelliJ
 
-Create an "Application" "Run Configuration" like the following:  see `docs\Run_Debug_Configurations.png`
+Create an "Application" "Run Configuration" like the following [screenshot](https://github.com/timveil/ey-hive-poc/blob/master/docs/Run_Debug_Configurations.png)
 
 
 Current Problems
