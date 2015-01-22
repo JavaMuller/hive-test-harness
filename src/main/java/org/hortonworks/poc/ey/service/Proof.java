@@ -1,5 +1,6 @@
 package org.hortonworks.poc.ey.service;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.io.FileUtils;
 import org.hortonworks.poc.ey.domain.QueryResult;
 import org.hortonworks.poc.ey.domain.ScriptType;
@@ -15,10 +16,7 @@ import org.springframework.util.StringUtils;
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class Proof {
@@ -84,21 +82,12 @@ public class Proof {
     }
 
 
-    public List<QueryResult> executeQueries(String[] filter) {
-        String[] extensions = {"sql"};
+    public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter) {
+        List<File> filteredFiles = applyFilters(includeFilter, excludeFilter);
 
-        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
+        List<QueryResult> results = new ArrayList<>(filteredFiles.size());
 
-        boolean filtered = filter != null && filter.length > 0;
-
-        List<QueryResult> results = new ArrayList<>(files.size());
-
-        for (File file : files) {
-
-            if (filtered && !Arrays.asList(filter).contains(file.getName())) {
-                continue;
-            }
-
+        for (File file : filteredFiles) {
 
             StopWatch sw = new StopWatch();
             sw.start();
@@ -121,6 +110,48 @@ public class Proof {
         return results;
 
 
+    }
+
+    private List<File> applyFilters(String[] includeFilter, String[] excludeFilter) {
+
+        String[] extensions = {"sql"};
+
+        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
+
+        Map<String, File> fileMap = new HashMap<>();
+
+        for (File file : files) {
+            fileMap.put(file.getName(), file);
+        }
+
+        List<File> filteredFiles = new ArrayList<>();
+
+        Set<String> allFileNames = fileMap.keySet();
+
+
+        if (excludeFilter != null && excludeFilter.length > 0) {
+            Set<String> excludedNames = Sets.newHashSet(excludeFilter);
+            final Set<String> difference = Sets.difference(allFileNames, excludedNames).immutableCopy();
+
+            for (String fileName : difference) {
+                filteredFiles.add(fileMap.get(fileName));
+            }
+        }
+
+        if (includeFilter != null && includeFilter.length > 0) {
+            Set<String> includedNames = Sets.newHashSet(includeFilter);
+            final Set<String> intersection = Sets.intersection(allFileNames, includedNames).immutableCopy();
+
+            for (String fileName : intersection) {
+                filteredFiles.add(fileMap.get(fileName));
+            }
+        }
+
+        if (filteredFiles.isEmpty()) {
+            filteredFiles.addAll(fileMap.values());
+        }
+
+        return filteredFiles;
     }
 
     public void buildTables() {
