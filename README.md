@@ -31,18 +31,18 @@ The test requires two parameters be passed as `args` to the `main(String[] args)
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
 
 ```java
-        String[] includeFilter = new String[]{};
-        String[] excludeFilter = new String[]{
-                "VW_GL016T2_Zero_Balance_GL.sql",
-                "VW_GL015T1_Cutoff_Analysis.sql",
-                "VW_GL012T3_Date_Analysis.sql",
-                "VW_GL018T1_Overview.sql",
-                "VW_GL017T3_Transactions_By_Relationship.sql",
-                "VW_GL013T1_Back_Postings1.sql",
-                "VW_GL011_Relationship_Analyses.sql",
-                "VW_GL010_Gross_Margin.sql",
-                "v_IL_GL018_KPI_Overview.sql"
-        };
+String[] includeFilter = new String[]{};
+String[] excludeFilter = new String[]{
+        "VW_GL016T2_Zero_Balance_GL.sql",
+        "VW_GL015T1_Cutoff_Analysis.sql",
+        "VW_GL012T3_Date_Analysis.sql",
+        "VW_GL018T1_Overview.sql",
+        "VW_GL017T3_Transactions_By_Relationship.sql",
+        "VW_GL013T1_Back_Postings1.sql",
+        "VW_GL011_Relationship_Analyses.sql",
+        "VW_GL010_Gross_Margin.sql",
+        "v_IL_GL018_KPI_Overview.sql"
+};
 ```
 
 

@@ -90,7 +90,7 @@ public class RunTest implements CommandLineRunner {
             printer.printComment("executed on " + SimpleDateFormat.getDateTimeInstance().format(new Date()));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } finally {
             try {
                 fileWriter.flush();
