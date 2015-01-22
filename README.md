@@ -53,13 +53,12 @@ From the project's base directory execute the following from the command line
 
 ```bash
 
-mvn package clean
+> mvn package clean
 
-java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] "[test description]"
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] "[test description]"
 
 # for example
-
-java -jar target/hive-poc-0.0.1-SNAPSHOT.jar false "some test"
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar false "some test"
 
 ```
 
