@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
@@ -22,7 +21,6 @@ import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.security.PrivilegedExceptionAction;
@@ -59,10 +57,9 @@ public class HiveService {
         });
     }
 
-    private String getSqlString(String location) throws IOException {
+    private String getSqlString(Resource resource) throws IOException {
 
-        Resource queryResource = new FileSystemResource(location);
-        EncodedResource encodedResource = new EncodedResource(queryResource);
+        EncodedResource encodedResource = new EncodedResource(resource);
 
         try (LineNumberReader reader = new LineNumberReader(encodedResource.getReader())) {
 
@@ -80,10 +77,10 @@ public class HiveService {
         }
     }
 
-    public QueryResult executeSqlQuery(File queryFile) throws IOException {
+    public QueryResult executeSqlQuery(Resource resource) throws IOException {
 
 
-        String query = getSqlString(queryFile.getPath());
+        String query = getSqlString(resource);
 
         int resultSize = 0;
 
@@ -121,7 +118,7 @@ public class HiveService {
            error = e.getMessage();
         }
 
-        final QueryResult queryResult = new QueryResult(queryFile.getName(), queryTime, countTime, error, resultSize);
+        final QueryResult queryResult = new QueryResult(resource.getFilename(), queryTime, countTime, error, resultSize);
 
         log.debug(queryResult.toString());
 
@@ -130,25 +127,22 @@ public class HiveService {
     }
 
 
-    public void executeSqlScript(String location, ScriptType scriptType) {
+    public void executeSqlScript(Resource resource, ScriptType scriptType) {
 
-        StopWatch sw = new StopWatch("executed sql script: " + location);
+        StopWatch sw = new StopWatch("executed sql script: " + resource.getFilename());
         sw.start();
 
-        Resource originalResource = new FileSystemResource(location);
 
         try (Connection connection = dataSource.getConnection()) {
 
-            ScriptUtils.executeSqlScript(connection, originalResource);
+            ScriptUtils.executeSqlScript(connection, resource);
 
             if (scriptType.equals(ScriptType.table)) {
 
-                Resource tmpResource = new FileSystemResource(location);
-
-                String tempContents = IOUtils.toString(tmpResource.getInputStream());
+                String tempContents = IOUtils.toString(resource.getInputStream());
 
                 tempContents = StringUtils.replace(tempContents, "stored AS orc", "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\054' stored AS textfile");
-                String filename = StringUtils.replace(tmpResource.getFilename(), ".sql", "");
+                String filename = StringUtils.replace(resource.getFilename(), ".sql", "");
                 tempContents = StringUtils.replace(tempContents, filename, filename + "_csv");
 
                 ScriptUtils.executeSqlScript(connection, new ByteArrayResource(tempContents.getBytes()));

@@ -1,20 +1,20 @@
 package org.hortonworks.poc.ey.service;
 
 import com.google.common.collect.Sets;
-import org.apache.commons.io.FileUtils;
 import org.hortonworks.poc.ey.domain.QueryResult;
 import org.hortonworks.poc.ey.domain.ScriptType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -48,23 +48,22 @@ public class Proof {
 
         hadoopService.createDirectory(dataPath);
 
-        String[] extensions = {"csv"};
-
-        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/data/converted"), extensions, false);
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:data/converted/*.csv");
 
         int count = 0;
 
         StopWatch sw = new StopWatch();
         sw.start();
 
-        for (File file : files) {
+        for (Resource resource : resources) {
 
-            hadoopService.writeFile(file);
+            hadoopService.writeFile(resource);
 
-            String tableName = StringUtils.replace(file.getName(), ".csv", "");
+            String tableName = StringUtils.replace(resource.getFilename(), ".csv", "");
             String tableNameCsv = tableName + "_csv";
 
-            String loadFile = "load data inpath '" + dataPath + "/" + file.getName() + "' into table " + tableNameCsv;
+            String loadFile = "load data inpath '" + dataPath + "/" + resource.getFilename() + "' into table " + tableNameCsv;
             log.debug("running: " + loadFile);
             jdbcTemplate.execute(loadFile);
 
@@ -83,11 +82,11 @@ public class Proof {
 
 
     public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter) throws IOException {
-        List<File> filteredFiles = applyFilters(includeFilter, excludeFilter);
+        List<Resource> filteredFiles = applyFilters(includeFilter, excludeFilter);
 
         List<QueryResult> results = new ArrayList<>(filteredFiles.size());
 
-        for (File file : filteredFiles) {
+        for (Resource file : filteredFiles) {
 
             QueryResult queryResult = hiveService.executeSqlQuery(file);
 
@@ -100,19 +99,19 @@ public class Proof {
 
     }
 
-    private List<File> applyFilters(String[] includeFilter, String[] excludeFilter) {
+    private List<Resource> applyFilters(String[] includeFilter, String[] excludeFilter) throws IOException {
 
-        String[] extensions = {"sql"};
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:sql/converted/queries/*.sql");
 
-        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/queries"), extensions, false);
 
-        Map<String, File> fileMap = new HashMap<>();
+        Map<String, Resource> fileMap = new HashMap<>();
 
-        for (File file : files) {
-            fileMap.put(file.getName(), file);
+        for (Resource resource  : resources) {
+            fileMap.put(resource.getFilename(), resource);
         }
 
-        List<File> filteredFiles = new ArrayList<>();
+        List<Resource> filteredFiles = new ArrayList<>();
 
         Set<String> allFileNames = fileMap.keySet();
 
@@ -142,18 +141,18 @@ public class Proof {
         return filteredFiles;
     }
 
-    public void buildTables() {
-        String[] extensions = {"sql"};
+    public void buildTables() throws IOException {
 
-        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/tables"), extensions, false);
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:sql/converted/tables/*.sql");
 
         int count = 0;
 
         StopWatch sw = new StopWatch();
         sw.start();
 
-        for (File file : files) {
-            hiveService.executeSqlScript(file.getPath(), ScriptType.table);
+        for (Resource resource : resources) {
+            hiveService.executeSqlScript(resource, ScriptType.table);
             count++;
         }
 
@@ -162,18 +161,16 @@ public class Proof {
         log.info("CREATED " + count + " TABLES ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
     }
 
-    public void buildViews() {
-        String[] extensions = {"sql"};
-
-        Collection<File> files = FileUtils.listFiles(new File("src/main/resources/sql/converted/views"), extensions, false);
-
+    public void buildViews() throws IOException {
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:sql/converted/views/*.sql");
         int count = 0;
 
         StopWatch sw = new StopWatch();
         sw.start();
 
-        for (File file : files) {
-            hiveService.executeSqlScript(file.getPath(), ScriptType.view);
+        for (Resource resource : resources) {
+            hiveService.executeSqlScript(resource, ScriptType.view);
             count++;
         }
 

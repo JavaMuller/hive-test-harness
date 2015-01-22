@@ -10,10 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.PrivilegedExceptionAction;
@@ -72,7 +71,7 @@ public class HadoopService {
 
     }
 
-    public void writeFile(final File file) throws IOException, InterruptedException {
+    public void writeFile(final Resource resource) throws IOException, InterruptedException {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
@@ -82,13 +81,13 @@ public class HadoopService {
 
                 byte[] chunk = new byte[1024];
 
-                Path path = new Path(environment.getProperty("data.path") + "/" + file.getName());
+                Path path = new Path(environment.getProperty("data.path") + "/" + resource.getFilename());
 
                 log.debug("writing file to path [" + path.toString() + "]");
 
                 FSDataOutputStream outputStream = fs.create(path, true);
 
-                InputStream inputStream = new FileInputStream(file);
+                InputStream inputStream = resource.getInputStream();
 
                 while (inputStream.read(chunk) != -1) {
                     outputStream.write(chunk);
