@@ -21,11 +21,11 @@ The main method of `RunTest.java` can do the following:
 * Load Test Data from Files
 * Execute Queries
 
-The test can be executed in two modes by passing or not passing `args` to the `main(String[] args)` method of `Application.java`:
+The test requires two parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
 
-1) When run without `args` (null or empty), the application will execute all steps listed above.
+1) The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & views and load test data
 
-2) When run with `args` (any value will do), the application will only execute queries and not attempt to build and load
+2) The second `arg` is a description of the test being performed.  For example `enabled tez`, would indicate that this test was the first execution since enabling TEZ
 
 You can further refine the test by updating `String[] filter` in `RunTest.java`.  If `filter` is not null, then only queries listed will be executed.  This is a great way to test individual queries.
 

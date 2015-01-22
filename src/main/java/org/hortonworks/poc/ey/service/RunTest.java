@@ -46,9 +46,11 @@ public class RunTest implements CommandLineRunner {
 
         String[] filter = null;
 
-        //filter = new String[]{"v_IL_GL016_Missing_info.sql"};
+        filter = new String[]{"v_IL_GL018_KPI_Overview.sql"};
 
         List<QueryResult> results = proof.executeQueries(filter);
+
+        log.debug("Test Finished!  Writing results to file...");
 
         generateResultFile(description, results);
 
