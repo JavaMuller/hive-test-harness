@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
@@ -44,11 +43,20 @@ public class RunTest implements CommandLineRunner {
             proof.loadData();
         }
 
-        String[] filter = null;
+        String[] includeFilter = new String[]{};
+        String[] excludeFilter = new String[]{
+                "VW_GL016T2_Zero_Balance_GL.sql",
+                "VW_GL015T1_Cutoff_Analysis.sql",
+                "VW_GL012T3_Date_Analysis.sql",
+                "VW_GL018T1_Overview.sql",
+                "VW_GL017T3_Transactions_By_Relationship.sql",
+                "VW_GL013T1_Back_Postings1.sql",
+                "VW_GL011_Relationship_Analyses.sql",
+                "VW_GL010_Gross_Margin.sql",
+                "v_IL_GL018_KPI_Overview.sql"
+        };
 
-        filter = new String[]{"VW_GL011_Relationship_Analyses.sql"};
-
-        List<QueryResult> results = proof.executeQueries(filter);
+        List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter);
 
         log.debug("Test Finished!  Writing results to file...");
 
