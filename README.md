@@ -21,7 +21,7 @@ The main method of `RunTest.java` can do the following:
 
 The test requires 4 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
 
-1) The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & views
+1) The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & build views
 
 1) The second `arg` should be `true` or `false` and indicates if you want load data
 
