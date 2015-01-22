@@ -49,7 +49,7 @@ You can further refine the test by updating `String[] includeFilter` and `String
 Current Problems
 ----------
 
-See project 
+See project [issues](https://github.com/timveil/ey-hive-poc/issues)
 
 Results
 ----------
