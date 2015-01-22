@@ -116,6 +116,8 @@ public class HiveService {
 
         } catch (SQLException e) {
            error = e.getMessage();
+
+           log.error(error, e);
         }
 
         final QueryResult queryResult = new QueryResult(resource.getFilename(), queryTime, countTime, error, resultSize);

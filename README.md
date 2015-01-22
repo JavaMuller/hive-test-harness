@@ -77,8 +77,15 @@ Current Problems
 
 See project [issues](https://github.com/timveil/ey-hive-poc/issues)
 
+This issue is affecting some queries.
+
+https://issues.apache.org/jira/browse/HIVE-9249
+
 
 Tuning
 ----------
+
+1) hive.execution.engine = tez
+
 
 hive.tez.auto.reducer.parallelism=true
