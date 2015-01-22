@@ -75,13 +75,13 @@ public class RunTest implements CommandLineRunner {
 
         final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
 
-        CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "executionTime", "error");
+        CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "queryDuration", "countDuration", "resultCount", "error");
 
         try (FileWriter fileWriter = new FileWriter(filename);
              CSVPrinter printer = new CSVPrinter(fileWriter, format)) {
 
             for (QueryResult result : results) {
-                printer.printRecord(result.getFile(), result.getExecutionTime(), result.getError());
+                printer.printRecord(result.getFile(), result.getQueryDuration(), result.getCountDuration(), result.getResultCount(), result.getError());
             }
 
             fileWriter.flush();

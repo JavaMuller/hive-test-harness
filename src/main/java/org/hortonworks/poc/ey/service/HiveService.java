@@ -6,6 +6,7 @@ import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hive.hcatalog.api.HCatClient;
 import org.apache.hive.hcatalog.api.HCatCreateDBDesc;
 import org.apache.hive.hcatalog.common.HCatException;
+import org.hortonworks.poc.ey.domain.QueryResult;
 import org.hortonworks.poc.ey.domain.ScriptType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,16 +15,25 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 
+import javax.management.Query;
 import javax.sql.DataSource;
+import javax.xml.transform.Result;
+import java.io.File;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.security.PrivilegedExceptionAction;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class HiveService {
@@ -51,24 +61,87 @@ public class HiveService {
         });
     }
 
+    private String getSqlString(String location) throws IOException {
+
+        Resource queryResource = new FileSystemResource(location);
+        EncodedResource encodedResource = new EncodedResource(queryResource);
+
+        try (LineNumberReader reader = new LineNumberReader(encodedResource.getReader())) {
+
+            String script = ScriptUtils.readScript(reader, ScriptUtils.DEFAULT_COMMENT_PREFIX, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR);
+
+            List<String> statements = new ArrayList<>();
+
+            ScriptUtils.splitSqlScript(script, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR, statements);
+
+            assert statements.size() == 1;
+
+            return statements.get(0);
+
+
+        }
+    }
+
+    public QueryResult executeSqlQuery(File queryFile) throws IOException {
+
+
+        String query = getSqlString(queryFile.getPath());
+
+        int resultSize = 0;
+
+        String error = null;
+
+        long queryTime = 0;
+        long countTime = 0;
+
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+
+
+            StopWatch queryTimer = new StopWatch();
+            queryTimer.start();
+
+            ResultSet resultSet = statement.executeQuery();
+
+            queryTimer.stop();
+            queryTime = queryTimer.getTotalTimeMillis();
+
+
+            StopWatch countTimer = new StopWatch();
+            countTimer.start();
+
+            while (resultSet.next()) {
+                resultSize++;
+            }
+
+            countTimer.stop();
+            countTime = countTimer.getTotalTimeMillis();
+
+        } catch (SQLException e) {
+           error = e.getMessage();
+        }
+
+        final QueryResult queryResult = new QueryResult(queryFile.getName(), queryTime, countTime, error, resultSize);
+
+        log.debug(queryResult.toString());
+
+        return queryResult;
+
+    }
+
 
     public void executeSqlScript(String location, ScriptType scriptType) {
 
-        log.debug("attempting to load sql script from [" + location + "]");
+        StopWatch sw = new StopWatch("executed sql script: " + location);
+        sw.start();
 
+        Resource originalResource = new FileSystemResource(location);
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Resource originalResource = new FileSystemResource(location);
-
-            StopWatch sw = new StopWatch("executed sql script: " + location);
-            sw.start();
-
             ScriptUtils.executeSqlScript(connection, originalResource);
-
-            sw.stop();
-
-            log.debug(sw.shortSummary());
 
             if (scriptType.equals(ScriptType.table)) {
 
@@ -82,12 +155,15 @@ public class HiveService {
 
                 ScriptUtils.executeSqlScript(connection, new ByteArrayResource(tempContents.getBytes()));
 
-
             }
 
         } catch (IOException | SQLException e) {
             log.error(e.getMessage(), e);
         }
+
+        sw.stop();
+
+        log.debug(sw.shortSummary());
     }
 
 

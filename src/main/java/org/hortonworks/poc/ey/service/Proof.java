@@ -82,28 +82,16 @@ public class Proof {
     }
 
 
-    public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter) {
+    public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter) throws IOException {
         List<File> filteredFiles = applyFilters(includeFilter, excludeFilter);
 
         List<QueryResult> results = new ArrayList<>(filteredFiles.size());
 
         for (File file : filteredFiles) {
 
-            StopWatch sw = new StopWatch();
-            sw.start();
+            QueryResult queryResult = hiveService.executeSqlQuery(file);
 
-            String errorMessage = null;
-
-            try {
-                hiveService.executeSqlScript(file.getPath(), ScriptType.query);
-            } catch (Exception e) {
-                errorMessage = e.getMessage();
-                log.error(errorMessage, e);
-            }
-
-            sw.stop();
-
-            results.add(new QueryResult(file.getName(), sw.getTotalTimeMillis(), errorMessage));
+            results.add(queryResult);
 
         }
 
