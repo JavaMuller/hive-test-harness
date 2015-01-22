@@ -43,7 +43,10 @@ public class RunTest implements CommandLineRunner {
             proof.loadData();
         }
 
-        String[] includeFilter = new String[]{};
+        String[] includeFilter = new String[]{
+           //"VW_GL016T2_Zero_Balance_GL.sql"
+        };
+
         String[] excludeFilter = new String[]{
                 "VW_GL016T2_Zero_Balance_GL.sql",
                 "VW_GL015T1_Cutoff_Analysis.sql",
@@ -72,32 +75,19 @@ public class RunTest implements CommandLineRunner {
 
         final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
 
-        FileWriter fileWriter = null;
-        CSVPrinter printer = null;
+        CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "executionTime", "error");
 
-        try {
-            final CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "executionTime", "error");
-
-            fileWriter = new FileWriter(filename);
-            printer = new CSVPrinter(fileWriter, format);
-
+        try (FileWriter fileWriter = new FileWriter(filename);
+             CSVPrinter printer = new CSVPrinter(fileWriter, format)) {
 
             for (QueryResult result : results) {
                 printer.printRecord(result.getFile(), result.getExecutionTime(), result.getError());
             }
 
-            printer.printComment("comment: " + description);
-            printer.printComment("executed on " + SimpleDateFormat.getDateTimeInstance().format(new Date()));
+            fileWriter.flush();
 
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-        } finally {
-            try {
-                fileWriter.flush();
-                fileWriter.close();
-                printer.close();
-            } catch (IOException ignore) {
-            }
         }
     }
 }
