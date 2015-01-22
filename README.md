@@ -51,5 +51,8 @@ Current Problems
 
 See project [issues](https://github.com/timveil/ey-hive-poc/issues)
 
-Results
+
+Tuning
 ----------
+
+hive.tez.auto.reducer.parallelism=true

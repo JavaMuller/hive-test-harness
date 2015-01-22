@@ -50,8 +50,8 @@ public class QueryResult {
                 .add("file", file)
                 .add("queryDuration", queryDuration)
                 .add("countDuration", countDuration)
-                .add("error", error)
                 .add("resultCount", resultCount)
+                .add("error", error)
                 .toString();
     }
 }
