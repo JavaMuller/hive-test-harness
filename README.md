@@ -53,8 +53,10 @@ From the project's base directory execute the following from the command line
 
 ```bash
 
+# builds the spring boot jar called hive-poc-0.0.1-SNAPSHOT.jar
 > mvn package clean
 
+# runs the spring boot jar.  must pass 2 parameters.
 > java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] "[test description]"
 
 # for example
