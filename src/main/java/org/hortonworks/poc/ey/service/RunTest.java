@@ -46,7 +46,7 @@ public class RunTest implements CommandLineRunner {
 
         String[] filter = null;
 
-        filter = new String[]{"v_IL_GL018_KPI_Overview.sql"};
+        filter = new String[]{"VW_GL011_Relationship_Analyses.sql"};
 
         List<QueryResult> results = proof.executeQueries(filter);
 
@@ -60,7 +60,9 @@ public class RunTest implements CommandLineRunner {
 
         String[] words = StringUtils.split(StringUtils.trim(description.toLowerCase()));
 
-        final String filename = "query-results-" + StringUtils.join(words, "-") + ".csv";
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss_");
+
+        final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
 
         FileWriter fileWriter = null;
         CSVPrinter printer = null;
