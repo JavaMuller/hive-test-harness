@@ -27,43 +27,48 @@ public class RunTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        assert args != null && args.length == 2;
+        assert args != null && args.length == 3;
 
         final boolean build = Boolean.parseBoolean(args[0]);
-        final String description = args[1];
+        final boolean load = Boolean.parseBoolean(args[1]);
+        final boolean query = Boolean.parseBoolean(args[2]);
+        final String description = args[3];
 
 
         if (build) {
             proof.createDatabase();
-        }
-
-        if (build) {
             proof.buildTables();
             proof.buildViews();
+        }
+
+        if (load) {
             proof.loadData();
         }
 
-        String[] includeFilter = new String[]{
-           //"VW_GL016T2_Zero_Balance_GL.sql"
-        };
+        if (query) {
 
-        String[] excludeFilter = new String[]{
-                "VW_GL016T2_Zero_Balance_GL.sql",
-                "VW_GL015T1_Cutoff_Analysis.sql",
-                "VW_GL012T3_Date_Analysis.sql",
-                "VW_GL018T1_Overview.sql",
-                "VW_GL017T3_Transactions_By_Relationship.sql",
-                "VW_GL013T1_Back_Postings1.sql",
-                "VW_GL011_Relationship_Analyses.sql",
-                "VW_GL010_Gross_Margin.sql",
-                "v_IL_GL018_KPI_Overview.sql"
-        };
+            String[] includeFilter = new String[]{
+                    //"VW_GL016T2_Zero_Balance_GL.sql"
+            };
 
-        List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter);
+            String[] excludeFilter = new String[]{
+                    "VW_GL016T2_Zero_Balance_GL.sql",
+                    "VW_GL015T1_Cutoff_Analysis.sql",
+                    "VW_GL012T3_Date_Analysis.sql",
+                    "VW_GL018T1_Overview.sql",
+                    "VW_GL017T3_Transactions_By_Relationship.sql",
+                    "VW_GL013T1_Back_Postings1.sql",
+                    "VW_GL011_Relationship_Analyses.sql",
+                    "VW_GL010_Gross_Margin.sql",
+                    "v_IL_GL018_KPI_Overview.sql"
+            };
 
-        log.debug("Test Finished!  Writing results to file...");
+            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter);
 
-        generateResultFile(description, results);
+            log.debug("Test Finished!  Writing results to file...");
+
+            generateResultFile(description, results);
+        }
 
     }
 

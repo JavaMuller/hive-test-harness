@@ -19,11 +19,15 @@ The main method of `RunTest.java` can do the following:
 * Execute Queries
 * Output Results to CSV File
 
-The test requires two parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
+The test requires 4 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
 
-1) The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & views and load test data
+1) The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & views
 
-2) The second `arg` is a description of the test being performed.  For example `'enabled tez'`, would indicate that this test was the first execution since enabling TEZ
+1) The second `arg` should be `true` or `false` and indicates if you want load data
+
+1) The third `arg` should be `true` or `false` and indicates if you want execute queries
+
+2) The forth `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
 
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
 
@@ -46,7 +50,6 @@ String[] excludeFilter = new String[]{
 
 You can run this locally with either IntelliJ or via the Command Line.
 
-
 ### Command Line
 
 From the project's base directory execute the following from the command line
@@ -56,11 +59,11 @@ From the project's base directory execute the following from the command line
 # builds the spring boot jar called hive-poc-0.0.1-SNAPSHOT.jar
 > mvn package clean
 
-# runs the spring boot jar.  must pass 2 parameters.
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] "[test description]"
+# runs the spring boot jar.  must pass 4 parameters.
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] [true|false] [true|false] "[test description]"
 
 # for example
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar false "some test"
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar true true true "some test"
 
 ```
 
