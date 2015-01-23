@@ -34,7 +34,6 @@ import java.util.List;
 @Service
 public class HiveService {
 
-
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -76,7 +75,6 @@ public class HiveService {
     }
 
     public QueryResult executeSqlQuery(Resource resource) throws IOException {
-
 
         String query = getSqlString(resource);
 
