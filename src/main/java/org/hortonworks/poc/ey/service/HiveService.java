@@ -115,9 +115,9 @@ public class HiveService {
             countTime = countTimer.getTotalTimeMillis();
 
         } catch (SQLException e) {
-           error = e.getMessage();
+            error = e.getMessage();
 
-           log.error(error, e);
+            log.error(error, e);
         }
 
         final QueryResult queryResult = new QueryResult(resource.getFilename(), queryTime, countTime, error, resultSize);

@@ -107,7 +107,7 @@ public class Proof {
 
         Map<String, Resource> fileMap = new HashMap<>();
 
-        for (Resource resource  : resources) {
+        for (Resource resource : resources) {
             fileMap.put(resource.getFilename(), resource);
         }
 
