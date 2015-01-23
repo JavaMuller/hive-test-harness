@@ -21,13 +21,13 @@ The main method of `RunTest.java` can do the following:
 
 The test requires 4 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
 
-1) The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & build views
+1.  The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & build views
 
-1) The second `arg` should be `true` or `false` and indicates if you want load data
+1.  The second `arg` should be `true` or `false` and indicates if you want load data
 
-1) The third `arg` should be `true` or `false` and indicates if you want execute queries
+1.  The third `arg` should be `true` or `false` and indicates if you want execute queries
 
-2) The forth `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
+1.  The forth `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
 
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
 
@@ -80,8 +80,8 @@ Run in Azure by setting the active profile (eg `-Dspring.profiles.active=azure`)
 java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar false false true "testing in azure"
 ```
 
-Current Problems
-----------
+## Current Problems
+
 
 See project [issues](https://github.com/timveil/ey-hive-poc/issues)
 
@@ -90,14 +90,15 @@ This issue is affecting some queries.
 https://issues.apache.org/jira/browse/HIVE-9249
 
 
-Tuning
-----------
+## Tuning
 
-1) hive.execution.engine = tez
-1) hive.server2.tez.initialize.default.sessions = true
-1) hive.tez.auto.reducer.parallelism=true
+### Working
+1.  hive.execution.engine = tez
+1.  hive.server2.tez.initialize.default.sessions = true
+1.  hive.tez.auto.reducer.parallelism=true
 
-1) hive.optimize.bucketmapjoin.sortedmerge=true - HURT PERFORMANCE LOCALLY
-1) increase ez.task.resource.memory.mb from 512 to 1024 - HURT PERFORMANCE LOCALLY
-1) hive.cbo.enable=true ALREADY ENABLED
-1) hive.vectorized.execution.enabled=true ALREADY ENABLED
+### Not Working
+1.  hive.optimize.bucketmapjoin.sortedmerge=true - HURT PERFORMANCE LOCALLY
+1.  increase ez.task.resource.memory.mb from 512 to 1024 - HURT PERFORMANCE LOCALLY
+1.  hive.cbo.enable=true ALREADY ENABLED
+1.  hive.vectorized.execution.enabled=true ALREADY ENABLED
