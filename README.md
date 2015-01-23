@@ -86,6 +86,10 @@ Tuning
 ----------
 
 1) hive.execution.engine = tez
+1) hive.server2.tez.initialize.default.sessions = true
+1) hive.tez.auto.reducer.parallelism=true
 
-
-hive.tez.auto.reducer.parallelism=true
+1) hive.optimize.bucketmapjoin.sortedmerge=true - HURT PERFORMANCE LOCALLY
+1) increase ez.task.resource.memory.mb from 512 to 1024 - HURT PERFORMANCE LOCALLY
+1) hive.cbo.enable=true ALREADY ENABLED
+1) hive.vectorized.execution.enabled=true ALREADY ENABLED

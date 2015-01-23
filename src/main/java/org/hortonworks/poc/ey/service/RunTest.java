@@ -63,6 +63,9 @@ public class RunTest implements CommandLineRunner {
                     "v_IL_GL018_KPI_Overview.sql"
             };
 
+            // this is a JVM warm-up run
+            proof.executeQueries(includeFilter, excludeFilter);
+
             List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter);
 
             log.debug("Test Finished!  Writing results to file...");
