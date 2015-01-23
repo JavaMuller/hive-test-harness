@@ -122,7 +122,7 @@ public class HiveService {
 
         final QueryResult queryResult = new QueryResult(resource.getFilename(), queryTime, countTime, error, resultSize);
 
-        log.debug(queryResult.toString());
+        log.info(queryResult.toString());
 
         return queryResult;
 

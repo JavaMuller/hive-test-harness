@@ -36,12 +36,14 @@ public class RunTest implements CommandLineRunner {
 
 
         if (build) {
+            log.info("Building Database, Tables and Views");
             proof.createDatabase();
             proof.buildTables();
             proof.buildViews();
         }
 
         if (load) {
+            log.info("Loading data");
             proof.loadData();
         }
 
@@ -66,9 +68,10 @@ public class RunTest implements CommandLineRunner {
             // this is a JVM warm-up run
             proof.executeQueries(includeFilter, excludeFilter);
 
+            log.info("Executing queries");
             List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter);
 
-            log.debug("Test Finished!  Writing results to file...");
+            log.info("Test Finished!  Writing results to file...");
 
             generateResultFile(description, results);
         }

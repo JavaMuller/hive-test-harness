@@ -72,6 +72,14 @@ From the project's base directory execute the following from the command line
 Create an "Application" "Run Configuration" like the following [screenshot](https://github.com/timveil/ey-hive-poc/blob/master/docs/Run_Debug_Configurations.png)
 
 
+## Running in Azure
+
+Run in Azure by setting the active profile (eg `-Dspring.profiles.active=azure`)
+
+```
+java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar false false true "testing in azure"
+```
+
 Current Problems
 ----------
 
