@@ -24,9 +24,7 @@ public class HadoopConfig implements EnvironmentAware {
 
     @Bean
     public FileSystem buildFileSystem() throws IOException, InterruptedException {
-        org.apache.hadoop.conf.Configuration conf = buildConfiguration();
-
-        return FileSystem.get(URI.create(environment.getProperty("hdfs.url")), conf, environment.getProperty("hdfs.username"));
+        return FileSystem.get(URI.create(environment.getProperty("hdfs.url")), buildConfiguration(), environment.getProperty("hdfs.username"));
     }
 
     private org.apache.hadoop.conf.Configuration buildConfiguration() {
@@ -39,9 +37,7 @@ public class HadoopConfig implements EnvironmentAware {
 
     @Bean
     public HiveConf buildHiveConf() {
-        org.apache.hadoop.conf.Configuration conf = buildConfiguration();
-
-        HiveConf hiveConf = new HiveConf(conf, HiveConf.class);
+        HiveConf hiveConf = new HiveConf(buildConfiguration(), HiveConf.class);
         hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS, environment.getProperty("hive.metastore.url"));
 
         return hiveConf;
