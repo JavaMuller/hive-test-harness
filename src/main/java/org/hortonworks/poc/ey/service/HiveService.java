@@ -72,8 +72,6 @@ public class HiveService {
             assert statements.size() == 1;
 
             return statements.get(0);
-
-
         }
     }
 
@@ -93,7 +91,6 @@ public class HiveService {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)
         ) {
-
 
             StopWatch queryTimer = new StopWatch();
             queryTimer.start();
@@ -179,7 +176,6 @@ public class HiveService {
             log.debug("creating database: " + dbDesc);
 
             client.createDatabase(dbDesc);
-
 
         } finally {
 

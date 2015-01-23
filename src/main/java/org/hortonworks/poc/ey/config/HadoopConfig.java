@@ -27,7 +27,6 @@ public class HadoopConfig implements EnvironmentAware {
         org.apache.hadoop.conf.Configuration conf = buildConfiguration();
 
         return FileSystem.get(URI.create(environment.getProperty("hdfs.url")), conf, environment.getProperty("hdfs.username"));
-
     }
 
     private org.apache.hadoop.conf.Configuration buildConfiguration() {

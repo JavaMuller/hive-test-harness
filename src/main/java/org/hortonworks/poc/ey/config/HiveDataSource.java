@@ -66,7 +66,6 @@ public class HiveDataSource implements DataSource {
     @Override
     public void setLoginTimeout(int seconds) throws SQLException {
         throw new SQLFeatureNotSupportedException("Method not supported");
-
     }
 
     @Override

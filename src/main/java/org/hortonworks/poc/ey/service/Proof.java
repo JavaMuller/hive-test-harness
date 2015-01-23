@@ -60,7 +60,7 @@ public class Proof {
 
             hadoopService.writeFile(resource);
 
-            String tableName = StringUtils.substringBefore(resource.getFilename(), ".");
+            String tableName = StringUtils.lowerCase(StringUtils.substringBefore(resource.getFilename(), "."));
             String tableNameCsv = tableName + "_csv";
 
             String loadFile = "load data inpath '" + dataPath + "/" + resource.getFilename() + "' into table " + tableNameCsv;

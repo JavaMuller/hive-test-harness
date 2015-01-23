@@ -34,7 +34,6 @@ public class RunTest implements CommandLineRunner {
         final boolean query = Boolean.parseBoolean(args[2]);
         final String description = args[3];
 
-
         if (build) {
             log.info("Building Database, Tables and Views");
             proof.createDatabase();

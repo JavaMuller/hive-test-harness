@@ -52,7 +52,6 @@ public class HadoopService {
                 return path.toString();
             }
         });
-
     }
 
     public boolean deleteDirectory(final String directory) throws IOException, InterruptedException {
@@ -67,8 +66,6 @@ public class HadoopService {
                 return fs.delete(path, true);
             }
         });
-
-
     }
 
     public void writeFile(final Resource resource) throws IOException, InterruptedException {
@@ -100,8 +97,6 @@ public class HadoopService {
                 return null;
             }
         });
-
-
     }
 
 }
