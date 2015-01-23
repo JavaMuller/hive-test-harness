@@ -48,6 +48,5 @@ public class HadoopConfig implements EnvironmentAware {
         return new HiveDataSource(environment.getProperty("hive.jdbc.url"), environment.getProperty("hive.username"), null);
     }
 
-
 }
 
