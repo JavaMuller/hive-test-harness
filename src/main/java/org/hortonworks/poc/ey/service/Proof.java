@@ -1,6 +1,7 @@
 package org.hortonworks.poc.ey.service;
 
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.StringUtils;
 import org.hortonworks.poc.ey.domain.QueryResult;
 import org.hortonworks.poc.ey.domain.ScriptType;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
-import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -60,14 +60,14 @@ public class Proof {
 
             hadoopService.writeFile(resource);
 
-            String tableName = StringUtils.replace(resource.getFilename(), ".csv", "");
+            String tableName = StringUtils.substringBefore(resource.getFilename(), ".");
             String tableNameCsv = tableName + "_csv";
 
             String loadFile = "load data inpath '" + dataPath + "/" + resource.getFilename() + "' into table " + tableNameCsv;
             log.debug("running: " + loadFile);
             jdbcTemplate.execute(loadFile);
 
-            String loadOrc = "insert overwrite table " + tableName + " select * from " + tableNameCsv;
+            String loadOrc = "insert overwrite table " + tableName + " IF NOT EXISTS select * from " + tableNameCsv;
             log.debug("running: " + loadOrc);
             jdbcTemplate.execute(loadOrc);
 
