@@ -79,7 +79,7 @@ Create an "Application" "Run Configuration" like the following [screenshot](http
 Run in Azure by setting the active profile (eg `-Dspring.profiles.active=azure`)
 
 ```
-java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar false false true "testing in azure"
+java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar true true true "testing in azure" "/path/to/data/in/azure"
 ```
 
 ## Current Problems
