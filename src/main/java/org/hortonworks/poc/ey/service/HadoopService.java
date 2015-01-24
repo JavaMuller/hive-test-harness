@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,7 +81,8 @@ public class HadoopService {
 
                 Path path = new Path(environment.getProperty("data.path") + "/" + resource.getFilename());
 
-                log.debug("writing file to path [" + path.toString() + "]");
+                StopWatch sw = new StopWatch("wrote file to path " + path);
+                sw.start();
 
                 FSDataOutputStream outputStream = fs.create(path, true);
 
@@ -92,7 +94,9 @@ public class HadoopService {
 
                 outputStream.close();
 
-                log.debug("file written successfully!");
+                sw.stop();
+
+                log.debug(sw.shortSummary());
 
                 return null;
             }

@@ -46,8 +46,8 @@ public class HiveDataSource implements DataSource {
 
         sw.stop();
 
-        if (log.isDebugEnabled()) {
-            log.debug(sw.shortSummary());
+        if (log.isTraceEnabled()) {
+            log.trace(sw.shortSummary());
         }
 
         return connection;

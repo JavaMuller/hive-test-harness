@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -36,20 +37,31 @@ public class Proof {
     private DataSource dataSource;
 
     public void createDatabase() throws IOException, InterruptedException {
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+
         hiveService.createDatabase();
+
+        sw.stop();
+
+        log.info("\tCREATED DATABASE IN " + sw.getTotalTimeMillis() + "ms");
     }
 
 
-    public void loadData() throws IOException, InterruptedException {
+    public void loadData(String dataPath) throws IOException, InterruptedException {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        final String dataPath = environment.getProperty("data.path");
+        final String hdfsPath = environment.getProperty("data.path");
 
-        hadoopService.createDirectory(dataPath);
+        hadoopService.createDirectory(hdfsPath);
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:data/converted/*.csv");
+
+        final String locationPattern = cleanPath(dataPath);
+
+        Resource[] resources = resolver.getResources("file:" + locationPattern);
 
         int count = 0;
 
@@ -60,24 +72,39 @@ public class Proof {
 
             hadoopService.writeFile(resource);
 
-            String tableName = StringUtils.lowerCase(StringUtils.substringBefore(resource.getFilename(), "."));
-            String tableNameCsv = tableName + "_csv";
+            final String tableName = StringUtils.lowerCase(StringUtils.substringBefore(resource.getFilename(), "."));
+            final String tableNameCsv = tableName + "_csv";
 
-            String loadFile = "load data inpath '" + dataPath + "/" + resource.getFilename() + "' into table " + tableNameCsv;
-            log.debug("running: " + loadFile);
+            final String loadFile = "load data inpath '" + hdfsPath + "/" + resource.getFilename() + "' into table " + tableNameCsv;
+            final String loadOrc = "insert overwrite table " + tableName + " if not exists select * from " + tableNameCsv;
+
+            StopWatch rawTimer = new StopWatch("executed: " + loadFile);
+            rawTimer.start();
+
             jdbcTemplate.execute(loadFile);
 
-            String loadOrc = "insert overwrite table " + tableName + " IF NOT EXISTS select * from " + tableNameCsv;
-            log.debug("running: " + loadOrc);
+            rawTimer.stop();
+            log.debug(rawTimer.shortSummary());
+
+            StopWatch orcTimer = new StopWatch("executed: " + loadOrc);
+            orcTimer.start();
+
             jdbcTemplate.execute(loadOrc);
+
+            orcTimer.stop();
+            log.debug(orcTimer.shortSummary());
 
             count++;
         }
 
         sw.stop();
 
-        log.info("LOADED " + count + " FILES INTO DATABASE IN " + sw.getTotalTimeMillis() + "ms");
+        log.info("\tLOADED " + count + " FILES INTO DATABASE IN " + sw.getTotalTimeMillis() + "ms");
 
+    }
+
+    private String cleanPath(String dataPath) {
+        return (StringUtils.endsWith(dataPath, File.separator) ? dataPath : dataPath + File.separator) + "*.csv";
     }
 
 
@@ -158,7 +185,7 @@ public class Proof {
 
         sw.stop();
 
-        log.info("CREATED " + count + " TABLES ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
+        log.info("\tCREATED " + count + " TABLES ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
     }
 
     public void buildViews() throws IOException {
@@ -176,7 +203,7 @@ public class Proof {
 
         sw.stop();
 
-        log.info("CREATED " + count + " VIEWS ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
+        log.info("\tCREATED " + count + " VIEWS ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
     }
 
 }

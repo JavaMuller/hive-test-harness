@@ -40,6 +40,7 @@
     </parent>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -152,6 +153,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>com.microsoft.windowsazure.storage</groupId>
+                            <artifactId>microsoft-windowsazure-storage-sdk</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>junit</groupId>
+                            <artifactId>junit</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

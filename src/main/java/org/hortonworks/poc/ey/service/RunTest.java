@@ -27,23 +27,46 @@ public class RunTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        assert args != null && args.length == 3;
+        assert args != null && args.length == 5;
 
         final boolean build = Boolean.parseBoolean(args[0]);
         final boolean load = Boolean.parseBoolean(args[1]);
         final boolean query = Boolean.parseBoolean(args[2]);
         final String description = args[3];
+        final String dataPath = args[4];
+
+        System.out.println();
+        log.info("******************************************");
+        log.info("Running Test with the following parameters...");
+        log.info("\tBuild? " + build);
+        log.info("\tLoad? " + load);
+        log.info("\tQuery? " + query);
+        log.info("\tDescription: " + description);
+        log.info("\tData Path: " + dataPath);
+        log.info("******************************************");
+        System.out.println();
+
 
         if (build) {
+            System.out.println();
+            log.info("******************************************");
             log.info("Building Database, Tables and Views");
+            log.info("******************************************");
+            System.out.println();
+
             proof.createDatabase();
             proof.buildTables();
             proof.buildViews();
         }
 
         if (load) {
+            System.out.println();
+            log.info("******************************************");
             log.info("Loading data");
-            proof.loadData();
+            log.info("******************************************");
+            System.out.println();
+
+            proof.loadData(dataPath);
         }
 
         if (query) {
@@ -64,13 +87,28 @@ public class RunTest implements CommandLineRunner {
                     "v_IL_GL018_KPI_Overview.sql"
             };
 
+            System.out.println();
+            log.info("******************************************");
+            log.info("Warming up JVM");
+            log.info("******************************************");
+            System.out.println();
+
             // this is a JVM warm-up run
             proof.executeQueries(includeFilter, excludeFilter);
 
+            System.out.println();
+            log.info("******************************************");
             log.info("Executing queries");
+            log.info("******************************************");
+            System.out.println();
+
             List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter);
 
+            System.out.println();
+            log.info("******************************************");
             log.info("Test Finished!  Writing results to file...");
+            log.info("******************************************");
+            System.out.println();
 
             generateResultFile(description, results);
         }
