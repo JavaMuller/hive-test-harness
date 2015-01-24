@@ -29,7 +29,7 @@ The test requires 5 parameters be passed as `args` to the `main(String[] args)` 
 
 1.  The forth `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
 
-1.  The fifth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted`
+1.  The fifth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted`.  This directory should contain `.csv` files whose name matches that of the table its loading.
 
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
 
