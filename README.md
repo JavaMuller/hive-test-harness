@@ -19,7 +19,7 @@ The main method of `RunTest.java` can do the following:
 * Execute Queries
 * Output Results to CSV File
 
-The test requires 4 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
+The test requires 5 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
 
 1.  The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & build views
 
@@ -28,6 +28,8 @@ The test requires 4 parameters be passed as `args` to the `main(String[] args)` 
 1.  The third `arg` should be `true` or `false` and indicates if you want execute queries
 
 1.  The forth `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
+
+1.  The fifth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted`
 
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
 
@@ -60,10 +62,10 @@ From the project's base directory execute the following from the command line
 > mvn package clean
 
 # runs the spring boot jar.  must pass 4 parameters.
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] [true|false] [true|false] "[test description]"
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] [true|false] [true|false] "[test description]" "[data location]
 
 # for example
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar true true true "some test"
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar true true true "some test" "/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted"
 
 ```
 
