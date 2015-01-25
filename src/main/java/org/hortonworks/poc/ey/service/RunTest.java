@@ -72,11 +72,12 @@ public class RunTest implements CommandLineRunner {
         if (query) {
 
             String[] includeFilter = new String[]{
-                    "VW_Agg_GL_Account.sql"
+                    //"VW_Agg_GL_Account.sql"
             };
 
             String[] excludeFilter = new String[]{
-/*                    "VW_GL016T2_Zero_Balance_GL.sql",
+                    "v_IL_GL018_KPIs_unpivot.sql", // no data given
+                    "VW_GL016T2_Zero_Balance_GL.sql",
                     "VW_GL015T1_Cutoff_Analysis.sql",
                     "VW_GL012T3_Date_Analysis.sql",
                     "VW_GL018T1_Overview.sql",
@@ -84,17 +85,17 @@ public class RunTest implements CommandLineRunner {
                     "VW_GL013T1_Back_Postings1.sql",
                     "VW_GL011_Relationship_Analyses.sql",
                     "VW_GL010_Gross_Margin.sql",
-                    "v_IL_GL018_KPI_Overview.sql"*/
+                    "v_IL_GL018_KPI_Overview.sql"
             };
 
-            System.out.println();
+           /* System.out.println();
             log.info("******************************************");
             log.info("Warming up JVM");
             log.info("******************************************");
             System.out.println();
 
             // this is a JVM warm-up run
-            proof.executeQueries(includeFilter, excludeFilter);
+            proof.executeQueries(includeFilter, excludeFilter);*/
 
             System.out.println();
             log.info("******************************************");
