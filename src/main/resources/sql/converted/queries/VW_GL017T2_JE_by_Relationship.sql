@@ -1,74 +1,74 @@
 SELECT
     CASE
-        WHEN f.year_flag ='CY'
-        THEN 'Current'
-        WHEN f.year_flag ='PY'
-        THEN 'Prior'
-        WHEN f.year_flag ='SP'
-        THEN 'Subsequent'
-        ELSE pp.year_flag_desc
-    END ,
-    pp.period_flag_desc ,
-    F.year_flag ,
-    F.period_flag ,
-    bu.bu_group ,
-    bu.bu_ref ,
-    s1.ey_segment_ref ,
-    s2.ey_segment_ref ,
-    s1.ey_segment_group ,
-    s2.ey_segment_group ,
-    src.source_group ,
-    src.Source_ref ,
-    F.Ey_period ,
-    f.journal_type ,
-    ul.preparer_ref ,
-    ul.department ,
-    F.reporting_amount_curr_cd ,
-    F.functional_curr_cd ,
+    WHEN f.year_flag = 'CY'
+    THEN 'Current'
+    WHEN f.year_flag = 'PY'
+    THEN 'Prior'
+    WHEN f.year_flag = 'SP'
+    THEN 'Subsequent'
+    ELSE pp.year_flag_desc
+    END,
+    pp.period_flag_desc,
+    F.year_flag,
+    F.period_flag,
+    bu.bu_group,
+    bu.bu_ref,
+    s1.ey_segment_ref,
+    s2.ey_segment_ref,
+    s1.ey_segment_group,
+    s2.ey_segment_group,
+    src.source_group,
+    src.Source_ref,
+    F.Ey_period,
+    f.journal_type,
+    ul.preparer_ref,
+    ul.department,
+    F.reporting_amount_curr_cd,
+    F.functional_curr_cd,
     SUM(f.count_je_id)
 FROM
     FT_GL_Account F
-INNER JOIN
+    INNER JOIN
     Parameters_period PP
-ON
-    PP.year_flag = f.year_flag
-AND PP.period_flag = F.period_flag
-LEFT OUTER JOIN
+        ON
+            PP.year_flag = f.year_flag
+            AND PP.period_flag = F.period_flag
+    LEFT OUTER JOIN
     v_User_listing UL
-ON
-    UL.user_listing_id = f.user_listing_id
-LEFT OUTER JOIN
+        ON
+            UL.user_listing_id = f.user_listing_id
+    LEFT OUTER JOIN
     v_Business_unit_listing BU
-ON
-    Bu.bu_id = f.bu_id
-LEFT OUTER JOIN
+        ON
+            Bu.bu_id = f.bu_id
+    LEFT OUTER JOIN
     v_Source_listing src
-ON
-    src.source_id = f.source_id
-LEFT OUTER JOIN
+        ON
+            src.source_id = f.source_id
+    LEFT OUTER JOIN
     v_Segment01_listing S1
-ON
-    S1.ey_segment_id = f.segment1_id
-LEFT OUTER JOIN
+        ON
+            S1.ey_segment_id = f.segment1_id
+    LEFT OUTER JOIN
     v_Segment02_listing S2
-ON
-    S2.ey_segment_id = f.segment2_id
+        ON
+            S2.ey_segment_id = f.segment2_id
 GROUP BY
-    pp.year_flag_desc ,
-    pp.period_flag_desc ,
-    F.year_flag ,
-    F.period_flag ,
-    bu.bu_group ,
-    bu.bu_ref ,
-    s1.ey_segment_ref ,
-    s2.ey_segment_ref ,
-    s1.ey_segment_group ,
-    s2.ey_segment_group ,
-    src.source_group ,
-    src.Source_ref ,
-    F.Ey_period ,
-    f.journal_type ,
-    ul.preparer_ref ,
-    ul.department ,
-    F.reporting_amount_curr_cd ,
+    pp.year_flag_desc,
+    pp.period_flag_desc,
+    F.year_flag,
+    F.period_flag,
+    bu.bu_group,
+    bu.bu_ref,
+    s1.ey_segment_ref,
+    s2.ey_segment_ref,
+    s1.ey_segment_group,
+    s2.ey_segment_group,
+    src.source_group,
+    src.Source_ref,
+    F.Ey_period,
+    f.journal_type,
+    ul.preparer_ref,
+    ul.department,
+    F.reporting_amount_curr_cd,
     F.functional_curr_cd;
