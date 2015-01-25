@@ -75,8 +75,4 @@ SELECT
     SEGMENT.ey_segment_group,
     SEGMENT.segment_cd + ' - ' + SEGMENT.segment_desc AS ey_segment_ref
 FROM
-    SEGMENT_CTE SEGMENT
-INNER JOIN
-    Parameters_engagement PE
-ON
-    SEGMENT.table_identifier = PE.segment_selection2;
+    SEGMENT_CTE SEGMENT;
