@@ -72,7 +72,7 @@ public class RunTest implements CommandLineRunner {
         if (query) {
 
             String[] includeFilter = new String[]{
-                    //"VW_GL016T2_Zero_Balance_GL.sql"
+                    //"VW_Balance_By_GL.sql"
             };
 
             String[] excludeFilter = new String[]{

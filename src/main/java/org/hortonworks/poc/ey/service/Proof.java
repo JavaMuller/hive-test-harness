@@ -1,5 +1,8 @@
 package org.hortonworks.poc.ey.service;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.hortonworks.poc.ey.domain.QueryResult;
@@ -112,6 +115,13 @@ public class Proof {
         List<Resource> filteredFiles = applyFilters(includeFilter, excludeFilter);
 
         List<QueryResult> results = new ArrayList<>(filteredFiles.size());
+
+        Collections.sort(filteredFiles, Ordering.natural().onResultOf(new Function<Resource, String>() {
+            @Override
+            public String apply(Resource input) {
+                return input.getFilename();
+            }
+        }));
 
         for (Resource file : filteredFiles) {
 

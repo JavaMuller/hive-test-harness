@@ -1,5 +1,5 @@
 CREATE TABLE Currency (
-  curr_cd VARCHAR(25),
-  curr_desc VARCHAR(100),
-  currency_zone VARCHAR(100)
+  curr_cd string,
+  curr_desc string,
+  currency_zone string
 ) stored AS orc;

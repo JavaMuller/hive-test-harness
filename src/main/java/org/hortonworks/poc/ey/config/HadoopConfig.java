@@ -28,11 +28,7 @@ public class HadoopConfig implements EnvironmentAware {
     }
 
     private org.apache.hadoop.conf.Configuration buildConfiguration() {
-        org.apache.hadoop.conf.Configuration conf = new org.apache.hadoop.conf.Configuration();
-        conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
-        conf.set("fs.webhdfs.impl", "org.apache.hadoop.hdfs.web.WebHdfsFileSystem");
-        conf.set("fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem");
-        return conf;
+        return new org.apache.hadoop.conf.Configuration();
     }
 
     @Bean

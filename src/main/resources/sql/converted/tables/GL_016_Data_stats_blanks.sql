@@ -1,9 +1,9 @@
 CREATE TABLE GL_016_Data_stats_blanks (
-  Metric_B VARCHAR(250),
+  Metric_B string,
   Metric_Count_B INT,
-  Period_Type_B VARCHAR(250),
-  Period_Flag VARCHAR(50),
-  Column_Name VARCHAR(250),
-  Start_Date VARCHAR(250),
-  End_Date VARCHAR(250)
+  Period_Type_B string,
+  Period_Flag string,
+  Column_Name string,
+  Start_Date string,
+  End_Date string
 ) stored AS orc;
