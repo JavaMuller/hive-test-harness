@@ -41,5 +41,5 @@ WHERE
         FROM
             FT_GL_Account fl
         WHERE
-            fl.year_flag IN ('PY'))
+            fl.year_flag = 'PY')
     AND F.year_flag = 'CY';
