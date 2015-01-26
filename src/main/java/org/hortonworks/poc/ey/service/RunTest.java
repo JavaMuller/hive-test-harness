@@ -74,14 +74,14 @@ public class RunTest implements CommandLineRunner {
                     "v_IL_GL018_KPI_Overview.sql"
             };
 
-           /* System.out.println();
+            System.out.println();
             log.info("******************************************");
             log.info("Warming up JVM");
             log.info("******************************************");
             System.out.println();
 
             // this is a JVM warm-up run
-            proof.executeQueries(includeFilter, excludeFilter);*/
+            proof.executeQueries(includeFilter, excludeFilter);
 
             System.out.println();
             log.info("******************************************");
