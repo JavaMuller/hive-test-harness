@@ -33,7 +33,7 @@ WHERE
               SELECT DISTINCT
                               coa.gl_account_cd
                          FROM
-                              trialbalance tb
+                             trial_balance tb
                    INNER JOIN
                               DIM_Chart_of_Accounts coa
                            ON
@@ -59,7 +59,7 @@ SELECT
     'Active GL accounts with no balance',
     fc.fiscal_period_seq
 FROM
-    TrialBalance tb
+    trial_balance tb
 INNER JOIN
     DIM_Chart_of_Accounts coa
  ON

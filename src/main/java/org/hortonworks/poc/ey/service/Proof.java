@@ -1,21 +1,17 @@
 package org.hortonworks.poc.ey.service;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.hortonworks.poc.ey.domain.QueryResult;
-import org.hortonworks.poc.ey.domain.ScriptType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -39,77 +35,18 @@ public class Proof {
     @Autowired
     private DataSource dataSource;
 
-    public void createDatabase() throws IOException, InterruptedException {
 
-        StopWatch sw = new StopWatch();
-        sw.start();
+    public void build(String dataPath) throws IOException, InterruptedException {
 
-        hiveService.createDatabase();
+        loadFilesIntoHdfs(dataPath);
 
-        sw.stop();
+        createDatabase();
 
-        log.info("\tCREATED DATABASE IN " + sw.getTotalTimeMillis() + "ms");
-    }
+        buildTables();
 
-
-    public void loadData(String dataPath) throws IOException, InterruptedException {
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
-        final String hdfsPath = environment.getProperty("data.path");
-
-        hadoopService.createDirectory(hdfsPath);
-
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
-        final String locationPattern = cleanPath(dataPath);
-
-        Resource[] resources = resolver.getResources("file:" + locationPattern);
-
-        int count = 0;
-
-        StopWatch sw = new StopWatch();
-        sw.start();
-
-        for (Resource resource : resources) {
-
-            hadoopService.writeFile(resource);
-
-            final String tableName = StringUtils.lowerCase(StringUtils.substringBefore(resource.getFilename(), "."));
-            final String tableNameCsv = tableName + "_csv";
-
-            final String loadFile = "load data inpath '" + hdfsPath + "/" + resource.getFilename() + "' into table " + tableNameCsv;
-            final String loadOrc = "insert overwrite table " + tableName + " if not exists select * from " + tableNameCsv;
-
-            StopWatch rawTimer = new StopWatch("executed: " + loadFile);
-            rawTimer.start();
-
-            jdbcTemplate.execute(loadFile);
-
-            rawTimer.stop();
-            log.debug(rawTimer.shortSummary());
-
-            StopWatch orcTimer = new StopWatch("executed: " + loadOrc);
-            orcTimer.start();
-
-            jdbcTemplate.execute(loadOrc);
-
-            orcTimer.stop();
-            log.debug(orcTimer.shortSummary());
-
-            count++;
-        }
-
-        sw.stop();
-
-        log.info("\tLOADED " + count + " FILES INTO DATABASE IN " + sw.getTotalTimeMillis() + "ms");
+        buildViews();
 
     }
-
-    private String cleanPath(String dataPath) {
-        return (StringUtils.endsWith(dataPath, File.separator) ? dataPath : dataPath + File.separator) + "*.csv";
-    }
-
 
     public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter) throws IOException {
         List<Resource> filteredFiles = applyFilters(includeFilter, excludeFilter);
@@ -136,8 +73,35 @@ public class Proof {
 
     }
 
-    private List<Resource> applyFilters(String[] includeFilter, String[] excludeFilter) throws IOException {
+    private void createDatabase() throws IOException, InterruptedException {
+        hiveService.createDatabase();
+    }
 
+
+    private void loadFilesIntoHdfs(String dataPath) throws IOException, InterruptedException {
+
+        final String hdfsPath = environment.getProperty("data.path");
+
+        hadoopService.createDirectory(hdfsPath);
+
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+
+        final String locationPattern = cleanPath(dataPath);
+
+        Resource[] resources = resolver.getResources("file:" + locationPattern);
+
+        for (Resource resource : resources) {
+            hadoopService.writeFile(resource);
+        }
+    }
+
+
+    private String cleanPath(String dataPath) {
+        return (StringUtils.endsWith(dataPath, File.separator) ? dataPath : dataPath + File.separator) + "*.csv";
+    }
+
+
+    private List<Resource> applyFilters(String[] includeFilter, String[] excludeFilter) throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath:sql/converted/queries/*.sql");
 
@@ -178,42 +142,32 @@ public class Proof {
         return filteredFiles;
     }
 
-    public void buildTables() throws IOException {
-
+    private void buildTables() throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/converted/tables/*.sql");
-
-        int count = 0;
-
-        StopWatch sw = new StopWatch();
-        sw.start();
+        Resource[] resources = resolver.getResources("classpath:sql/build/tables/*.sql");
 
         for (Resource resource : resources) {
-            hiveService.executeSqlScript(resource, ScriptType.table);
-            count++;
+            hiveService.executeSqlScript(resource);
         }
-
-        sw.stop();
-
-        log.info("\tCREATED " + count + " TABLES ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
     }
 
-    public void buildViews() throws IOException {
+    private void buildViews() throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/converted/views/*.sql");
-        int count = 0;
-
-        StopWatch sw = new StopWatch();
-        sw.start();
+        Resource[] resources = resolver.getResources("classpath:sql/build/views/*.sql");
 
         for (Resource resource : resources) {
-            hiveService.executeSqlScript(resource, ScriptType.view);
-            count++;
+            hiveService.executeSqlScript(resource);
         }
+    }
 
-        sw.stop();
 
-        log.info("\tCREATED " + count + " VIEWS ON DATABASE IN " + sw.getTotalTimeMillis() + "ms");
+    private void buildIndexes() throws IOException {
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:sql/converted/indexes/*.sql");
+
+        for (Resource resource : resources) {
+            hiveService.executeSqlScript(resource);
+        }
     }
 
 }

@@ -223,7 +223,7 @@ FROM (
                                        END), 2),
         'Ending balance'
     FROM
-        TrialBalance tb
+        trial_balance tb
         INNER JOIN
         DIM_Chart_of_Accounts coa
             ON

@@ -19,11 +19,9 @@ The main method of `RunTest.java` can do the following:
 * Execute Queries
 * Output Results to CSV File
 
-The test requires 5 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
+The test requires 4 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
 
-1.  The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables & build views
-
-1.  The second `arg` should be `true` or `false` and indicates if you want load data
+1.  The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables, build views and load data
 
 1.  The third `arg` should be `true` or `false` and indicates if you want execute queries
 
@@ -62,10 +60,10 @@ From the project's base directory execute the following from the command line
 > mvn package clean
 
 # runs the spring boot jar.  must pass 4 parameters.
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] [true|false] [true|false] "[test description]" "[data location]
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] [true|false] "[test description]" "[data location]
 
 # for example
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar true true true "some test" "/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted"
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar true true "some test" "/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted"
 
 ```
 
@@ -79,7 +77,7 @@ Create an "Application" "Run Configuration" like the following [screenshot](http
 Run in Azure by setting the active profile (eg `-Dspring.profiles.active=azure`)
 
 ```
-java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar true true true "testing in azure" "/path/to/data/in/azure"
+java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar true true "testing in azure" "/path/to/data/in/azure"
 ```
 
 ## Current Problems

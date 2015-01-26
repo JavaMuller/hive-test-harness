@@ -1,0 +1,68 @@
+CREATE TABLE gl_012_date_validation (
+  coa_id INT,
+  bu_id INT,
+  segment1_id INT,
+  segment2_id INT,
+  source_id INT,
+  user_listing_id INT,
+  approver_by_id INT,
+  year_flag string,
+  period_flag string,
+  ey_period string,
+  entry_date TIMESTAMP,
+  Effective_date TIMESTAMP,
+  min_max_ent_eff_date TIMESTAMP,
+  category string,
+  je_id_count INT,
+  days_lag INT,
+  sys_manual_ind string,
+  journal_type string,
+  functional_curr_cd string,
+  reporting_amount_curr_cd string,
+  net_reporting_amount FLOAT,
+  net_reporting_amount_credit FLOAT,
+  net_reporting_amount_debit FLOAT,
+  net_functional_amount FLOAT,
+  net_functional_credit_amount FLOAT,
+  net_functional_debit_amount FLOAT,
+  net_amount FLOAT,
+  net_amount_credit FLOAT,
+  net_amount_debit FLOAT
+) stored AS orc;
+
+CREATE TABLE gl_012_date_validation_csv (
+  coa_id INT,
+  bu_id INT,
+  segment1_id INT,
+  segment2_id INT,
+  source_id INT,
+  user_listing_id INT,
+  approver_by_id INT,
+  year_flag string,
+  period_flag string,
+  ey_period string,
+  entry_date TIMESTAMP,
+  Effective_date TIMESTAMP,
+  min_max_ent_eff_date TIMESTAMP,
+  category string,
+  je_id_count INT,
+  days_lag INT,
+  sys_manual_ind string,
+  journal_type string,
+  functional_curr_cd string,
+  reporting_amount_curr_cd string,
+  net_reporting_amount FLOAT,
+  net_reporting_amount_credit FLOAT,
+  net_reporting_amount_debit FLOAT,
+  net_functional_amount FLOAT,
+  net_functional_credit_amount FLOAT,
+  net_functional_debit_amount FLOAT,
+  net_amount FLOAT,
+  net_amount_credit FLOAT,
+  net_amount_debit FLOAT
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054' stored AS textfile;
+
+load data inpath '/poc/data/ey/gl_012_date_validation.csv' into table gl_012_date_validation_csv;
+
+insert into table gl_012_date_validation  select * from gl_012_date_validation_csv;
+

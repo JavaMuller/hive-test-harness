@@ -124,7 +124,7 @@ public class HiveService {
     }
 
 
-    public void executeSqlScript(Resource resource, ScriptType scriptType) {
+    public void executeSqlScript(Resource resource) {
 
         StopWatch sw = new StopWatch("executed sql script: " + resource.getFilename());
         sw.start();
@@ -134,19 +134,7 @@ public class HiveService {
 
             ScriptUtils.executeSqlScript(connection, resource);
 
-            if (scriptType.equals(ScriptType.table)) {
-
-                String tempContents = IOUtils.toString(resource.getInputStream());
-
-                tempContents = StringUtils.replace(tempContents, "stored AS orc", "ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\054' stored AS textfile");
-                String filename = StringUtils.replace(resource.getFilename(), ".sql", "");
-                tempContents = StringUtils.replace(tempContents, filename, filename + "_csv");
-
-                ScriptUtils.executeSqlScript(connection, new ByteArrayResource(tempContents.getBytes()));
-
-            }
-
-        } catch (IOException | SQLException e) {
+        } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }
 
@@ -164,6 +152,8 @@ public class HiveService {
 
         try {
             client = getHCatClient();
+
+            log.debug("dropping database: " + databaseName);
 
             client.dropDatabase(databaseName, true, HCatClient.DropDBMode.CASCADE);
 

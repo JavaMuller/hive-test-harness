@@ -27,19 +27,17 @@ public class RunTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        assert args != null && args.length == 5;
+        assert args != null && args.length == 4;
 
         final boolean build = Boolean.parseBoolean(args[0]);
-        final boolean load = Boolean.parseBoolean(args[1]);
-        final boolean query = Boolean.parseBoolean(args[2]);
-        final String description = args[3];
-        final String dataPath = args[4];
+        final boolean query = Boolean.parseBoolean(args[1]);
+        final String description = args[2];
+        final String dataPath = args[3];
 
         System.out.println();
         log.info("******************************************");
         log.info("Running Test with the following parameters...");
         log.info("\tBuild? " + build);
-        log.info("\tLoad? " + load);
         log.info("\tQuery? " + query);
         log.info("\tDescription: " + description);
         log.info("\tData Path: " + dataPath);
@@ -54,20 +52,9 @@ public class RunTest implements CommandLineRunner {
             log.info("******************************************");
             System.out.println();
 
-            proof.createDatabase();
-            proof.buildTables();
-            proof.buildViews();
+            proof.build(dataPath);
         }
 
-        if (load) {
-            System.out.println();
-            log.info("******************************************");
-            log.info("Loading data");
-            log.info("******************************************");
-            System.out.println();
-
-            proof.loadData(dataPath);
-        }
 
         if (query) {
 
@@ -76,7 +63,6 @@ public class RunTest implements CommandLineRunner {
             };
 
             String[] excludeFilter = new String[]{
-                    "v_IL_GL018_KPIs_unpivot.sql", // no data given
                     "VW_GL016T2_Zero_Balance_GL.sql",
                     "VW_GL015T1_Cutoff_Analysis.sql",
                     "VW_GL012T3_Date_Analysis.sql",

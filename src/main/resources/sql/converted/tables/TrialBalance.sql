@@ -1,4 +1,4 @@
-CREATE TABLE TrialBalance (
+CREATE TABLE trial_balance (
   coa_id INT,
   bu_id INT,
   period_id INT,

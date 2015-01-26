@@ -121,7 +121,7 @@ LEFT OUTER JOIN
             NULL AS `Version description`,
             'Interim as posted' AS `Source type`
        FROM
-            TrialBalance tb
+           trial_balance tb
 FULL OUTER JOIN
             (
              SELECT
@@ -255,7 +255,7 @@ LEFT OUTER JOIN
             NULL AS `Version description`,
             'Interim as shown' AS `Source type`
        FROM
-            TrialBalance tb
+           trial_balance tb
  INNER JOIN
             DIM_Chart_of_Accounts coa
          ON
