@@ -67,4 +67,4 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054' stored AS textfile;
 
 load data inpath '/poc/data/ey/ft_gl_account.csv' into table ft_gl_account_csv;
 
-insert table ft_gl_account partition(year_flag, period_flag) select * from ft_gl_account_csv;
+insert into table ft_gl_account partition(year_flag, period_flag) select * from ft_gl_account_csv;
