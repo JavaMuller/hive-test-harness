@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
+import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,8 +78,6 @@ public class HadoopService {
 
             public Void run() throws Exception {
 
-                byte[] chunk = new byte[1024];
-
                 Path path = new Path(environment.getProperty("data.path") + "/" + resource.getFilename());
 
                 StopWatch sw = new StopWatch("wrote file to path " + path);
@@ -88,11 +87,7 @@ public class HadoopService {
 
                 InputStream inputStream = resource.getInputStream();
 
-                while (inputStream.read(chunk) != -1) {
-                    outputStream.write(chunk);
-                }
-
-                outputStream.close();
+                IOUtils.copyBytes(inputStream, outputStream, fs.getConf());
 
                 sw.stop();
 

@@ -1,33 +1,26 @@
 package org.hortonworks.poc.ey.service;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hive.hcatalog.api.HCatClient;
 import org.apache.hive.hcatalog.api.HCatCreateDBDesc;
 import org.apache.hive.hcatalog.common.HCatException;
 import org.hortonworks.poc.ey.domain.QueryResult;
-import org.hortonworks.poc.ey.domain.ScriptType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
-import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.security.PrivilegedExceptionAction;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +64,24 @@ public class HiveService {
             assert statements.size() == 1;
 
             return statements.get(0);
+        }
+    }
+
+
+    private List<String> getSqlStrings(Resource resource) throws IOException {
+
+        EncodedResource encodedResource = new EncodedResource(resource);
+
+        try (LineNumberReader reader = new LineNumberReader(encodedResource.getReader())) {
+
+            String script = ScriptUtils.readScript(reader, ScriptUtils.DEFAULT_COMMENT_PREFIX, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR);
+
+            List<String> statements = new ArrayList<>();
+
+            ScriptUtils.splitSqlScript(script, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR, statements);
+
+
+            return statements;
         }
     }
 
@@ -124,23 +135,34 @@ public class HiveService {
     }
 
 
-    public void executeSqlScript(Resource resource) {
+    public void executeSqlScript(Resource resource) throws IOException {
 
-        StopWatch sw = new StopWatch("executed sql script: " + resource.getFilename());
-        sw.start();
+        List<String> statements = getSqlStrings(resource);
 
 
-        try (Connection connection = dataSource.getConnection()) {
+        try (
+                Connection connection = dataSource.getConnection()
+        ) {
 
-            ScriptUtils.executeSqlScript(connection, resource);
+            for (String query : statements) {
+                Statement statement = connection.createStatement();
+
+                StopWatch sw = new StopWatch(query);
+                sw.start();
+
+                statement.execute(query);
+
+                sw.stop();
+
+                log.debug(sw.shortSummary());
+
+            }
 
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }
 
-        sw.stop();
 
-        log.debug(sw.shortSummary());
     }
 
 
