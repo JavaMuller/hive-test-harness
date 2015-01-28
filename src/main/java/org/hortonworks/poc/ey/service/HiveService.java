@@ -99,6 +99,8 @@ public class HiveService {
 
             for (int i = 0; i < iterations; i++) {
 
+                log.debug("warmup " + i + 1 + " of " + iterations);
+
                 StopWatch queryTimer = new StopWatch();
                 queryTimer.start();
 
@@ -107,6 +109,8 @@ public class HiveService {
                 queryTimer.stop();
 
                 if (i == iterations -1) {
+
+                    log.debug("counting results and capturing timings");
 
                     StopWatch countTimer = new StopWatch();
                     countTimer.start();
