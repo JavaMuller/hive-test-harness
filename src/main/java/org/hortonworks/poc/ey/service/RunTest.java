@@ -27,12 +27,13 @@ public class RunTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        assert args != null && args.length == 4;
+        assert args != null && args.length == 5;
 
         final boolean build = Boolean.parseBoolean(args[0]);
         final boolean query = Boolean.parseBoolean(args[1]);
         final String description = args[2];
         final String dataPath = args[3];
+        final int iterations = Integer.parseInt(args[4]);
 
         System.out.println();
         log.info("******************************************");
@@ -41,6 +42,7 @@ public class RunTest implements CommandLineRunner {
         log.info("\tQuery? " + query);
         log.info("\tDescription: " + description);
         log.info("\tData Path: " + dataPath);
+        log.info("\tWarmup Iterations: " + iterations);
         log.info("******************************************");
         System.out.println();
 
@@ -84,7 +86,7 @@ public class RunTest implements CommandLineRunner {
             log.info("******************************************");
             System.out.println();
 
-            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, 1);
+            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, iterations);
 
             System.out.println();
             log.info("******************************************");
