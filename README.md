@@ -19,15 +19,17 @@ The main method of `RunTest.java` can do the following:
 * Execute Queries
 * Output Results to CSV File
 
-The test requires 4 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
+The test requires 5 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
 
 1.  The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables, build views and load data
 
-1.  The third `arg` should be `true` or `false` and indicates if you want execute queries
+1.  The second `arg` should be `true` or `false` and indicates if you want execute queries
 
-1.  The forth `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
+1.  The third `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
 
-1.  The fifth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted`.  This directory should contain `.csv` files whose name matches that of the table its loading.
+1.  The forth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted`.  This directory should contain `.csv` files whose name matches that of the table its loading.
+
+1.  The fifth `arg` is the number of times to execute the query.  Set this to 5 to "warm up" each query before saving results.
 
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
 
@@ -60,10 +62,10 @@ From the project's base directory execute the following from the command line
 > mvn package clean
 
 # runs the spring boot jar.  must pass 4 parameters.
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] [true|false] "[test description]" "[data location]
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar [true|false] [true|false] "[test description]" "[data location]" [iterations]
 
 # for example
-> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar true true "some test" "/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted"
+> java -jar target/hive-poc-0.0.1-SNAPSHOT.jar true true "some test" "/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data/converted" 5
 
 ```
 
@@ -77,7 +79,7 @@ Create an "Application" "Run Configuration" like the following [screenshot](http
 Run in Azure by setting the active profile (eg `-Dspring.profiles.active=azure`)
 
 ```
-java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar true true "testing in azure" "/path/to/data/in/azure"
+java -jar -Dspring.profiles.active=azure hive-poc-0.0.1-SNAPSHOT.jar true true "testing in azure" "/path/to/data/in/azure" 5
 ```
 
 ## Current Problems
