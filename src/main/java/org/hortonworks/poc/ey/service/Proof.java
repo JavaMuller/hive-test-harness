@@ -157,7 +157,7 @@ public class Proof {
 
     private void buildViews(String[] viewFilter) throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/build/views/*.sql");
+        Resource[] resources = resolver.getResources("classpath:sql/build/materialized/*.sql");
 
         List<Resource> filteredResources = applyFilters(resources, viewFilter, null);
 
@@ -165,15 +165,4 @@ public class Proof {
             hiveService.executeSqlScript(resource);
         }
     }
-
-
-    private void buildIndexes() throws IOException {
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/converted/indexes/*.sql");
-
-        for (Resource resource : resources) {
-            hiveService.executeSqlScript(resource);
-        }
-    }
-
 }

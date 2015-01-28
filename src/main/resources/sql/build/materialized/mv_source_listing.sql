@@ -1,3 +1,22 @@
+CREATE TABLE
+    mv_source_listing
+    (
+        source_id INT,
+        engagement_id string,
+        source_cd string,
+        source_desc string,
+        erp_subledger_module string,
+        bus_process_major string,
+        bus_process_minor string,
+        sys_manual_ind string,
+        ver_start_date_id INT,
+        ver_end_date_id INT,
+        ver_desc string,
+        source_group string,
+        source_ref string
+    ) ;
+
+
 insert overwrite TABLE mv_source_listing
     SELECT
         all_version.source_id,

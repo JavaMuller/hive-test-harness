@@ -19,7 +19,7 @@ SELECT
 FROM
     FT_GL_Account FJ
 INNER JOIN
-    v_Chart_of_accounts coa
+    mv_chart_of_accounts coa
  ON
     coa.coa_id = fj.coa_id
 INNER JOIN

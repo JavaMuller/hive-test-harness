@@ -67,32 +67,32 @@ FROM
             PP.period_flag = FJ.period_flag
             AND PP.year_flag = FJ.YEAR_FLAG
     INNER JOIN
-    v_Chart_of_accounts coa
+    mv_chart_of_accounts coa
         ON
             coa.coa_id = FJ.coa_id
     LEFT JOIN
-    v_Fiscal_calendar FC
+    mv_fiscal_calendar FC
         ON
             FJ.bu_id = FC.bu_id
             AND ENTCAL.calendar_date > FC.fiscal_period_start AND ENTCAL.calendar_date <= FC.fiscal_period_end
             AND FC.adjustment_period = 'N'
     LEFT OUTER JOIN
-    v_User_listing UL
+    mv_user_listing UL
         ON
             UL.user_listing_id = FJ.user_listing_id
     LEFT OUTER JOIN
-    v_Business_unit_listing BU
+    mv_business_unit_listing BU
         ON
             Bu.bu_id = fJ.bu_id
     LEFT OUTER JOIN
-    v_Source_listing src
+    mv_source_listing src
         ON
             src.source_id = fJ.source_id
     LEFT OUTER JOIN
-    v_Segment01_listing S1
+    mv_segment01_listing S1
         ON
             S1.ey_segment_id = fJ.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing S2
+    mv_segment02_listing S2
         ON
             S2.ey_segment_id = fJ.segment2_id;

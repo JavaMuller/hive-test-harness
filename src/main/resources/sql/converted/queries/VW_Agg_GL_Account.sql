@@ -1,45 +1,3 @@
-WITH
-        agg_acct AS
-    (
-        SELECT
-            AGG.coa_id,
-            agg.bu_id,
-            agg.source_id,
-            agg.year_flag,
-            agg.period_flag,
-            agg.Sys_man_ind,
-            agg.journal_type,
-            agg.dr_cr_ind,
-            agg.user_listing_id,
-            agg.segment1_id,
-            agg.segment2_id,
-            agg.Ey_period,
-            reporting_amount_curr_cd,
-            functional_curr_cd,
-            SUM(Net_reporting_amount) AS `Net_reporting_amount`,
-            SUM(Net_reporting_amount_credit) AS `Net_reporting_amount_credit`,
-            SUM(Net_reporting_amount_debit) AS `Net_reporting_amount_debit`,
-            SUM(net_functional_amount) AS `net_functional_amount`,
-            SUM(net_functional_amount_credit) AS `net_functional_amount_credit`,
-            SUM(net_functional_amount_debit) AS `net_functional_amount_debit`
-        FROM
-            FT_GL_Account AGG
-        GROUP BY
-            AGG.coa_id,
-            agg.bu_id,
-            agg.source_id,
-            agg.year_flag,
-            agg.period_flag,
-            agg.Sys_man_ind,
-            agg.journal_type,
-            agg.dr_cr_ind,
-            agg.user_listing_id,
-            agg.segment1_id,
-            agg.segment2_id,
-            agg.Ey_period,
-            reporting_amount_curr_cd,
-            functional_curr_cd
-    )
 SELECT
     AGG.coa_id AS `COA ID `,
     COA.ey_account_type AS `Account TYPE `,
@@ -87,9 +45,9 @@ SELECT
     SEG2.ey_segment_group AS `Segment 2 GROUP `,
     agg.dr_cr_ind AS `INDICATOR`
 FROM
-    agg_acct AGG
+    mv_agg_act AGG
     INNER JOIN
-    v_Chart_of_accounts COA
+    mv_chart_of_accounts COA
         ON
             COA.coa_id = AGG.coa_id
             AND COA.bu_id = AGG.bu_id
@@ -99,22 +57,22 @@ FROM
             PP.period_flag = AGG.period_flag
             AND PP.year_flag = AGG.year_flag
     LEFT OUTER JOIN
-    v_User_listing UL
+    mv_user_listing UL
         ON
             UL.user_listing_id = AGG.user_listing_id
     LEFT OUTER JOIN
-    v_Source_listing DS
+    mv_source_listing DS
         ON
             DS.source_id = AGG.Source_Id
     LEFT OUTER JOIN
-    v_Business_unit_listing Bu
+    mv_business_unit_listing Bu
         ON
             BU.bu_id = AGG.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing Seg1
+    mv_segment01_listing Seg1
         ON
             seg1.ey_segment_id = AGG.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing Seg2
+    mv_segment02_listing Seg2
         ON
             seg2.ey_segment_id = AGG.segment2_id;

@@ -77,16 +77,16 @@ SELECT
 FROM
     GL_016_Balance_by_GL F
     INNER JOIN
-    v_Chart_of_accounts coa
+    mv_chart_of_accounts coa
         ON
             coa.coa_id = f.coa_id
             AND coa.bu_id = f.bu_id
     LEFT OUTER JOIN
-    v_User_listing UL
+    mv_user_listing UL
         ON
             UL.user_listing_id = F.user_listing_id
     LEFT OUTER JOIN
-    v_User_listing AUL
+    mv_user_listing AUL
         ON
             AUL.user_listing_id = F.approved_by_id
     LEFT OUTER JOIN
@@ -95,18 +95,18 @@ FROM
             PP.year_flag = F.year_flag
             AND PP.period_flag = F.period_flag
     LEFT OUTER JOIN
-    v_Business_unit_listing BU
+    mv_business_unit_listing BU
         ON
             Bu.bu_id = f.bu_id
     LEFT OUTER JOIN
-    v_Source_listing src
+    mv_source_listing src
         ON
             src.source_id = f.source_id
     LEFT OUTER JOIN
-    v_Segment01_listing S1
+    mv_segment01_listing S1
         ON
             S1.ey_segment_id = f.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing S2
+    mv_segment02_listing S2
         ON
             S2.ey_segment_id = f.segment2_id;

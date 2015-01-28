@@ -28,19 +28,19 @@ SELECT
 FROM
     FLAT_JE AS f
     LEFT OUTER JOIN
-    v_Business_unit_listing bu
+    mv_business_unit_listing bu
         ON
             bu.bu_id = f.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing s1
+    mv_segment01_listing s1
         ON
             s1.ey_segment_id = F.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing s2
+    mv_segment02_listing s2
         ON
             s2.ey_segment_id = F.segment2_id
     LEFT OUTER JOIN
-    v_Source_listing src
+    mv_source_listing src
         ON
             src.source_id = f.source_id
 WHERE

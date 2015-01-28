@@ -345,18 +345,18 @@ LEFT OUTER JOIN
 ON
     full_result.user_listing_id = dp.user_listing_id
 LEFT OUTER JOIN
-    v_Business_unit_listing B
+    mv_business_unit_listing B
 ON
     B.bu_id = full_result.bu_id
 LEFT OUTER JOIN
-    v_Source_listing src
+    mv_source_listing src
 ON
     src.source_id = full_result.source_id
 LEFT OUTER JOIN
-    v_Segment01_listing S1
+    mv_segment01_listing S1
 ON
     S1.ey_segment_id = full_result.segment1_id
 LEFT OUTER JOIN
-    v_Segment02_listing S2
+    mv_segment02_listing S2
 ON
     S2.ey_segment_id = full_result.segment2_id;

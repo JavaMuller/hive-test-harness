@@ -1,4 +1,19 @@
-insert overwrite TABLE mv_segment02_listing
+CREATE TABLE
+    mv_segment02_listing
+    (
+        segment01 INT,
+        segment02 INT,
+        segment03 INT,
+        segment04 INT,
+        segment05 INT,
+        ey_segment_id INT,
+        segment_cd string,
+        segment_desc string,
+        ey_segment_group string,
+        ey_segment_ref string
+    ) ;
+
+
 WITH
     SEGMENT_CTE AS
     (
@@ -47,6 +62,7 @@ WITH
         FROM
             Segment05_listing SL
     )
+insert overwrite TABLE mv_segment02_listing
 SELECT
     CASE
         WHEN SEGMENT.table_identifier = 'Segment01'

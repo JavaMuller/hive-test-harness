@@ -42,15 +42,15 @@ FROM
        FROM
             flat_je fj
 LEFT OUTER JOIN
-            v_Business_unit_listing BU
+            mv_business_unit_listing BU
          ON
             Bu.bu_id = fj.bu_id
 LEFT OUTER JOIN
-            v_Segment01_listing S1
+            mv_segment01_listing S1
          ON
             S1.ey_segment_id = fj.segment1_id
 LEFT OUTER JOIN
-            v_Segment02_listing S2
+            mv_segment02_listing S2
          ON
             S2.ey_segment_id = fj.segment2_id
       WHERE
@@ -150,15 +150,15 @@ FULL OUTER JOIN
                FROM
                     flat_je fj
     LEFT OUTER JOIN
-                    v_Business_unit_listing BU
+                    mv_business_unit_listing BU
                  ON
                     Bu.bu_id = fj.bu_id
     LEFT OUTER JOIN
-                    v_Segment01_listing S1
+                    mv_segment01_listing S1
                  ON
                     S1.ey_segment_id = fj.segment1_id
     LEFT OUTER JOIN
-                    v_Segment02_listing S2
+                    mv_segment02_listing S2
                  ON
                     S2.ey_segment_id = fj.segment2_id
               WHERE
@@ -202,15 +202,15 @@ FULL OUTER JOIN
             fc.fiscal_period_seq = pp.fiscal_period_seq_end
         AND fc.fiscal_year_cd = pp.fiscal_year_cd
 LEFT OUTER JOIN
-            v_Business_unit_listing BU
+            mv_business_unit_listing BU
          ON
             Bu.bu_id = tb.bu_id
 LEFT OUTER JOIN
-            v_Segment01_listing S1
+            mv_segment01_listing S1
          ON
             S1.ey_segment_id = tb.segment1_id
 LEFT OUTER JOIN
-            v_Segment02_listing S2
+            mv_segment02_listing S2
          ON
             S2.ey_segment_id = tb.segment2_id
       WHERE
@@ -270,15 +270,15 @@ LEFT OUTER JOIN
             fc.fiscal_period_seq = pp.fiscal_period_seq_end
         AND fc.fiscal_year_cd = pp.fiscal_year_cd
 LEFT OUTER JOIN
-            v_Business_unit_listing BU
+            mv_business_unit_listing BU
          ON
             Bu.bu_id = tb.bu_id
 LEFT OUTER JOIN
-            v_Segment01_listing S1
+            mv_segment01_listing S1
          ON
             S1.ey_segment_id = tb.segment1_id
 LEFT OUTER JOIN
-            v_Segment02_listing S2
+            mv_segment02_listing S2
          ON
             S2.ey_segment_id = tb.segment2_id
       WHERE

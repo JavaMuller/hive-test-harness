@@ -36,20 +36,20 @@ FROM
             pp.period_flag = fj.period_flag
             AND PP.year_flag = FJ.year_flag
     INNER JOIN
-    v_Chart_of_accounts coa
+    mv_chart_of_accounts coa
         ON
             coa.coa_id = fj.coa_id
             AND coa.bu_id = FJ.bu_id
     LEFT OUTER JOIN
-    v_Business_unit_listing bu
+    mv_business_unit_listing bu
         ON
             bu.bu_id = fj.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing s1
+    mv_segment01_listing s1
         ON
             s1.ey_segment_id = Fj.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing s2
+    mv_segment02_listing s2
         ON
             s2.ey_segment_id = Fj.segment2_id
 WHERE
@@ -110,20 +110,20 @@ FROM
             pp.period_flag = fj.period_flag
             AND PP.year_flag = FJ.year_flag
     INNER JOIN
-    v_Chart_of_accounts coa
+    mv_chart_of_accounts coa
         ON
             coa.coa_id = fj.coa_id
             AND coa.bu_id = FJ.bu_id
     LEFT OUTER JOIN
-    v_Business_unit_listing bu
+    mv_business_unit_listing bu
         ON
             bu.bu_id = fj.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing s1
+    mv_segment01_listing s1
         ON
             s1.ey_segment_id = Fj.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing s2
+    mv_segment02_listing s2
         ON
             s2.ey_segment_id = Fj.segment2_id
 WHERE
@@ -184,20 +184,20 @@ FROM
             pp.period_flag = fj.period_flag
             AND PP.year_flag = FJ.year_flag
     INNER JOIN
-    v_Chart_of_accounts coa
+    mv_chart_of_accounts coa
         ON
             coa.coa_id = fj.coa_id
             AND coa.bu_id = FJ.bu_id
     LEFT OUTER JOIN
-    v_Business_unit_listing bu
+    mv_business_unit_listing bu
         ON
             bu.bu_id = fj.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing s1
+    mv_segment01_listing s1
         ON
             s1.ey_segment_id = Fj.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing s2
+    mv_segment02_listing s2
         ON
             s2.ey_segment_id = Fj.segment2_id
 WHERE
@@ -265,15 +265,15 @@ FROM
         ON
             fc.fiscal_year_cd = pp.fiscal_year_cd
     LEFT OUTER JOIN
-    v_Business_unit_listing bu
+    mv_business_unit_listing bu
         ON
             bu.bu_id = tb.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing S1
+    mv_segment01_listing S1
         ON
             s1.ey_segment_id = tb.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing S2
+    mv_segment02_listing S2
         ON
             s2.ey_segment_id = tb.segment2_id
 WHERE
@@ -345,15 +345,15 @@ FROM
         ON
             fc.fiscal_year_cd = pp.fiscal_year_cd
     LEFT OUTER JOIN
-    v_Business_unit_listing bu
+    mv_business_unit_listing bu
         ON
             bu.bu_id = tb.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing S1
+    mv_segment01_listing S1
         ON
             s1.ey_segment_id = tb.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing S2
+    mv_segment02_listing S2
         ON
             s2.ey_segment_id = tb.segment2_id
 WHERE
@@ -425,15 +425,15 @@ FROM
         ON
             fc.fiscal_year_cd = pp.fiscal_year_cd
     LEFT OUTER JOIN
-    v_Business_unit_listing bu
+    mv_business_unit_listing bu
         ON
             bu.bu_id = tb.bu_id
     LEFT OUTER JOIN
-    v_Segment01_listing S1
+    mv_segment01_listing S1
         ON
             s1.ey_segment_id = tb.segment1_id
     LEFT OUTER JOIN
-    v_Segment02_listing S2
+    mv_segment02_listing S2
         ON
             s2.ey_segment_id = tb.segment2_id
 WHERE

@@ -65,19 +65,19 @@ LEFT OUTER JOIN
          ON
             DP1.user_listing_id = f.approved_by_id
 LEFT OUTER JOIN
-            v_Business_unit_listing B
+            mv_business_unit_listing B
          ON
             B.bu_id = F.bu_id
 LEFT OUTER JOIN
-            v_Segment01_listing s1
+            mv_segment01_listing s1
          ON
             s1.ey_segment_id = f.segment1_id
 LEFT OUTER JOIN
-            v_Segment02_listing s2
+            mv_segment02_listing s2
          ON
             s2.ey_segment_id = f.segment2_id
 LEFT OUTER JOIN
-            v_Source_listing Src
+            mv_source_listing Src
          ON
             Src.Source_Id = f.source_id
  INNER JOIN
@@ -177,15 +177,15 @@ LEFT OUTER JOIN
          ON
             fc.fiscal_year_cd = pp.fiscal_year_cd
 LEFT OUTER JOIN
-            v_Business_unit_listing Bu
+            mv_business_unit_listing Bu
          ON
             Bu.bu_id = tb.bu_id
 LEFT OUTER JOIN
-            v_Segment01_listing s1
+            mv_segment01_listing s1
          ON
             s1.ey_segment_id = tb.segment1_id
 LEFT OUTER JOIN
-            v_Segment02_listing s2
+            mv_segment02_listing s2
          ON
             s2.ey_segment_id = tb.segment2_id
       WHERE
