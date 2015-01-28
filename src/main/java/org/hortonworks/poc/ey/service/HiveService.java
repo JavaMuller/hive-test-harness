@@ -85,52 +85,57 @@ public class HiveService {
         }
     }
 
-    public QueryResult executeSqlQuery(Resource resource) throws IOException {
+    public QueryResult executeSqlQuery(Resource resource, int iterations) throws IOException {
 
         String query = getSqlString(resource);
 
         int resultSize = 0;
-
-        String error = null;
-
-        long queryTime = 0;
-        long countTime = 0;
 
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)
         ) {
 
-            StopWatch queryTimer = new StopWatch();
-            queryTimer.start();
 
-            ResultSet resultSet = statement.executeQuery();
+            for (int i = 0; i < iterations; i++) {
 
-            queryTimer.stop();
-            queryTime = queryTimer.getTotalTimeMillis();
+                StopWatch queryTimer = new StopWatch();
+                queryTimer.start();
 
+                ResultSet resultSet = statement.executeQuery();
 
-            StopWatch countTimer = new StopWatch();
-            countTimer.start();
+                queryTimer.stop();
 
-            while (resultSet.next()) {
-                resultSize++;
+                if (i == iterations -1) {
+
+                    StopWatch countTimer = new StopWatch();
+                    countTimer.start();
+
+                    while (resultSet.next()) {
+                        resultSize++;
+                    }
+
+                    countTimer.stop();
+
+                    final QueryResult queryResult = new QueryResult(resource.getFilename(), queryTimer.getTotalTimeMillis(), countTimer.getTotalTimeMillis(), null, resultSize);
+
+                    log.info(queryResult.toString());
+
+                    return queryResult;
+                }
+
             }
 
-            countTimer.stop();
-            countTime = countTimer.getTotalTimeMillis();
 
         } catch (SQLException e) {
-            error = e.getMessage();
-
-            log.error(error, e);
+            log.error(e.getMessage(), e);
         }
 
-        final QueryResult queryResult = new QueryResult(resource.getFilename(), queryTime, countTime, error, resultSize);
 
-        log.info(queryResult.toString());
 
-        return queryResult;
+
+
+        return null;
 
     }
 

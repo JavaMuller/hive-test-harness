@@ -61,18 +61,15 @@ public class Proof {
 
         for (Resource file : filteredResources) {
 
-            for (int i = 0; i < iterations; i++) {
-                QueryResult queryResult = hiveService.executeSqlQuery(file);
+            QueryResult queryResult = hiveService.executeSqlQuery(file, iterations);
 
-                if (i == iterations -1) {
-                    results.add(queryResult);
-                }
+            if (queryResult != null) {
+                results.add(queryResult);
             }
 
         }
 
         return results;
-
 
     }
 
