@@ -98,8 +98,40 @@ https://issues.apache.org/jira/browse/HIVE-9249
 1.  hive.tez.auto.reducer.parallelism=true
 1.  hive.vectorized.execution.reduce.enabled=true
 
+set hive.prewarm.enabled=true
+set hive.prewarm.numcontainers=305
+set hive.auto.convert.join.noconditionaltask.size = 512mb?
+
+set hive.stats.fetch.partition.stats=false;
+
+
 ### Not Working
 1.  hive.optimize.bucketmapjoin.sortedmerge=true - HURT PERFORMANCE LOCALLY
 1.  increase ez.task.resource.memory.mb from 512 to 1024 - HURT PERFORMANCE LOCALLY
 1.  hive.cbo.enable=true ALREADY ENABLED
 1.  hive.vectorized.execution.enabled=true ALREADY ENABLED
+
+### possible indexes / partitions
+
+#### where clauses
+Business_unit_listing ver_end_date_id
+Business_unit_listing bu_cd
+Source_listing ver_end_date_id
+User_listing ver_end_date_id
+FLAT_JE year_flag
+FLAT_JE period_flag
+FLAT_JE ver_end_date_id
+FLAT_JE entry_date
+FLAT_JE effective_date
+trial_balance ver_end_date_id
+Parameters_period year_flag
+Parameters_period period_flag
+Parameters_period end_date
+Parameters_period fiscal_year_cd
+Dim_Fiscal_calendar fiscal_period_seq
+FT_GL_Account user_listing_id
+FT_GL_Account year_flag
+FT_GL_Account active_ind
+DIM_Chart_of_Accounts ey_account_type
+DIM_Chart_of_Accounts ey_account_sub_type
+DIM_Chart_of_Accounts ey_account_group_I

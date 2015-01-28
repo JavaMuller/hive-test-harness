@@ -1,4 +1,4 @@
-CREATE VIEW v_user_listing AS
+insert overwrite TABLE mv_user_listing
   SELECT
     all_version.user_listing_id,
     latest_version.bu_id,
@@ -21,8 +21,8 @@ CREATE VIEW v_user_listing AS
     latest_version.ver_start_date_id,
     latest_version.ver_end_date_id,
     latest_version.ver_desc,
-    latest_version.client_user_id + ' - ' + latest_version.full_name AS client_ref,
-    latest_version.client_user_id + ' - ' + latest_version.full_name AS preparer_ref
+    concat(latest_version.client_user_id, ' - ', latest_version.full_name) AS client_ref,
+    concat(latest_version.client_user_id, ' - ', latest_version.full_name) AS preparer_ref
   FROM
     User_listing all_version
     LEFT OUTER JOIN

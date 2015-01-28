@@ -1,4 +1,4 @@
-CREATE VIEW v_source_listing AS
+insert overwrite TABLE mv_source_listing
     SELECT
         all_version.source_id,
         all_version.engagement_id,
@@ -12,7 +12,7 @@ CREATE VIEW v_source_listing AS
         all_version.ver_end_date_id,
         all_version.ver_desc,
         all_version.ey_source_group AS source_group,
-        all_version.source_cd + ' - ' + all_version.source_desc         AS source_ref
+        concat(all_version.source_cd, ' - ', all_version.source_desc)         AS source_ref
     FROM
         Source_listing all_version
     WHERE

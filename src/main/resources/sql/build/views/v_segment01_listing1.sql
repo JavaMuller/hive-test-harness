@@ -70,7 +70,7 @@ SELECT
     SEGMENT.segment_cd,
     SEGMENT.segment_desc,
     SEGMENT.ey_segment_group,
-    SEGMENT.segment_cd + ' - ' + SEGMENT.segment_desc AS ey_segment_ref
+    concat(SEGMENT.segment_cd, ' - ', SEGMENT.segment_desc) AS ey_segment_ref
 FROM
     SEGMENT_CTE SEGMENT
 INNER JOIN

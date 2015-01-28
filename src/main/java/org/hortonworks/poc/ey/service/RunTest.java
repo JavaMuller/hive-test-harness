@@ -52,15 +52,19 @@ public class RunTest implements CommandLineRunner {
             log.info("******************************************");
             System.out.println();
 
-            proof.build(dataPath);
+            String[] dataFilter = new String[]{};
+
+            String[] tableFilter = new String[]{};
+
+            String[] viewFilter = new String[]{};
+
+            proof.build(dataPath, dataFilter, tableFilter, viewFilter);
         }
 
 
         if (query) {
 
-            String[] includeFilter = new String[]{
-                    //"VW_Agg_GL_Account.sql"
-            };
+            String[] includeFilter = new String[]{};
 
             String[] excludeFilter = new String[]{
                     "VW_GL016T2_Zero_Balance_GL.sql",
@@ -76,20 +80,11 @@ public class RunTest implements CommandLineRunner {
 
             System.out.println();
             log.info("******************************************");
-            log.info("Warming up JVM");
-            log.info("******************************************");
-            System.out.println();
-
-            // this is a JVM warm-up run
-            proof.executeQueries(includeFilter, excludeFilter);
-
-            System.out.println();
-            log.info("******************************************");
             log.info("Executing queries");
             log.info("******************************************");
             System.out.println();
 
-            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter);
+            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, 1);
 
             System.out.println();
             log.info("******************************************");

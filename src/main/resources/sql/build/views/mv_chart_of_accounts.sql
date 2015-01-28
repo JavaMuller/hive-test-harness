@@ -1,4 +1,4 @@
-CREATE VIEW v_chart_of_accounts AS
+insert overwrite TABLE mv_chart_of_accounts
     SELECT
         all_version.coa_id,
         latest_version.bu_id,
@@ -28,7 +28,7 @@ CREATE VIEW v_chart_of_accounts AS
         latest_version.ver_start_date_id,
         latest_version.ver_end_date_id,
         latest_version.ver_desc,
-        latest_version.gl_account_cd + ' - ' + latest_version.gl_account_name AS ey_gl_account_name
+        concat(latest_version.gl_account_cd, '-',latest_version.gl_account_name) AS ey_gl_account_name
     FROM
         Chart_of_accounts all_version
         LEFT OUTER JOIN
