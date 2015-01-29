@@ -49,7 +49,6 @@ SELECT
     COA.ey_account_sub_class,
     COA.gl_account_name,
     COA.ey_gl_account_name,
-    COA.ey_gl_account_name,
     COA.gl_account_cd,
     COA.ey_account_group_I,
     COA.ey_account_group_II,
