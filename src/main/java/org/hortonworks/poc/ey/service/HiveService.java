@@ -99,7 +99,7 @@ public class HiveService {
 
             for (int i = 0; i < iterations; i++) {
 
-                log.debug("warmup " + i + 1 + " of " + iterations);
+                log.debug("warmup " + (i + 1) + " of " + iterations);
 
                 StopWatch queryTimer = new StopWatch();
                 queryTimer.start();
@@ -127,17 +127,10 @@ public class HiveService {
 
                     return queryResult;
                 }
-
             }
-
-
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }
-
-
-
-
 
         return null;
 
@@ -170,8 +163,6 @@ public class HiveService {
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }
-
-
     }
 
 
