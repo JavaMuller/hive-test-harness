@@ -1,0 +1,1 @@
+select * from ex_agg_gl_account;

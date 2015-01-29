@@ -42,6 +42,21 @@ public class Proof {
 
         buildViews(viewFilter);
 
+        buildExperimental();
+
+    }
+
+    private void buildExperimental() throws IOException {
+
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:sql/build/experimental/*.sql");
+
+        List<Resource> filteredResources = applyFilters(resources, null, null);
+
+        for (Resource resource : filteredResources) {
+            hiveService.executeSqlScript(resource);
+        }
+
     }
 
     public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter, int iterations) throws IOException {
