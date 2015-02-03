@@ -244,9 +244,7 @@ CREATE TABLE flat_je_csv (
   Adjusted_fiscal_period string
 ) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054' stored AS textfile;
 
-load data inpath '/poc/data/ey/flat_je.1.csv' into table flat_je_csv;
-load data inpath '/poc/data/ey/flat_je.2.csv' into table flat_je_csv;
-load data inpath '/poc/data/ey/flat_je.3.csv' into table flat_je_csv;
+load data inpath '/poc/data/ey/flat_je.csv' into table flat_je_csv;
 
 insert into table flat_je  select * from flat_je_csv;
 
