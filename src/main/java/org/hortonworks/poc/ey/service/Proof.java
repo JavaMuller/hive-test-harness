@@ -59,7 +59,7 @@ public class Proof {
 
     }
 
-    public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter, int iterations) throws IOException {
+    public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter, int iterations, boolean countResults) throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath:sql/converted/queries/*.sql");
 
@@ -76,7 +76,7 @@ public class Proof {
 
         for (Resource file : filteredResources) {
 
-            QueryResult queryResult = hiveService.executeSqlQuery(file, iterations);
+            QueryResult queryResult = hiveService.executeSqlQuery(file, iterations, countResults);
 
             if (queryResult != null) {
                 results.add(queryResult);

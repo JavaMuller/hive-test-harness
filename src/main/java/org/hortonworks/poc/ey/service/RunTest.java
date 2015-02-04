@@ -86,7 +86,7 @@ public class RunTest implements CommandLineRunner {
             log.info("******************************************");
             System.out.println();
 
-            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, iterations);
+            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, iterations, false);
 
             System.out.println();
             log.info("******************************************");

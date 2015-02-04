@@ -10,9 +10,9 @@ public class QueryResult {
     private long queryDuration;
     private long countDuration;
     private String error;
-    private int resultCount;
+    private long resultCount;
 
-    public QueryResult(String file, long queryDuration, long iterateResultsDuration, String error, int resultCount) {
+    public QueryResult(String file, long queryDuration, long iterateResultsDuration, String error, long resultCount) {
         this.file = file;
         this.queryDuration = queryDuration;
         this.countDuration = iterateResultsDuration;
@@ -36,7 +36,7 @@ public class QueryResult {
         return error;
     }
 
-    public int getResultCount() {
+    public long getResultCount() {
         return resultCount;
     }
 

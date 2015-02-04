@@ -85,21 +85,21 @@ public class HiveService {
         }
     }
 
-    public QueryResult executeSqlQuery(Resource resource, int iterations) throws IOException {
+    public QueryResult executeSqlQuery(Resource resource, int iterations, boolean countResults) throws IOException {
 
         String query = getSqlString(resource);
 
-        int resultSize = 0;
 
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)
         ) {
 
+            final String filename = resource.getFilename();
+
+            log.debug("executing: " + filename);
 
             for (int i = 0; i < iterations; i++) {
-
-                log.debug("warmup " + (i + 1) + " of " + iterations);
 
                 StopWatch queryTimer = new StopWatch();
                 queryTimer.start();
@@ -108,25 +108,42 @@ public class HiveService {
 
                 queryTimer.stop();
 
-                if (i == iterations -1) {
+                final long totalTimeMillis = queryTimer.getTotalTimeMillis();
 
-                    log.debug("counting results and capturing timings");
+                log.debug("warm up " + (i + 1) + " of " + iterations + " in " + totalTimeMillis + "ms");
 
-                    StopWatch countTimer = new StopWatch();
-                    countTimer.start();
 
-                    while (resultSet.next()) {
-                        resultSize++;
+                if (i == iterations - 1) {
+
+                    long resultSize = 0;
+                    long countTime = 0;
+
+                    if (countResults) {
+
+                        log.debug("counting results and capturing timings");
+
+                        StopWatch countTimer = new StopWatch();
+                        countTimer.start();
+
+                        while (resultSet.next()) {
+                            resultSize++;
+                        }
+
+                        countTimer.stop();
+
+                        countTime = countTimer.getTotalTimeMillis();
                     }
 
-                    countTimer.stop();
-
-                    final QueryResult queryResult = new QueryResult(resource.getFilename(), queryTimer.getTotalTimeMillis(), countTimer.getTotalTimeMillis(), null, resultSize);
+                    final QueryResult queryResult = new QueryResult(filename, totalTimeMillis, countTime, null, resultSize);
 
                     log.info(queryResult.toString());
 
+                    resultSet.close();
+
                     return queryResult;
                 }
+
+                resultSet.close();
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
