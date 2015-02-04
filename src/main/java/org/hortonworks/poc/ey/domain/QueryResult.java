@@ -49,9 +49,6 @@ public class QueryResult {
         return Objects.toStringHelper(this)
                 .add("file", file)
                 .add("queryDuration", queryDuration)
-                .add("countDuration", countDuration)
-                .add("resultCount", resultCount)
-                .add("error", error)
                 .toString();
     }
 }
