@@ -11,7 +11,7 @@ CREATE TABLE
         segment_desc string,
         ey_segment_group string,
         ey_segment_ref string
-    ) ;
+) stored AS orc;
 
 
 WITH

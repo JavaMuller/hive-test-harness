@@ -26,7 +26,7 @@ CREATE TABLE
         ver_desc STRING,
         bu_group STRING,
         bu_ref STRING
-    ) ;
+) stored AS orc;
 
 
 insert overwrite TABLE mv_business_unit_listing

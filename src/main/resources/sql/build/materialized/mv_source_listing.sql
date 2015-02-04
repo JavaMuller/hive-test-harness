@@ -14,7 +14,7 @@ CREATE TABLE
         ver_desc string,
         source_group string,
         source_ref string
-    ) ;
+) stored AS orc;
 
 
 insert overwrite TABLE mv_source_listing

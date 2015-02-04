@@ -21,7 +21,7 @@ CREATE TABLE
         ver_start_date_id INT,
         ver_end_date_id INT,
         ver_desc string
-    ) ;
+) stored AS orc;
 
 
 insert overwrite TABLE mv_fiscal_calendar

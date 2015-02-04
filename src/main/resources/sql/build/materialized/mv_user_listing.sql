@@ -24,7 +24,7 @@ CREATE TABLE
         ver_desc string,
         client_ref string,
         preparer_ref string
-    ) ;
+) stored AS orc;
 
 
 insert overwrite TABLE mv_user_listing

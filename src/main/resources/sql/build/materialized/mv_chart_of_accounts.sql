@@ -30,7 +30,9 @@ CREATE TABLE
         ver_end_date_id INT,
         ver_desc string,
         ey_gl_account_name string
-    ) ;
+)
+CLUSTERED BY(coa_id, bu_id) into 100 buckets
+stored AS orc;
 
 
 
