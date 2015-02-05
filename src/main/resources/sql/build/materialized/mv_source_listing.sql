@@ -28,10 +28,10 @@ insert overwrite TABLE mv_source_listing
         all_version.bus_process_minor,
         all_version.sys_manual_ind,
         all_version.ver_start_date_id,
-        all_version.ver_end_date_id,
+        0,
         all_version.ver_desc,
-        all_version.ey_source_group AS source_group,
-        concat(all_version.source_cd, ' - ', all_version.source_desc)         AS source_ref
+        all_version.ey_source_group,
+        concat(all_version.source_cd, ' - ', all_version.source_desc)
     FROM
         Source_listing all_version
     WHERE

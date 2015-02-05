@@ -48,7 +48,7 @@ insert overwrite TABLE mv_user_listing
     latest_version.last_modified_by_id,
     latest_version.last_modified_date_id,
     latest_version.ver_start_date_id,
-    latest_version.ver_end_date_id,
+    0,
     latest_version.ver_desc,
     concat(latest_version.client_user_id, ' - ', latest_version.full_name) AS client_ref,
     concat(latest_version.client_user_id, ' - ', latest_version.full_name) AS preparer_ref

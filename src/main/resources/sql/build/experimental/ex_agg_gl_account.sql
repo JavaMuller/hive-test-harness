@@ -37,7 +37,7 @@ CREATE TABLE
         ey_segment1_group string,
         ey_segment2_group string,
         dr_cr_ind string
-    ) ;
+    ) stored as orc;
     
 INSERT
     overwrite TABLE ex_agg_gl_account

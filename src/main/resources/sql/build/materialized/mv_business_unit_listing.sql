@@ -52,7 +52,7 @@ insert overwrite TABLE mv_business_unit_listing
         latest_version.seg_03_cd,
         latest_version.seg_03_desc,
         latest_version.ver_start_date_id,
-        latest_version.ver_end_date_id,
+        0,
         latest_version.ver_desc,
         COALESCE(latest_version.bu_hier_01_desc, BU_MAPPING.bu_group) AS bu_group,
         concat(COALESCE(latest_version.bu_cd, ''),' - ', COALESCE(latest_version.bu_desc, '')) AS bu_ref

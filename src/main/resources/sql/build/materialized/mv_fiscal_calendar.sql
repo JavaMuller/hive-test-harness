@@ -44,7 +44,7 @@ insert overwrite TABLE mv_fiscal_calendar
         latest_version.fiscal_year_end,
         latest_version.adjustment_period,
         latest_version.ver_start_date_id,
-        latest_version.ver_end_date_id,
+        0,
         latest_version.ver_desc
     FROM
         Fiscal_calendar all_version

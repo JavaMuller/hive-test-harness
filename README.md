@@ -101,7 +101,9 @@ https://issues.apache.org/jira/browse/HIVE-9249
 1.  hive.vectorized.execution.reduce.enabled=true
 
 set hive.prewarm.enabled=true
-set hive.prewarm.numcontainers=305
+set hive.prewarm.numcontainers=50
+hive.optimize.bucketmapjoin.sortedmerge=true
+
 set hive.auto.convert.join.noconditionaltask.size = 512mb?
 
 set hive.stats.fetch.partition.stats=false;
@@ -137,3 +139,14 @@ FT_GL_Account active_ind
 DIM_Chart_of_Accounts ey_account_type
 DIM_Chart_of_Accounts ey_account_sub_type
 DIM_Chart_of_Accounts ey_account_group_I
+
+
+
+hive.auto.convert.join=true to do auto-join conversion
+
+set hive.auto.convert.join.noconditionaltask = true;
+set hive.auto.convert.join.noconditionaltask.size = 10000;
+
+hive.enforce.bucketing = true
+
+prewarm containers

@@ -31,7 +31,7 @@ CREATE TABLE
         ver_desc string,
         ey_gl_account_name string
 )
-CLUSTERED BY(coa_id) into 256 buckets
+CLUSTERED BY (coa_id, bu_id) sorted by (coa_id, bu_id) into 256 buckets
 stored AS orc;
 
 
@@ -64,7 +64,7 @@ insert overwrite TABLE mv_chart_of_accounts
         latest_version.last_modified_by_id,
         latest_version.last_modified_date_id,
         latest_version.ver_start_date_id,
-        latest_version.ver_end_date_id,
+        0,
         latest_version.ver_desc,
         concat(latest_version.gl_account_cd, '-',latest_version.gl_account_name) AS ey_gl_account_name
     FROM
