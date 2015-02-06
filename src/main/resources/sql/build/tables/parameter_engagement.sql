@@ -53,4 +53,4 @@ CREATE TABLE Parameters_engagement_csv (
 
 load data inpath '/poc/data/ey/parameters_engagement.csv' into table parameters_engagement_csv;
 
-insert into table parameters_engagement  select * from Parameters_engagement_csv;
+insert into table parameters_engagement  select * from parameters_engagement_csv;

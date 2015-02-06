@@ -1,0 +1,1 @@
+select * from ex_gl017t1_transactions_by_preparer;

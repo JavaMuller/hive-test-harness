@@ -53,7 +53,7 @@ CREATE TABLE ft_gl_account_csv (
     effective_date_id INT,
     amount_curr_cd string,
     reporting_amount_curr_cd string,
-    functional_curr_cd string,d
+    functional_curr_cd string,
     net_amount FLOAT,
     net_amount_credit FLOAT,
     net_amount_debit FLOAT,

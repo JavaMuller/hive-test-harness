@@ -52,7 +52,7 @@ FROM
             coa.coa_id = f.coa_id
             AND coa.bu_id = f.bu_id
     INNER JOIN
-    Parameters_period PP
+    parameters_period PP
         ON
             pp.period_flag = f.period_flag
             AND PP.year_flag = F.year_flag

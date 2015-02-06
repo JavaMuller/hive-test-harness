@@ -1,0 +1,1 @@
+select * from ex_balance_by_gl;

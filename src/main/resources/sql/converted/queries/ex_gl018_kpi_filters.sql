@@ -1,0 +1,1 @@
+select * from  ex_gl018_kpi_filters;
