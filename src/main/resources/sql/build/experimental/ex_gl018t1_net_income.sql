@@ -73,7 +73,7 @@ LEFT OUTER JOIN
 LEFT OUTER JOIN
     mv_user_listing AUL
  ON
-    UL.user_listing_id = f.approved_by_id
+    AUL.user_listing_id = f.approved_by_id
 LEFT OUTER JOIN
     mv_business_unit_listing BU
  ON
