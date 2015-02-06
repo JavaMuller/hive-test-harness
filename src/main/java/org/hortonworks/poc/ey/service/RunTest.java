@@ -40,9 +40,19 @@ public class RunTest implements CommandLineRunner {
         log.info("Running Test with the following parameters...");
         log.info("\tBuild? " + build);
         log.info("\tQuery? " + query);
-        log.info("\tDescription: " + description);
-        log.info("\tData Path: " + dataPath);
-        log.info("\tIterations: " + iterations);
+
+        if (query) {
+            log.info("\tDescription: " + description);
+        }
+
+        if (build) {
+            log.info("\tData Path: " + dataPath);
+        }
+
+        if (query) {
+            log.info("\tIterations: " + iterations);
+        }
+
         log.info("******************************************");
         System.out.println();
 
