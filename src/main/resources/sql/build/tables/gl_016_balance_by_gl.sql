@@ -54,7 +54,10 @@ CREATE TABLE gl_016_balance_by_gl (
   Diff_btw_calc_end_and_report_ending FLOAT,
   Calc_functional_ending_bal FLOAT,
   Diff_btw_calc_end_and_func_ending FLOAT
-) stored AS orc;
+)
+CLUSTERED BY (coa_id, bu_id) sorted by (coa_id, bu_id) into 24 buckets
+stored AS orc
+;
 
 CREATE TABLE gl_016_balance_by_gl_csv (
   coa_id INT,
