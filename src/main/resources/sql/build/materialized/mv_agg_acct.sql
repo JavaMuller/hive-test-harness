@@ -20,7 +20,7 @@ create table mv_agg_act (
     net_functional_amount_credit FLOAT,
     net_functional_amount_debit FLOAT
 )
-CLUSTERED BY (coa_id, bu_id) sorted by (coa_id, bu_id) into 256 buckets
+CLUSTERED BY (coa_id, bu_id) sorted by (coa_id, bu_id) into 4 buckets
 stored AS orc;
 
 INSERT

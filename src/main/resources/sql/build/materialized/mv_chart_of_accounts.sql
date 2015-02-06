@@ -31,7 +31,7 @@ CREATE TABLE
         ver_desc string,
         ey_gl_account_name string
 )
-CLUSTERED BY (coa_id, bu_id) sorted by (coa_id, bu_id) into 256 buckets
+CLUSTERED BY (coa_id, bu_id) sorted by (coa_id, bu_id) into 4 buckets
 stored AS orc;
 
 

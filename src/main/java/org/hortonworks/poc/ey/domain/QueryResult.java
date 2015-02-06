@@ -7,48 +7,69 @@ import org.apache.commons.lang3.StringUtils;
 public class QueryResult {
 
     private String file;
-    private long queryDuration;
-    private long countDuration;
-    private String error;
-    private long resultCount;
+    private long min;
+    private long max;
+    private double mean;
+    private double median;
+    private double standardDeviation;
+    private int iterations;
 
-    public QueryResult(String file, long queryDuration, long iterateResultsDuration, String error, long resultCount) {
+    private long recordCount;
+
+    public QueryResult(String file, long min, long max, double mean, double median, double standardDeviation, int iterations, long recordCount) {
         this.file = file;
-        this.queryDuration = queryDuration;
-        this.countDuration = iterateResultsDuration;
-        this.error = error;
-        this.resultCount = resultCount;
+        this.min = min;
+        this.max = max;
+        this.mean = mean;
+        this.median = median;
+        this.standardDeviation = standardDeviation;
+        this.iterations = iterations;
+        this.recordCount = recordCount;
     }
 
     public String getFile() {
         return file;
     }
 
-    public long getQueryDuration() {
-        return queryDuration;
+    public long getMin() {
+        return min;
     }
 
-    public long getCountDuration() {
-        return countDuration;
+    public long getMax() {
+        return max;
     }
 
-    public String getError() {
-        return error;
+    public double getMean() {
+        return mean;
     }
 
-    public long getResultCount() {
-        return resultCount;
+    public double getMedian() {
+        return median;
     }
 
-    public boolean success() {
-        return StringUtils.isBlank(this.error);
+    public double getStandardDeviation() {
+        return standardDeviation;
+    }
+
+    public int getIterations() {
+        return iterations;
+    }
+
+    public long getRecordCount() {
+        return recordCount;
     }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("file", file)
-                .add("queryDuration", queryDuration)
+                .add("min", min)
+                .add("max", max)
+                .add("mean", mean)
+                .add("median", median)
+                .add("standardDeviation", standardDeviation)
+                .add("iterations", iterations)
+                .add("recordCount", recordCount)
                 .toString();
     }
 }
