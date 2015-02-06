@@ -42,7 +42,7 @@ public class RunTest implements CommandLineRunner {
         log.info("\tQuery? " + query);
         log.info("\tDescription: " + description);
         log.info("\tData Path: " + dataPath);
-        log.info("\tWarmup Iterations: " + iterations);
+        log.info("\tIterations: " + iterations);
         log.info("******************************************");
         System.out.println();
 
@@ -107,13 +107,13 @@ public class RunTest implements CommandLineRunner {
 
         final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
 
-        CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "queryDuration");
+        CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "min", "max", "mean", "median", "standard deviation", "iterations");
 
         try (FileWriter fileWriter = new FileWriter(filename);
              CSVPrinter printer = new CSVPrinter(fileWriter, format)) {
 
             for (QueryResult result : results) {
-                printer.printRecord(result.getFile(), result.getQueryDuration());
+                printer.printRecord(result.getFile(), result.getMin(), result.getMax(), result.getMean(), result.getMedian(), result.getStandardDeviation(), result.getIterations());
             }
 
             fileWriter.flush();

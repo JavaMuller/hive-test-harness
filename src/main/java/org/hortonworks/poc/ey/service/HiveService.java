@@ -1,5 +1,8 @@
 package org.hortonworks.poc.ey.service;
 
+import com.codahale.metrics.Histogram;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.Snapshot;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hive.hcatalog.api.HCatClient;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.security.PrivilegedExceptionAction;
 import java.sql.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +41,9 @@ public class HiveService {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private MetricRegistry metricRegistry;
 
 
     public HCatClient getHCatClient() throws IOException, InterruptedException {
@@ -89,6 +96,9 @@ public class HiveService {
 
         String query = getSqlString(resource);
 
+        final NumberFormat numberInstance = NumberFormat.getNumberInstance();
+        numberInstance.setMaximumFractionDigits(2);
+
 
         try (
                 Connection connection = dataSource.getConnection();
@@ -98,6 +108,8 @@ public class HiveService {
             final String filename = resource.getFilename();
 
             log.debug("executing: " + filename);
+
+            Histogram histogram = metricRegistry.histogram(filename);
 
             for (int i = 0; i < iterations; i++) {
 
@@ -110,41 +122,33 @@ public class HiveService {
 
                 final long totalTimeMillis = queryTimer.getTotalTimeMillis();
 
-                log.debug("warm up " + (i + 1) + " of " + iterations + " in " + totalTimeMillis + "ms");
+                histogram.update(totalTimeMillis);
 
+                log.debug("executing " + (i + 1) + " of " + iterations + " in " + numberInstance.format(totalTimeMillis) + " ms, " + numberInstance.format(totalTimeMillis / 1000) + " s");
 
-                if (i == iterations - 1) {
+                resultSet.close();
+            }
 
-                    long resultSize = 0;
-                    long countTime = 0;
+            Snapshot snapshot = histogram.getSnapshot();
 
-                    if (countResults) {
+            long resultSize = 0;
 
-                        log.debug("counting results and capturing timings");
+            if (countResults) {
+                ResultSet resultSet = statement.executeQuery();
 
-                        StopWatch countTimer = new StopWatch();
-                        countTimer.start();
-
-                        while (resultSet.next()) {
-                            resultSize++;
-                        }
-
-                        countTimer.stop();
-
-                        countTime = countTimer.getTotalTimeMillis();
-                    }
-
-                    final QueryResult queryResult = new QueryResult(filename, totalTimeMillis, countTime, null, resultSize);
-
-                    log.info(queryResult.toString());
-
-                    resultSet.close();
-
-                    return queryResult;
+                while (resultSet.next()) {
+                    resultSize++;
                 }
 
                 resultSet.close();
             }
+
+            final QueryResult queryResult = new QueryResult(filename, snapshot.getMin(), snapshot.getMax(), snapshot.getMean(), snapshot.getMedian(), snapshot.getStdDev(), snapshot.size(), resultSize);
+
+            log.debug(queryResult.toString());
+
+            return queryResult;
+
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }
@@ -157,7 +161,6 @@ public class HiveService {
     public void executeSqlScript(Resource resource) throws IOException {
 
         List<String> statements = getSqlStrings(resource);
-
 
         try (
                 Connection connection = dataSource.getConnection()

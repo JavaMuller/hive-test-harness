@@ -126,6 +126,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${metrics.version}</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -135,6 +141,7 @@
 
         <hive.version>0.14.0.2.2.0.0-2041</hive.version>
         <hadoop.version>2.6.0.2.2.0.0-2041</hadoop.version>
+        <metrics.version>3.1.0</metrics.version>
     </properties>
 
     <build>
