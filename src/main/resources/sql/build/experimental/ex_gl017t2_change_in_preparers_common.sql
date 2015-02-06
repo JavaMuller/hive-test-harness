@@ -1,5 +1,3 @@
-drop table ex_gl017t2_change_in_preparers_common;
-
 CREATE TABLE
     ex_gl017t2_change_in_preparers_common stored AS orc AS
 SELECT

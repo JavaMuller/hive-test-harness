@@ -47,15 +47,15 @@ SELECT
 FROM
     FT_GL_Account F
 INNER JOIN
-    Parameters_period PP
- ON
-    pp.period_flag = f.period_flag
-AND PP.year_flag = F.year_flag
-INNER JOIN
     mv_chart_of_accounts coa
  ON
     coa.coa_id = f.coa_id
 AND coa.bu_id = f.bu_id
+    INNER JOIN
+    parameters_period PP
+        ON
+            pp.period_flag = f.period_flag
+            AND PP.year_flag = F.year_flag
 LEFT OUTER JOIN
     mv_user_listing UL
  ON

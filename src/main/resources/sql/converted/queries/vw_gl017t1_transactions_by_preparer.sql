@@ -56,7 +56,6 @@ FROM
         ON
             pp.period_flag = f.period_flag
             AND PP.year_flag = F.year_flag
-
     LEFT OUTER JOIN
     mv_user_listing UL
         ON

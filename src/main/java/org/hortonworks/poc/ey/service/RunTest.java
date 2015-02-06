@@ -40,9 +40,19 @@ public class RunTest implements CommandLineRunner {
         log.info("Running Test with the following parameters...");
         log.info("\tBuild? " + build);
         log.info("\tQuery? " + query);
-        log.info("\tDescription: " + description);
-        log.info("\tData Path: " + dataPath);
-        log.info("\tIterations: " + iterations);
+
+        if (query) {
+            log.info("\tDescription: " + description);
+        }
+
+        if (build) {
+            log.info("\tData Path: " + dataPath);
+        }
+
+        if (query) {
+            log.info("\tIterations: " + iterations);
+        }
+
         log.info("******************************************");
         System.out.println();
 
@@ -69,15 +79,15 @@ public class RunTest implements CommandLineRunner {
             String[] includeFilter = new String[]{};
 
             String[] excludeFilter = new String[]{
-                    "VW_GL016T2_Zero_Balance_GL.sql",
-                    "VW_GL015T1_Cutoff_Analysis.sql",
-                    "VW_GL012T3_Date_Analysis.sql",
-                    "VW_GL018T1_Overview.sql",
-                    "VW_GL017T3_Transactions_By_Relationship.sql",
-                    "VW_GL013T1_Back_Postings1.sql",
-                    "VW_GL011_Relationship_Analyses.sql",
-                    "VW_GL010_Gross_Margin.sql",
-                    "v_IL_GL018_KPI_Overview.sql"
+                    "vw_gl016t2_zero_balance_gl.sql",
+                    "vw_gl015t1_cutoff_analysis.sql",
+                    "vw_gl012t3_date_analysis.sql",
+                    "vw_gl018t1_overview.sql",
+                    "vw_gl017t3_transactions_by_relationship.sql",
+                    "vw_gl013t1_back_postings1.sql",
+                    "vw_gl011_relationship_analyses.sql",
+                    "vw_gl010_gross_margin.sql",
+                    "v_il_gl018_kpi_overview.sql"
             };
 
             System.out.println();
