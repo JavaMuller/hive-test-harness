@@ -30,6 +30,7 @@ CREATE TABLE ft_gl_account (
     count_je_id INT
 )
 PARTITIONED BY(year_flag string)
+CLUSTERED BY (coa_id, bu_id) sorted by (coa_id, bu_id) into 24 buckets
 stored AS orc;
 
 CREATE TABLE ft_gl_account_csv (
@@ -52,7 +53,7 @@ CREATE TABLE ft_gl_account_csv (
     effective_date_id INT,
     amount_curr_cd string,
     reporting_amount_curr_cd string,
-    functional_curr_cd string,
+    functional_curr_cd string,d
     net_amount FLOAT,
     net_amount_credit FLOAT,
     net_amount_debit FLOAT,
