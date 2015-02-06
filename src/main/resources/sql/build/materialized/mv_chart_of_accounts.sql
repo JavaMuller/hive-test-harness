@@ -66,7 +66,7 @@ insert overwrite TABLE mv_chart_of_accounts
         latest_version.ver_start_date_id,
         0,
         latest_version.ver_desc,
-        concat(latest_version.gl_account_cd, '-',latest_version.gl_account_name) AS ey_gl_account_name
+        concat(latest_version.gl_account_cd, ' - ',latest_version.gl_account_name) AS ey_gl_account_name
     FROM
         Chart_of_accounts all_version
         LEFT OUTER JOIN
