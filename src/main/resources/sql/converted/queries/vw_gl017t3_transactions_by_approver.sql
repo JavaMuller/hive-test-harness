@@ -32,7 +32,7 @@ SELECT
     ABS(SUM(F.net_reporting_amount_debit)) + ABS(SUM(F.net_reporting_amount_debit)),
     ABS(SUM(F.net_functional_amount_credit)) + ABS(SUM(F.net_functional_amount_debit))
 FROM
-    FT_GL_Account F
+    FT_GL_Account_csv F
     INNER JOIN
     Parameters_period PP
         ON
