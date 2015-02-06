@@ -70,8 +70,8 @@ FROM
       UL.user_listing_id = f.user_listing_id
   LEFT OUTER JOIN
   mv_user_listing AUL
-    ON
-      UL.user_listing_id = f.approved_by_id
+    ON 1 = 1
+      AUL.user_listing_id = f.approved_by_id
   LEFT OUTER JOIN
   mv_business_unit_listing BU
     ON
@@ -114,4 +114,7 @@ GROUP BY
   F.journal_type,
   COA.ey_account_group_I,
   f.reporting_amount_curr_cd,
-  f.functional_curr_cd;
+  f.functional_curr_cd
+
+  LIMIT 10
+  ;
