@@ -1,3 +1,5 @@
+set mapred.reduce.tasks=20;
+
 SELECT
     F.EY_period,
     coa.coa_id,
@@ -45,15 +47,16 @@ SELECT
 FROM
     FT_GL_Account F
     INNER JOIN
-    Parameters_period PP
-        ON
-            pp.period_flag = f.period_flag
-            AND PP.year_flag = F.year_flag
-    INNER JOIN
     mv_chart_of_accounts coa
         ON
             coa.coa_id = f.coa_id
             AND coa.bu_id = f.bu_id
+    INNER JOIN
+    Parameters_period PP
+        ON
+            pp.period_flag = f.period_flag
+            AND PP.year_flag = F.year_flag
+
     LEFT OUTER JOIN
     mv_user_listing UL
         ON
@@ -106,4 +109,7 @@ GROUP BY
     PP.year_flag_desc,
     PP.period_flag_desc,
     f.reporting_amount_curr_cd,
-    f.functional_curr_cd;
+    f.functional_curr_cd
+    ;
+
+set mapred.reduce.tasks=-1;
