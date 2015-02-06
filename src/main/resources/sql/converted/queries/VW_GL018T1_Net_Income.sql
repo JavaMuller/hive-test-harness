@@ -115,6 +115,4 @@ GROUP BY
   COA.ey_account_group_I,
   f.reporting_amount_curr_cd,
   f.functional_curr_cd
-
-  LIMIT 10
-  ;
+;
