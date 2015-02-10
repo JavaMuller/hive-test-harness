@@ -20,7 +20,8 @@ CREATE TABLE gl_016_balance_by_gl (
   net_functional_amount FLOAT,
   net_functional_amount_credit FLOAT,
   net_functional_amount_debit FLOAT,
-  period_id INT,
+  period_id INT
+  ,
   ey_account_type string,
   ey_account_sub_type string,
   ey_account_class string,
