@@ -1,1 +1,0 @@
-select * from ex_gl018t1_net_income;

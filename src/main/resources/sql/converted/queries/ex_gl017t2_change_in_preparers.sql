@@ -1,1 +1,0 @@
-select * from ex_gl017t2_change_in_preparers;

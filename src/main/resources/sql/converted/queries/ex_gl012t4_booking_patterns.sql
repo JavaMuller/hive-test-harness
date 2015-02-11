@@ -1,1 +1,0 @@
-select * from ex_gl012t4_booking_patterns;

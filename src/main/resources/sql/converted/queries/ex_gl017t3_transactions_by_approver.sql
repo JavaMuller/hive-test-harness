@@ -1,1 +1,0 @@
-select * from ex_gl017t3_transactions_by_approver;

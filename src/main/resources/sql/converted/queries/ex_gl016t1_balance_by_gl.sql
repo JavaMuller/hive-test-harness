@@ -1,1 +1,0 @@
-select * from ex_gl016t1_balance_by_gl;

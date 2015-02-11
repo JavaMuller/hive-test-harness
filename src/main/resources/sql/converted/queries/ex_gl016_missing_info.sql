@@ -1,1 +1,0 @@
-select * from ex_gl016_missing_info;
