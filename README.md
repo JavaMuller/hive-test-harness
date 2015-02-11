@@ -35,7 +35,7 @@ The test requires 5 parameters be passed as `args` to the `main(String[] args)` 
 
 1.  The third `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
 
-1.  The forth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/hw/clients/ey-hive-poc/data`.  This directory should contain `.csv` files whose name matches that of the table its loading.
+1.  The forth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/personal/hive-test-harness/data`.  This directory should contain `.csv` files whose name matches that of the table its loading.
 
 1.  The fifth `arg` is the number of times to execute the query.  Set this to 5 to "warm up" each query before saving results.
 
@@ -79,6 +79,6 @@ Create an "Application" "Run Configuration" like the following [screenshot](http
 Run on a remote by setting the active profile (eg `-Dspring.profiles.active=remote`) and updating `src/main/resources/application-remote.properties`
 
 ```
-java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar true true "testing in remote" "/path/to/data/in/azure" 5
+java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar true true "testing in remote" "/path/to/data/on/remote/server" 5
 ```
 
