@@ -1,9 +1,9 @@
-package org.hortonworks.poc.ey.service;
+package hive.harness.service;
 
+import hive.harness.domain.QueryResult;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang.StringUtils;
-import org.hortonworks.poc.ey.domain.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +68,7 @@ public class RunTest implements CommandLineRunner {
 
             String[] tableFilter = new String[]{};
 
-            String[] viewFilter = new String[]{};
-
-            proof.build(dataPath, dataFilter, tableFilter, viewFilter);
+            proof.build(dataPath, dataFilter, tableFilter);
         }
 
 
@@ -78,17 +76,7 @@ public class RunTest implements CommandLineRunner {
 
             String[] includeFilter = new String[]{};
 
-            String[] excludeFilter = new String[]{
-                    "vw_gl016t2_zero_balance_gl.sql",
-                    "vw_gl015t1_cutoff_analysis.sql",
-                    "vw_gl012t3_date_analysis.sql",
-                    "vw_gl018t1_overview.sql",
-                    "vw_gl017t3_transactions_by_relationship.sql",
-                    "vw_gl013t1_back_postings1.sql",
-                    "vw_gl011_relationship_analyses.sql",
-                    "vw_gl010_gross_margin.sql",
-                    "v_il_gl018_kpi_overview.sql"
-            };
+            String[] excludeFilter = new String[]{};
 
             System.out.println();
             log.info("******************************************");

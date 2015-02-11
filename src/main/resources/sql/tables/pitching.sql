@@ -1,0 +1,71 @@
+
+CREATE TABLE pitching (
+  playerID string,
+  yearID bigint,
+  stint bigint,
+  teamID string,
+  lgID string,
+  w bigint,
+  l bigint,
+  g bigint,
+  gs bigint,
+  cg bigint,
+  sho bigint,
+  sv bigint,
+  ipouts bigint,
+  h bigint,
+  er bigint,
+  hr bigint,
+  bb bigint,
+  so bigint,
+  baopp double,
+  era double,
+  ibb bigint,
+  wp bigint,
+  hbp bigint,
+  bk bigint,
+  bfp bigint,
+  gf bigint,
+  r bigint,
+  sh string,
+  sf string,
+  gidp string)
+  stored as orc;
+
+CREATE TABLE pitching_csv (
+  playerID string,
+  yearID bigint,
+  stint bigint,
+  teamID string,
+  lgID string,
+  w bigint,
+  l bigint,
+  g bigint,
+  gs bigint,
+  cg bigint,
+  sho bigint,
+  sv bigint,
+  ipouts bigint,
+  h bigint,
+  er bigint,
+  hr bigint,
+  bb bigint,
+  so bigint,
+  baopp double,
+  era double,
+  ibb bigint,
+  wp bigint,
+  hbp bigint,
+  bk bigint,
+  bfp bigint,
+  gf bigint,
+  r bigint,
+  sh string,
+  sf string,
+  gidp string)
+  ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
+  stored as TEXTFILE;
+
+load data inpath '@@PATH@@/pitching.csv' into table pitching_csv;
+
+insert into table pitching select * from pitching_csv;

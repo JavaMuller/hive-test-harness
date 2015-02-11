@@ -136,7 +136,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>org.hortonworks.poc.ey.Application</start-class>
+        <start-class>hive.harness.Application</start-class>
         <java.version>1.7</java.version>
 
         <hive.version>0.14.0.2.2.0.0-2041</hive.version>

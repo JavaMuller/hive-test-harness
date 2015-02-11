@@ -1,14 +1,15 @@
-package org.hortonworks.poc.ey.service;
+package hive.harness.service;
 
 import com.codahale.metrics.Histogram;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Snapshot;
+import hive.harness.domain.QueryResult;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hive.hcatalog.api.HCatClient;
 import org.apache.hive.hcatalog.api.HCatCreateDBDesc;
 import org.apache.hive.hcatalog.common.HCatException;
-import org.hortonworks.poc.ey.domain.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import java.util.List;
 @Service
 public class HiveService {
 
+    public static final String PATH_TOKEN = "@@PATH@@";
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -86,7 +88,6 @@ public class HiveService {
             List<String> statements = new ArrayList<>();
 
             ScriptUtils.splitSqlScript(script, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR, statements);
-
 
             return statements;
         }
@@ -149,8 +150,8 @@ public class HiveService {
 
             return queryResult;
 
-        } catch (SQLException e) {
-            log.error(e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("message [" + e.getMessage() + "],  resource [" + resource.getFilename() + "]", e);
         }
 
         return null;
@@ -162,12 +163,24 @@ public class HiveService {
 
         List<String> statements = getSqlStrings(resource);
 
+        String hdfsDataPath = environment.getProperty("hdfs.data.path");
+
         try (
                 Connection connection = dataSource.getConnection()
         ) {
 
             for (String query : statements) {
                 Statement statement = connection.createStatement();
+
+
+                if (StringUtils.contains(query, PATH_TOKEN)) {
+
+                    if (log.isDebugEnabled()) {
+                        log.debug("replacing " + PATH_TOKEN + " with [" + hdfsDataPath + "]");
+                    }
+
+                    query = StringUtils.replace(query, PATH_TOKEN, hdfsDataPath);
+                }
 
                 StopWatch sw = new StopWatch(query);
                 sw.start();
@@ -180,8 +193,8 @@ public class HiveService {
 
             }
 
-        } catch (SQLException e) {
-            log.error(e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("message [" + e.getMessage() + "],  resource [" + resource.getFilename() + "]", e);
         }
     }
 

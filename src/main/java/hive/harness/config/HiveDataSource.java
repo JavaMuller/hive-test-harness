@@ -1,4 +1,4 @@
-package org.hortonworks.poc.ey.config;
+package hive.harness.config;
 
 
 import org.springframework.util.StopWatch;

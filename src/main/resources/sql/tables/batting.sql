@@ -1,4 +1,4 @@
-CREATE TABLE if not exists batting (
+CREATE TABLE batting (
   playerID string,
   yearID bigint,
   stint bigint,
@@ -8,8 +8,8 @@ CREATE TABLE if not exists batting (
   ab bigint,
   r bigint,
   h bigint,
-  2b bigint,
-  3b bigint,
+  `2b` bigint,
+  `3b` bigint,
   hr bigint,
   rbi bigint,
   sb bigint,
@@ -23,7 +23,7 @@ CREATE TABLE if not exists batting (
   gidp bigint)
   stored as orc;
 
-CREATE TABLE if not exists batting_csv (
+CREATE TABLE batting_csv (
   playerID string,
   yearID bigint,
   stint bigint,
@@ -33,8 +33,8 @@ CREATE TABLE if not exists batting_csv (
   ab bigint,
   r bigint,
   h bigint,
-  2b bigint,
-  3b bigint,
+  `2b` bigint,
+  `3b` bigint,
   hr bigint,
   rbi bigint,
   sb bigint,
@@ -49,6 +49,6 @@ CREATE TABLE if not exists batting_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '/poc/data/batting.csv' into table batting_csv;
+load data inpath '@@PATH@@/batting.csv' into table batting_csv;
 
 insert into table batting select * from batting_csv;

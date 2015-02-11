@@ -1,4 +1,4 @@
-package org.hortonworks.poc.ey.domain;
+package hive.harness.domain;
 
 
 import com.google.common.base.Objects;

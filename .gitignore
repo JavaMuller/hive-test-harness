@@ -40,7 +40,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
-data/original/FLAT_JE.xlsx
-data/original/FLAT_JE.csv
+/*.log
 
 /*.csv

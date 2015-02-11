@@ -1,4 +1,4 @@
-package org.hortonworks.poc.ey.service;
+package hive.harness.service;
 
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -45,7 +45,7 @@ public class HadoopService {
 
                 if (exists) {
                     log.debug("path [" + path.toString() + "] exists so it shall be deleted!");
-                    deleteDirectory(environment.getProperty("data.root"));
+                    deleteDirectory(path);
                 }
 
                 fs.mkdirs(path);
@@ -56,15 +56,13 @@ public class HadoopService {
         });
     }
 
-    public boolean deleteDirectory(final String directory) throws IOException, InterruptedException {
+    private boolean deleteDirectory(final Path path) throws IOException, InterruptedException {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
         return ugi.doAs(new PrivilegedExceptionAction<Boolean>() {
 
             public Boolean run() throws Exception {
-                Path path = new Path(directory);
-
                 return fs.delete(path, true);
             }
         });
@@ -78,7 +76,7 @@ public class HadoopService {
 
             public Void run() throws Exception {
 
-                Path path = new Path(environment.getProperty("data.path") + "/" + resource.getFilename());
+                Path path = new Path(environment.getProperty("hdfs.data.path") + "/" + resource.getFilename());
 
                 StopWatch sw = new StopWatch("wrote file to path " + path);
                 sw.start();

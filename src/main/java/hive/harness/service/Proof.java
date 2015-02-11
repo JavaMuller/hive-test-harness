@@ -1,10 +1,10 @@
-package org.hortonworks.poc.ey.service;
+package hive.harness.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
+import hive.harness.domain.QueryResult;
 import org.apache.commons.lang3.StringUtils;
-import org.hortonworks.poc.ey.domain.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class Proof {
     private HadoopService hadoopService;
 
 
-    public void build(String dataPath, String[] dataFilter, String[] tableFilter, String[] viewFilter) throws IOException, InterruptedException {
+    public void build(String dataPath, String[] dataFilter, String[] tableFilter) throws IOException, InterruptedException {
 
         loadFilesIntoHdfs(dataPath, dataFilter);
 
@@ -40,28 +40,11 @@ public class Proof {
 
         buildTables(tableFilter);
 
-        buildViews(viewFilter);
-
-        buildExperimental();
-
-    }
-
-    private void buildExperimental() throws IOException {
-
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/build/experimental/*.sql");
-
-        List<Resource> filteredResources = applyFilters(resources, null, null);
-
-        for (Resource resource : filteredResources) {
-            hiveService.executeSqlScript(resource);
-        }
-
     }
 
     public List<QueryResult> executeQueries(String[] includeFilter, String[] excludeFilter, int iterations, boolean countResults) throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/converted/queries/*.sql");
+        Resource[] resources = resolver.getResources("classpath:sql/queries/*.sql");
 
         List<Resource> filteredResources = applyFilters(resources, includeFilter, excludeFilter);
 
@@ -95,7 +78,7 @@ public class Proof {
 
     private void loadFilesIntoHdfs(String dataPath, String[] dataFilter) throws IOException, InterruptedException {
 
-        final String hdfsPath = environment.getProperty("data.path");
+        final String hdfsPath = environment.getProperty("hdfs.data.path");
 
         hadoopService.createDirectory(hdfsPath);
 
@@ -158,7 +141,7 @@ public class Proof {
 
     private void buildTables(String[] tableFilter) throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/build/tables/*.sql");
+        Resource[] resources = resolver.getResources("classpath:sql/tables/*.sql");
 
         List<Resource> filteredResources = applyFilters(resources, tableFilter, null);
 
@@ -167,14 +150,4 @@ public class Proof {
         }
     }
 
-    private void buildViews(String[] viewFilter) throws IOException {
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:sql/build/materialized/*.sql");
-
-        List<Resource> filteredResources = applyFilters(resources, viewFilter, null);
-
-        for (Resource resource : filteredResources) {
-            hiveService.executeSqlScript(resource);
-        }
-    }
 }

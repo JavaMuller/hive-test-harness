@@ -1,4 +1,4 @@
-package org.hortonworks.poc.ey.config;
+package hive.harness.config;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.hive.conf.HiveConf;

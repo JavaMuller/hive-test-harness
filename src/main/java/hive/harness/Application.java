@@ -1,4 +1,4 @@
-package org.hortonworks.poc.ey;
+package hive.harness;
 
 import com.codahale.metrics.MetricRegistry;
 import org.slf4j.Logger;
