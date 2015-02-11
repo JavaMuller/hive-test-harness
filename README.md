@@ -9,7 +9,9 @@ To execute you'll need the following:
 
 ## About
 
-This POC is a simple SpringBoot application.  The entry point is `Application.java`.  Once Spring has fully started, the `run(String... args)` method of `RunTest.java` is called.
+The purpose of this project is to provide an easy to use, easy to share, easy to deploy harness for testing Hive queries against HDP clusters.  The harness has the ability to create tables, load data, execute queries and capture detailed statistics about those queries.  This can be particularly useful when performance benchmarking or turning.  I use this tool frequently to establish a performance baseline, then capture results after each configuration or code change.
+
+The entry point is `Application.java`.  Once Spring has fully started, the `run(String... args)` method of `RunTest.java` is called.
 
 The main method of `RunTest.java` can do the following:
 
