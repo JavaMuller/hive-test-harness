@@ -1,6 +1,7 @@
 package hive.harness.service;
 
 import hive.harness.domain.QueryResult;
+import org.apache.commons.cli.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang.StringUtils;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
@@ -31,16 +33,23 @@ public class RunTest implements CommandLineRunner {
     @Autowired
     private Proof proof;
 
+    @Autowired
+    private Options options;
+
+    @Autowired
+    private Environment environment;
+
     @Override
     public void run(String... args) throws Exception {
 
-        assert args != null && args.length == 5;
+        CommandLineParser parser = new BasicParser();
+        CommandLine commandLine = parser.parse(options, args);
 
-        final boolean build = Boolean.parseBoolean(args[0]);
-        final boolean query = Boolean.parseBoolean(args[1]);
-        final String description = args[2];
-        final String dataPath = args[3];
-        final int iterations = Integer.parseInt(args[4]);
+        final boolean build = commandLine.hasOption("b");
+        final boolean query = commandLine.hasOption("q");
+        final String testName = commandLine.getOptionValue("test.name", environment.getProperty("test.name"));
+        final String dataPath = commandLine.getOptionValue("data.path", environment.getProperty("data.path"));
+        final int iterations = Integer.parseInt(commandLine.getOptionValue("i", "1"));
 
         System.out.println();
         log.info("******************************************");
@@ -49,7 +58,7 @@ public class RunTest implements CommandLineRunner {
         log.info("\tQuery? " + query);
 
         if (query) {
-            log.info("\tDescription: " + description);
+            log.info("\tTest Name: " + testName);
         }
 
         if (build) {
@@ -67,7 +76,7 @@ public class RunTest implements CommandLineRunner {
         if (build) {
             System.out.println();
             log.info("******************************************");
-            log.info("Building Database, Tables and Views");
+            log.info("Building Database, Tables and Load Data");
             log.info("******************************************");
             System.out.println();
 
@@ -99,7 +108,11 @@ public class RunTest implements CommandLineRunner {
             log.info("******************************************");
             System.out.println();
 
-            generateResultFile(description, results);
+            generateResultFile(testName, results);
+        }
+
+        if (!query && !build) {
+            log.warn("Whoops!  You didn't build or query!");
         }
 
     }

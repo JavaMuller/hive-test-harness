@@ -1,6 +1,7 @@
 package hive.harness;
 
 import com.codahale.metrics.MetricRegistry;
+import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +33,23 @@ public class Application {
     @Bean
     public MetricRegistry buildRegistry() {
         return new MetricRegistry();
+    }
+
+    @Bean
+    public Options commandLineOptions() {
+        Options options = new Options();
+
+        options.addOption("b", "build", false, "build database, tables and load data");
+        options.addOption("q", "query", false, "execute queries");
+        options.addOption("i", "iterations", true, "number of times the query will be executed");
+
+        options.addOption(OptionBuilder.withLongOpt("test.name").withDescription("short name or description of test being run").hasArg().withArgName("NAME").create());
+        options.addOption(OptionBuilder.withLongOpt("data.path").withDescription("path to local data to be uploaded to HDFS and used by build scripts ").hasArg().withArgName("PATH").create());
+
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("java -jar <Hive Test Harness Jar>", options );
+
+        return options;
     }
 
 }

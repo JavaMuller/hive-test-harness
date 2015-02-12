@@ -15,7 +15,7 @@ The code ships with Sean Lahman's terrific baseball statistics [data](http://www
 
 ## Getting Started
 
-Essentially the application will execute any `*.sql` file in the `src/main/resources/sql/tables` directory and then exectute any query in `src/main/resources/sql/queries` and output the results to a `*.csv` file.  This behavior can be refined by altering the `application.properties` file or the command line arguments as described below:
+Essentially the application will execute any `*.sql` file in the `src/main/resources/sql/tables` directory and then execute any query in `src/main/resources/sql/queries` and output the results to a `*.csv` file.  This behavior can be refined by altering the `application.properties` file or the command line arguments as described below:
 
 The entry point is `Application.java`.  Once Spring has fully started, the `run(String... args)` method of `RunTest.java` is called.
 
@@ -27,17 +27,17 @@ The main method of `RunTest.java` can do the following:
 * Execute Queries
 * Output Results to CSV File
 
-The test requires 5 parameters be passed as `args` to the `main(String[] args)` method of `Application.java`:
+The following parameters can be passed as command line arguments:
 
-1.  The first `arg` should be `true` or `false` and indicates if you want the application to drop/create the database, build tables and load data
-
-1.  The second `arg` should be `true` or `false` and indicates if you want execute queries
-
-1.  The third `arg` is a description of the test being performed.  For example `"enabled tez"`, would indicate that this test was the first execution since enabling TEZ
-
-1.  The forth `arg` is absolute path of data to be loaded.  For example `/Users/tveil/dev/projects/personal/hive-test-harness/data`.  This directory should contain `.csv` files whose name matches that of the table its loading.
-
-1.  The fifth `arg` is the number of times to execute the query.  Set this to 5 to "warm up" each query before saving results.
+```
+usage: java -jar <Hive Test Harness Jar>
+ -b,--build              build database, tables and load data
+    --data.path <PATH>   path to local data to be uploaded to HDFS and
+                         used by build scripts
+ -i,--iterations <arg>   number of times the query will be executed
+ -q,--query              execute queries
+    --test.name <NAME>   short name or description of test being run
+```
 
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
 
@@ -61,11 +61,17 @@ From the project's base directory execute the following from the command line
 # builds the spring boot jar called hive-test-harness-0.0.1-SNAPSHOT.jar
 > mvn package clean
 
-# runs the spring boot jar.  must pass 4 parameters.
-> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar [true|false] [true|false] "[test description]" "[data location]" [iterations]
+# runs the spring boot jar.
+> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b
 
-# for example
-> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar true true "some test" "/some/path/to/data/locally" 5
+# for example, to build only using default "data.path"
+> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b
+
+# for example, to query only using default "test.name" with 10 iterations
+> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -q -i 10
+
+# for example, to do everything with custom values
+> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b --data.path "/foo/bar" -q --test.name "super important test" -i 50
 
 ```
 
@@ -81,6 +87,6 @@ Run on a remote by setting the active profile (eg `-Dspring.profiles.active=remo
 Once the jar has been deployed to the remote cluster, you can execute the following...
 
 ```
-java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar true true "testing in remote" "/path/to/data/on/remote/server" 5
+java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar -b --data.path "/foo/bar" -q --test.name "super important test" -i 50
 ```
 
