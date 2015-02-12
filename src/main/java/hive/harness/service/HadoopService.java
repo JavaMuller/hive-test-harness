@@ -31,11 +31,11 @@ public class HadoopService {
     private Environment environment;
 
 
-    public String createDirectory(final String directory) throws IOException, InterruptedException {
+    public void createDirectory(final String directory) throws IOException, InterruptedException {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
-        return ugi.doAs(new PrivilegedExceptionAction<String>() {
+        ugi.doAs(new PrivilegedExceptionAction<String>() {
 
             public String run() throws Exception {
 
@@ -56,11 +56,11 @@ public class HadoopService {
         });
     }
 
-    private boolean deleteDirectory(final Path path) throws IOException, InterruptedException {
+    private void deleteDirectory(final Path path) throws IOException, InterruptedException {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
-        return ugi.doAs(new PrivilegedExceptionAction<Boolean>() {
+        ugi.doAs(new PrivilegedExceptionAction<Boolean>() {
 
             public Boolean run() throws Exception {
                 return fs.delete(path, true);

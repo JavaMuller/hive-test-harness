@@ -2,19 +2,18 @@ package hive.harness.domain;
 
 
 import com.google.common.base.Objects;
-import org.apache.commons.lang3.StringUtils;
 
 public class QueryResult {
 
-    private String file;
-    private long min;
-    private long max;
-    private double mean;
-    private double median;
-    private double standardDeviation;
-    private int iterations;
+    private final String file;
+    private final long min;
+    private final long max;
+    private final double mean;
+    private final double median;
+    private final double standardDeviation;
+    private final int iterations;
 
-    private long recordCount;
+    private final long recordCount;
 
     public QueryResult(String file, long min, long max, double mean, double median, double standardDeviation, int iterations, long recordCount) {
         this.file = file;

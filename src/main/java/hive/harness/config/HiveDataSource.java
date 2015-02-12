@@ -15,9 +15,9 @@ public class HiveDataSource implements DataSource {
 
     private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
-    private String username;
-    private String password;
-    private String url;
+    private final String username;
+    private final String password;
+    private final String url;
 
     public HiveDataSource(String url, String username, String password) {
         this.username = username;

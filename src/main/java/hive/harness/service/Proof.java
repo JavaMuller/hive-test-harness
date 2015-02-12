@@ -101,7 +101,7 @@ public class Proof {
     }
 
 
-    private List<Resource> applyFilters(Resource[] resources, String[] includeFilter, String[] excludeFilter) throws IOException {
+    private List<Resource> applyFilters(Resource[] resources, String[] includeFilter, String[] excludeFilter) {
 
         Map<String, Resource> fileMap = new HashMap<>();
 

@@ -24,7 +24,10 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.security.PrivilegedExceptionAction;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,44 +61,10 @@ public class HiveService {
         });
     }
 
-    private String getSqlString(Resource resource) throws IOException {
-
-        EncodedResource encodedResource = new EncodedResource(resource);
-
-        try (LineNumberReader reader = new LineNumberReader(encodedResource.getReader())) {
-
-            String script = ScriptUtils.readScript(reader, ScriptUtils.DEFAULT_COMMENT_PREFIX, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR);
-
-            List<String> statements = new ArrayList<>();
-
-            ScriptUtils.splitSqlScript(script, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR, statements);
-
-            assert statements.size() == 1;
-
-            return statements.get(0);
-        }
-    }
-
-
-    private List<String> getSqlStrings(Resource resource) throws IOException {
-
-        EncodedResource encodedResource = new EncodedResource(resource);
-
-        try (LineNumberReader reader = new LineNumberReader(encodedResource.getReader())) {
-
-            String script = ScriptUtils.readScript(reader, ScriptUtils.DEFAULT_COMMENT_PREFIX, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR);
-
-            List<String> statements = new ArrayList<>();
-
-            ScriptUtils.splitSqlScript(script, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR, statements);
-
-            return statements;
-        }
-    }
 
     public QueryResult executeSqlQuery(Resource resource, int iterations, boolean countResults) throws IOException {
 
-        String query = getSqlString(resource);
+        final String query = getSqlString(resource);
 
         final NumberFormat numberInstance = NumberFormat.getNumberInstance();
         numberInstance.setMaximumFractionDigits(2);
@@ -110,7 +79,7 @@ public class HiveService {
 
             log.debug("executing: " + filename);
 
-            Histogram histogram = metricRegistry.histogram(filename);
+            final Histogram histogram = metricRegistry.histogram(filename);
 
             for (int i = 0; i < iterations; i++) {
 
@@ -130,7 +99,7 @@ public class HiveService {
                 resultSet.close();
             }
 
-            Snapshot snapshot = histogram.getSnapshot();
+            final Snapshot snapshot = histogram.getSnapshot();
 
             long resultSize = 0;
 
@@ -161,9 +130,9 @@ public class HiveService {
 
     public void executeSqlScript(Resource resource) throws IOException {
 
-        List<String> statements = getSqlStrings(resource);
+        final List<String> statements = getSqlStrings(resource);
 
-        String hdfsDataPath = environment.getProperty("hdfs.data.path");
+        final String hdfsDataPath = environment.getProperty("hdfs.data.path");
 
         try (
                 Connection connection = dataSource.getConnection()
@@ -229,6 +198,33 @@ public class HiveService {
 
                 }
             }
+        }
+    }
+
+
+    private String getSqlString(Resource resource) throws IOException {
+
+        List<String> statements = getSqlStrings(resource);
+
+        assert statements.size() == 1;
+
+        return statements.get(0);
+    }
+
+
+    private List<String> getSqlStrings(Resource resource) throws IOException {
+
+        EncodedResource encodedResource = new EncodedResource(resource);
+
+        try (LineNumberReader reader = new LineNumberReader(encodedResource.getReader())) {
+
+            String script = ScriptUtils.readScript(reader, ScriptUtils.DEFAULT_COMMENT_PREFIX, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR);
+
+            List<String> statements = new ArrayList<>();
+
+            ScriptUtils.splitSqlScript(script, ScriptUtils.DEFAULT_STATEMENT_SEPARATOR, statements);
+
+            return statements;
         }
     }
 }
