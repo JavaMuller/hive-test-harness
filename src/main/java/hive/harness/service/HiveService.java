@@ -105,11 +105,19 @@ public class HiveService {
             long resultSize = 0;
 
             if (countResults) {
-                ResultSet resultSet = statement.executeQuery();
 
+                StopWatch sw = new StopWatch();
+                sw.start("execute query");
+                ResultSet resultSet = statement.executeQuery();
+                sw.stop();
+
+                sw.start("iterate and count");
                 while (resultSet.next()) {
                     resultSize++;
                 }
+                sw.stop();
+
+                log.debug(sw.prettyPrint());
 
                 resultSet.close();
             }
