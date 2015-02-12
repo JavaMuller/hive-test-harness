@@ -81,7 +81,7 @@ Create an "Application" "Run Configuration" like the following [screenshot](http
 
 ## Running on remote clusters
 
-Run on a remote by setting the active profile (eg `-Dspring.profiles.active=remote`) and updating `src/main/resources/application-remote.properties`
+Run on a remote cluster by setting the active profile (eg `-Dspring.profiles.active=remote`) and updating `src/main/resources/application-remote.properties`
 
 Once the jar has been deployed to the remote cluster, you can execute the following...
 
