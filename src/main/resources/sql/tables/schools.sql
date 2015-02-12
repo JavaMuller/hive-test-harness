@@ -1,17 +1,17 @@
 CREATE TABLE schools (
   schoolID string,
-  schoolName string,
-  schoolCity string,
-  schoolState string,
-  schoolNick string)
+  name string,
+  city string,
+  state string,
+  nickname string)
   stored as orc;
 
 CREATE TABLE schools_csv (
-  schoolID string,
-  schoolName string,
-  schoolCity string,
-  schoolState string,
-  schoolNick string)
+    schoolID string,
+    name string,
+    city string,
+    state string,
+    nickname string)
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 

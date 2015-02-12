@@ -1,0 +1,1 @@
+select schoolID, count(*) from college_playing group by schoolID order by schoolID;
