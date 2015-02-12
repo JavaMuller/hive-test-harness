@@ -26,8 +26,6 @@ public class RunTest implements CommandLineRunner {
      * Set COUNT_RESULTS to false if the data set is large or counts are not important to the test.
      */
 
-    public static final boolean COUNT_RESULTS = true;
-
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -47,6 +45,7 @@ public class RunTest implements CommandLineRunner {
 
         final boolean build = commandLine.hasOption("b");
         final boolean query = commandLine.hasOption("q");
+        final boolean count = commandLine.hasOption("c");
         final String testName = commandLine.getOptionValue("test.name", environment.getProperty("test.name"));
         final String dataPath = commandLine.getOptionValue("data.path", environment.getProperty("data.path"));
         final int iterations = Integer.parseInt(commandLine.getOptionValue("i", "1"));
@@ -58,6 +57,7 @@ public class RunTest implements CommandLineRunner {
         log.info("\tQuery? " + query);
 
         if (query) {
+            log.info("\tCount Records: " + count);
             log.info("\tTest Name: " + testName);
         }
 
@@ -100,7 +100,7 @@ public class RunTest implements CommandLineRunner {
             log.info("******************************************");
             System.out.println();
 
-            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, iterations, COUNT_RESULTS);
+            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, iterations, count);
 
             System.out.println();
             log.info("******************************************");

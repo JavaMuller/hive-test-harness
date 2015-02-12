@@ -41,6 +41,7 @@ public class Application {
 
         options.addOption("b", "build", false, "build database, tables and load data");
         options.addOption("q", "query", false, "execute queries");
+        options.addOption("c", "count", false, "when executing queries, count the records returned from the query");
         options.addOption("i", "iterations", true, "number of times the query will be executed");
 
         options.addOption(OptionBuilder.withLongOpt("test.name").withDescription("short name or description of test being run").hasArg().withArgName("NAME").create());

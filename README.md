@@ -32,6 +32,8 @@ The following parameters can be passed as command line arguments:
 ```
 usage: java -jar <Hive Test Harness Jar>
  -b,--build              build database, tables and load data
+ -c,--count              when executing queries, count the records
+                         returned from the query
     --data.path <PATH>   path to local data to be uploaded to HDFS and
                          used by build scripts
  -i,--iterations <arg>   number of times the query will be executed
@@ -60,9 +62,6 @@ From the project's base directory execute the following from the command line
 
 # builds the spring boot jar called hive-test-harness-0.0.1-SNAPSHOT.jar
 > mvn package clean
-
-# runs the spring boot jar.
-> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b
 
 # for example, to build only using default "data.path"
 > java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b
