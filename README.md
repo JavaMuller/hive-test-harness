@@ -79,7 +79,7 @@ From the project's base directory execute the following from the command line
 Create an "Application" "Run Configuration" like the following [screenshot](https://github.com/timveil/hive-test-harness/blob/master/docs/Run_Debug_Configurations.png)
 
 
-## Running on remote clusters
+## Running on a Remote Cluster
 
 Run on a remote cluster by setting the active profile (eg `-Dspring.profiles.active=remote`) and updating `src/main/resources/application-remote.properties`
 
