@@ -78,6 +78,8 @@ Create an "Application" "Run Configuration" like the following [screenshot](http
 
 Run on a remote by setting the active profile (eg `-Dspring.profiles.active=remote`) and updating `src/main/resources/application-remote.properties`
 
+Once the jar has been deployed to the remote cluster, you can execute the following...
+
 ```
 java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar true true "testing in remote" "/path/to/data/on/remote/server" 5
 ```
