@@ -35,8 +35,9 @@ import java.util.List;
 @Service
 public class HiveService {
 
-    public static final String PATH_TOKEN = "@@HDFS_PATH@@";
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    public static final String PATH_TOKEN = "@@HDFS_PATH@@";
 
     @Autowired
     private Environment environment;

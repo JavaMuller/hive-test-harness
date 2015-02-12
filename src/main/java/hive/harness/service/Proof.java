@@ -5,8 +5,6 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import hive.harness.domain.QueryResult;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
@@ -19,8 +17,6 @@ import java.util.*;
 
 @Service
 public class Proof {
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private Environment environment;

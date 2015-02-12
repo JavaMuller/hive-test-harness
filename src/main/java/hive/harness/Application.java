@@ -1,9 +1,9 @@
 package hive.harness;
 
 import com.codahale.metrics.MetricRegistry;
-import org.apache.commons.cli.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration;
@@ -21,8 +21,6 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, JtaAutoConfiguration.class, JmxAutoConfiguration.class, GroovyTemplateAutoConfiguration.class, GsonAutoConfiguration.class, PersistenceExceptionTranslationAutoConfiguration.class})
 public class Application {
-
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws Exception {
         SpringApplication app = new SpringApplication(Application.class);
