@@ -39,7 +39,7 @@ public class HiveDataSource implements DataSource {
         try {
             Class.forName("org.apache.hive.jdbc.HiveDriver");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         final Connection connection = DriverManager.getConnection(url, username, password);
