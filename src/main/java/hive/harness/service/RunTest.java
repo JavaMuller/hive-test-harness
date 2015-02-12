@@ -53,8 +53,8 @@ public class RunTest implements CommandLineRunner {
         System.out.println();
         log.info("******************************************");
         log.info("Running Test with the following parameters...");
-        log.info("\tBuild? " + build);
-        log.info("\tQuery? " + query);
+        log.info("\tBuild: " + build);
+        log.info("\tQuery: " + query);
 
         if (query) {
             log.info("\tCount Records: " + count);
