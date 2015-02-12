@@ -44,7 +44,10 @@ public class HadoopService {
                 boolean exists = fs.exists(path);
 
                 if (exists) {
-                    log.debug("path [" + path.toString() + "] exists so it shall be deleted!");
+                    if (log.isDebugEnabled()) {
+                        log.debug("path [" + path.toString() + "] exists so it shall be deleted!");
+                    }
+
                     deleteDirectory(path);
                 }
 
@@ -89,7 +92,9 @@ public class HadoopService {
 
                 sw.stop();
 
-                log.debug(sw.shortSummary());
+                if (log.isDebugEnabled()) {
+                    log.debug(sw.shortSummary());
+                }
 
                 return null;
             }

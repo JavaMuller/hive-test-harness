@@ -78,7 +78,9 @@ public class HiveService {
 
             final String filename = resource.getFilename();
 
-            log.debug("executing: " + filename);
+            if (log.isDebugEnabled()) {
+                log.debug("executing: " + filename);
+            }
 
             final Histogram histogram = metricRegistry.histogram(filename);
 
@@ -95,7 +97,9 @@ public class HiveService {
 
                 histogram.update(totalTimeMillis);
 
-                log.debug("executing " + (i + 1) + " of " + iterations + " in " + numberInstance.format(totalTimeMillis) + " ms, " + numberInstance.format(totalTimeMillis / 1000) + " s");
+                if (log.isDebugEnabled()) {
+                    log.debug("executing " + (i + 1) + " of " + iterations + " in " + numberInstance.format(totalTimeMillis) + " ms, " + numberInstance.format(totalTimeMillis / 1000) + " s");
+                }
 
                 resultSet.close();
             }
@@ -124,7 +128,9 @@ public class HiveService {
 
             final QueryResult queryResult = new QueryResult(filename, snapshot.getMin(), snapshot.getMax(), snapshot.getMean(), snapshot.getMedian(), snapshot.getStdDev(), snapshot.size(), resultSize);
 
-            log.debug(queryResult.toString());
+            if (log.isDebugEnabled()) {
+                log.debug(queryResult.toString());
+            }
 
             return queryResult;
 
@@ -167,7 +173,9 @@ public class HiveService {
 
                 sw.stop();
 
-                log.debug(sw.shortSummary());
+                if (log.isDebugEnabled()) {
+                    log.debug(sw.shortSummary());
+                }
 
             }
 
@@ -186,7 +194,9 @@ public class HiveService {
         try {
             client = getHCatClient();
 
-            log.debug("dropping database: " + databaseName);
+            if (log.isDebugEnabled()) {
+                log.debug("dropping database: " + databaseName);
+            }
 
             client.dropDatabase(databaseName, true, HCatClient.DropDBMode.CASCADE);
 
@@ -194,7 +204,9 @@ public class HiveService {
                     .ifNotExists(true)
                     .build();
 
-            log.debug("creating database: " + dbDesc);
+            if (log.isDebugEnabled()) {
+                log.debug("creating database: " + dbDesc);
+            }
 
             client.createDatabase(dbDesc);
 
