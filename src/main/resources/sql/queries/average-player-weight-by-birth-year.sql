@@ -1,1 +1,1 @@
-select birthyear, avg(weight) from master where weight is not null group by birthyear;
+select birthyear, avg(weight) from master where weight is not null and birthyear is not null group by birthyear order by birthyear asc;

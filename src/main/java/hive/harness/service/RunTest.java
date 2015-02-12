@@ -19,6 +19,8 @@ import java.util.List;
 @Component
 public class RunTest implements CommandLineRunner {
 
+    public static final boolean COUNT_RESULTS = true;
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -84,7 +86,7 @@ public class RunTest implements CommandLineRunner {
             log.info("******************************************");
             System.out.println();
 
-            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, iterations, false);
+            List<QueryResult> results = proof.executeQueries(includeFilter, excludeFilter, iterations, COUNT_RESULTS);
 
             System.out.println();
             log.info("******************************************");
