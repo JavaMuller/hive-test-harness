@@ -39,6 +39,6 @@ CREATE TABLE teams_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/teams.csv' into table teams_csv;
+load data inpath '@@HDFS_PATH@@/teams.csv' into table teams_csv;
 
 insert into table teams select * from teams_csv;

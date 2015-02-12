@@ -49,6 +49,6 @@ CREATE TABLE batting_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/batting.csv' into table batting_csv;
+load data inpath '@@HDFS_PATH@@/batting.csv' into table batting_csv;
 
 insert into table batting select * from batting_csv;

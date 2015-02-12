@@ -11,6 +11,6 @@ CREATE TABLE college_playing_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/college_playing.csv' into table college_playing_csv;
+load data inpath '@@HDFS_PATH@@/college_playing.csv' into table college_playing_csv;
 
 insert into table college_playing select * from college_playing_csv;

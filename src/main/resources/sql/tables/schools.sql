@@ -15,6 +15,6 @@ CREATE TABLE schools_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/schools.csv' into table schools_csv;
+load data inpath '@@HDFS_PATH@@/schools.csv' into table schools_csv;
 
 insert into table schools select * from schools_csv;

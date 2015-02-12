@@ -41,6 +41,6 @@ CREATE TABLE fielding_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/fielding.csv' into table fielding_csv;
+load data inpath '@@HDFS_PATH@@/fielding.csv' into table fielding_csv;
 
 insert into table fielding select * from fielding_csv;

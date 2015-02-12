@@ -49,6 +49,6 @@ CREATE TABLE master_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/master.csv' into table master_csv;
+load data inpath '@@HDFS_PATH@@/master.csv' into table master_csv;
 
 insert into table master select * from master_csv;

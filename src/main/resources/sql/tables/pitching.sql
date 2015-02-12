@@ -66,6 +66,6 @@ CREATE TABLE pitching_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/pitching.csv' into table pitching_csv;
+load data inpath '@@HDFS_PATH@@/pitching.csv' into table pitching_csv;
 
 insert into table pitching select * from pitching_csv;

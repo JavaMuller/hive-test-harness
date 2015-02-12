@@ -15,6 +15,6 @@ CREATE TABLE salaries_csv (
   ROW FORMAT DELIMITED FIELDS TERMINATED BY '\054'
   stored as TEXTFILE;
 
-load data inpath '@@PATH@@/salaries.csv' into table salaries_csv;
+load data inpath '@@HDFS_PATH@@/salaries.csv' into table salaries_csv;
 
 insert into table salaries select * from salaries_csv;
