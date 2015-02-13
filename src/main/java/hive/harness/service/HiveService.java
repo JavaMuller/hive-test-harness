@@ -121,7 +121,9 @@ public class HiveService {
                 }
                 sw.stop();
 
-                log.debug(sw.prettyPrint());
+                if (log.isDebugEnabled()) {
+                    log.debug(sw.prettyPrint());
+                }
 
                 resultSet.close();
             }
