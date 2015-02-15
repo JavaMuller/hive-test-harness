@@ -11,7 +11,7 @@ The code ships with Sean Lahman's terrific baseball statistics [data](http://www
 To execute you'll need the following:
 * Java 1.7 installed
 * Maven installed (use latest)
-* A HDP 2.2 cluster.  I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locally instead of the sandbox.  A `Vagrantfile` file is included in the root of the project.  If you don't use the included `Vagrantfile`, make sure you update `src/main/resources/application.properties` with your cluster info.
+* A running HDP 2.2 cluster.  I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locally instead of the sandbox.  A `Vagrantfile` file is included in the root of the project.  If you don't use the included `Vagrantfile`, make sure you update `src/main/resources/application.properties` with your cluster info.  To use install vagrant and run `vagrant up` in the root of the project.
 
 ## Getting Started
 

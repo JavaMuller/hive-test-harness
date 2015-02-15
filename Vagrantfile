@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.network "private_network", ip: "192.168.3.101"
 
-  config.multihostsupdater.aliases = ["min"]
+  config.multihostsupdater.aliases = ["hivetest"]
 
   config.vbguest.no_remote = true
 
