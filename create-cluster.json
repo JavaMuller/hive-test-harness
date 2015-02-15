@@ -1,0 +1,14 @@
+{
+  "blueprint" : "hive-test",
+  "default_password" : "password",
+  "host_groups" :[
+    {
+      "name" : "host_group_1",
+      "hosts" : [
+        {
+          "fqdn" : "hivetest.hdp.local"
+        }
+      ]
+    }
+  ]
+}

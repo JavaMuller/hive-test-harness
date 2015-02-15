@@ -11,7 +11,7 @@ The code ships with Sean Lahman's terrific baseball statistics [data](http://www
 To execute you'll need the following:
 * Java 1.7 installed
 * Maven installed (use latest)
-* A HDP 2.2 cluster.  I like to use [Ambari Vagrant](https://cwiki.apache.org/confluence/display/AMBARI/Quick+Start+Guide) to install my cluster locally instead of the sandbox.  Make sure you update `src/main/resources/application.properties` with your cluster info.
+* A HDP 2.2 cluster.  I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locally instead of the sandbox.  A `Vagrantfile` file is included in the root of the project.  If you don't use the included `Vagrantfile`, make sure you update `src/main/resources/application.properties` with your cluster info.
 
 ## Getting Started
 
