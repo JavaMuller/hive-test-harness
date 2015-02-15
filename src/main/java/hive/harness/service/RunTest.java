@@ -21,11 +21,6 @@ import java.util.List;
 @Component
 public class RunTest implements CommandLineRunner {
 
-    /**
-     * Be careful here! If the result set sizes reach into the millions it may not be worth the time to count them.
-     * Set COUNT_RESULTS to false if the data set is large or counts are not important to the test.
-     */
-
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
