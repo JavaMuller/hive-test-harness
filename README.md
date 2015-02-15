@@ -11,7 +11,7 @@ The code ships with Sean Lahman's terrific baseball statistics [data](http://www
 To execute you'll need the following:
 * Java 1.7 installed
 * Maven installed (use latest)
-* A running HDP 2.2 cluster.  I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locally instead of the sandbox.  A `Vagrantfile` file is included in the root of the project.  If you don't use the included `Vagrantfile`, make sure you update `src/main/resources/application.properties` with your cluster info.  To use install vagrant and run `vagrant up` in the root of the project.
+* A running HDP 2.2 cluster
 
 ## Getting Started
 
@@ -53,6 +53,15 @@ String[] excludeFilter = new String[]{
 ## Running Locally
 
 You can run this locally with either IntelliJ or via the Command Line.
+
+### Build Cluster with Vagrant (Optional)
+
+I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locally instead of the HDP sandbox.  A `Vagrantfile` file is included in the root of the project.  To use install Vagrant and run `vagrant up` in the root of the project.  The `Vagrantfile` uses the following plugins `vagrant-multi-hostsupdater` and `vagrant-vbguest`.  To install the plugins, run the following from the root of the project.
+
+```bash
+vagrant plugin install vagrant-multi-hostsupdater
+vagrant plugin install vagrant-vbguest
+```
 
 ### Command Line
 
