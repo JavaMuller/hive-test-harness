@@ -70,7 +70,6 @@ vagrant up
 From the project's base directory execute the following from the command line
 
 ```bash
-
 # builds the spring boot jar called hive-test-harness-0.0.1-SNAPSHOT.jar
 > mvn package clean
 
