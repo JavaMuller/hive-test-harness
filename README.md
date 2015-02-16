@@ -60,6 +60,7 @@ I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locall
 
 ```bash
 > vagrant plugin install vagrant-multi-hostsupdater
+> vagrant plugin install vagrant-vbguest
 
 > vagrant up
 ```
