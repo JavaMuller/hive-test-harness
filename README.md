@@ -2,7 +2,7 @@
 
 ## About
 
-The purpose of this project is to provide an easy to use, easy to share, easy to deploy harness for testing Hive queries against HDP clusters.  The harness has the ability to create tables, load data, execute queries and capture detailed statistics about those queries.  This can be particularly useful when performance benchmarking or turning.  I use this tool frequently to establish a performance baseline, then capture results after each configuration or code change.
+The purpose of this project is to provide an easy to use, easy to share, easy to deploy harness for testing Hive queries against Hortonworks Data Platform (HDP) clusters.  The harness has the ability to create tables, load data, execute queries and capture detailed statistics about those queries.  This can be particularly useful when performance benchmarking or turning.  I use this tool frequently to establish a performance baseline, then capture results after each configuration or code change.
 
 The code ships with Sean Lahman's terrific baseball statistics [data](http://www.seanlahman.com/baseball-archive/statistics/) but can be easily replaced with data, schema and queries of your choosing.
 
@@ -11,7 +11,7 @@ The code ships with Sean Lahman's terrific baseball statistics [data](http://www
 To execute you'll need the following:
 * Java 1.7 installed
 * Maven installed (use latest)
-* A running HDP 2.2 cluster
+* A running Hortonworks 2.2 cluster
 
 ## Getting Started
 
