@@ -67,7 +67,7 @@ I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locall
 
 ### Command Line
 
-From the project's base directory execute the following from the command line
+From the project's base directory execute the following from the command line:
 
 ```bash
 # builds the spring boot jar called hive-test-harness-0.0.1-SNAPSHOT.jar
@@ -93,7 +93,7 @@ Create an "Application" "Run Configuration" like the following [screenshot](http
 
 Run on a remote cluster by setting the active profile (eg `-Dspring.profiles.active=remote`) and updating `src/main/resources/application-remote.properties`
 
-Once the jar has been deployed to the remote cluster, you can execute the following...
+Once the jar has been deployed to the remote cluster, you can execute the following:
 
 ```
 java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar -b --data.path "/foo/bar" -q --test.name "super important test" -i 50
