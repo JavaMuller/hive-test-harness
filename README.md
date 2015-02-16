@@ -56,13 +56,13 @@ You can run this locally with either IntelliJ or via the Command Line.
 
 ### Build Cluster with Vagrant (Optional)
 
-I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locally instead of the HDP sandbox.  A `Vagrantfile` file is included in the root of the project.  To use, run the following commands in the root of the project.
+I like to use [Vagrant](https://www.vagrantup.com/) to install my cluster locally instead of the HDP sandbox.  A `Vagrantfile` file is included in the root of the project.  To use, run the following commands:
 
 ```bash
-vagrant plugin install vagrant-multi-hostsupdater
-vagrant plugin install vagrant-vbguest
+> vagrant plugin install vagrant-multi-hostsupdater
+> vagrant plugin install vagrant-vbguest
 
-vagrant up
+> vagrant up
 ```
 
 ### Command Line
