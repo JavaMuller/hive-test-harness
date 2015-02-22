@@ -3,11 +3,11 @@
 echo "******* JAVA_HOME = $JAVA_HOME"
 echo "******* HOSTNAME = $1"
 
-BLUEPRINT_URL="http://$1:8080/api/v1/blueprints/secure"
+BLUEPRINT_URL="http://$1:8080/api/v1/blueprints/hive-test"
 
 echo $BLUEPRINT_URL
 
-CLUSTER_URL="http://$1:8080/api/v1/clusters/secure"
+CLUSTER_URL="http://$1:8080/api/v1/clusters/hive-test"
 
 echo $CLUSTER_URL
 
