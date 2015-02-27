@@ -16,18 +16,16 @@ public class HiveDataSource implements DataSource {
     private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
     private final String username;
-    private final String password;
     private final String url;
 
-    public HiveDataSource(String url, String username, String password) {
+    public HiveDataSource(String url, String username) {
         this.username = username;
-        this.password = password;
         this.url = url;
     }
 
     @Override
     public Connection getConnection() throws SQLException {
-        return getConnection(this.username, this.password);
+        return getConnection(this.username, null);
     }
 
     @Override
