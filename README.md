@@ -11,7 +11,7 @@ The code ships with Sean Lahman's terrific baseball statistics [data](http://www
 To execute you'll need the following:
 * Java 1.7 installed
 * Maven installed (use latest)
-* A running Hortonworks 2.2 cluster
+* A running HDP 2.2 cluster
 
 ## Getting Started
 

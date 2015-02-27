@@ -6,7 +6,7 @@
 out/
 target/
 
-/*.log
-/*.csv
+*.log
+*.csv
 
 .vagrant

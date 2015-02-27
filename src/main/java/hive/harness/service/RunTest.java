@@ -120,13 +120,13 @@ public class RunTest implements CommandLineRunner {
 
         final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
 
-        CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "min", "max", "mean", "median", "standard deviation", "iterations", "recordCount");
+        CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "min", "max", "mean", "median", "standard deviation", "iterations", "count", "countDuration");
 
         try (FileWriter fileWriter = new FileWriter(filename);
              CSVPrinter printer = new CSVPrinter(fileWriter, format)) {
 
             for (QueryResult result : results) {
-                printer.printRecord(result.getFile(), result.getMin(), result.getMax(), result.getMean(), result.getMedian(), result.getStandardDeviation(), result.getIterations(), result.getRecordCount());
+                printer.printRecord(result.getFile(), result.getMin(), result.getMax(), result.getMean(), result.getMedian(), result.getStandardDeviation(), result.getIterations(), result.getCount(), result.getCountDuration());
             }
 
             fileWriter.flush();

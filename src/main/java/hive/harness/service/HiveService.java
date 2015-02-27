@@ -106,7 +106,9 @@ public class HiveService {
 
             final Snapshot snapshot = histogram.getSnapshot();
 
-            long resultSize = 0;
+            long count = 0;
+
+            long countDuration = 0;
 
             if (countResults) {
 
@@ -117,9 +119,11 @@ public class HiveService {
 
                 sw.start("iterate and count");
                 while (resultSet.next()) {
-                    resultSize++;
+                    count++;
                 }
                 sw.stop();
+
+                countDuration = sw.getLastTaskTimeMillis();
 
                 if (log.isDebugEnabled()) {
                     log.debug(sw.prettyPrint());
@@ -128,7 +132,7 @@ public class HiveService {
                 resultSet.close();
             }
 
-            final QueryResult queryResult = new QueryResult(filename, snapshot.getMin(), snapshot.getMax(), snapshot.getMean(), snapshot.getMedian(), snapshot.getStdDev(), snapshot.size(), resultSize);
+            final QueryResult queryResult = new QueryResult(filename, snapshot.getMin(), snapshot.getMax(), snapshot.getMean(), snapshot.getMedian(), snapshot.getStdDev(), snapshot.size(), count, countDuration);
 
             if (log.isDebugEnabled()) {
                 log.debug(queryResult.toString());
