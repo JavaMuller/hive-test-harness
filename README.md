@@ -31,14 +31,17 @@ The following parameters can be passed as command line arguments:
 
 ```
 usage: java -jar <Hive Test Harness Jar>
- -b,--build              build database, tables and load data
- -c,--count              when executing queries, count the records
-                         returned from the query
-    --local.data.path <PATH>   path to local data to be uploaded to HDFS and
-                         used by build scripts
- -i,--iterations <arg>   number of times the query will be executed
- -q,--query              execute queries
-    --test.name <NAME>   short name or description of test being run
+ -b,--build                    build database, tables and load data
+ -c,--count                    when executing queries, count the records
+                               returned from the query
+    --hdfs.data.path <PATH>    path to where the data should be stored on
+                               HDFS
+    --hive.db.name <NAME>      name of database to create in Hive
+ -i,--iterations <arg>         number of times the query will be executed
+    --local.data.path <PATH>   path to local data to be uploaded to HDFS
+                               and used by build scripts
+ -q,--query                    execute queries
+    --test.name <NAME>         short name or description of test being run
 ```
 
 You can further refine the test by updating `String[] includeFilter` and `String[] excludeFilter` in `RunTest.java`.  This is a great way to test individual queries (use `includeFilter`) or eliminate problematic ones (use `excludeFilter`).
