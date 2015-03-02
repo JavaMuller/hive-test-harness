@@ -28,13 +28,13 @@ public class Proof {
     private HadoopService hadoopService;
 
 
-    public void build(String dataPath, String[] dataFilter, String[] tableFilter) throws IOException, InterruptedException {
+    public void build(String localDataPath, String hdfsDataPath, String[] dataFilter, String[] tableFilter, String databaseName) throws IOException, InterruptedException {
 
-        loadFilesIntoHdfs(dataPath, dataFilter);
+        loadFilesIntoHdfs(localDataPath, hdfsDataPath, dataFilter);
 
-        createDatabase();
+        createDatabase(databaseName);
 
-        buildTables(tableFilter);
+        buildTables(tableFilter, hdfsDataPath);
 
     }
 
@@ -67,27 +67,25 @@ public class Proof {
 
     }
 
-    private void createDatabase() throws IOException, InterruptedException {
-        hiveService.createDatabase();
+    private void createDatabase(String databaseName) throws IOException, InterruptedException {
+        hiveService.createDatabase(databaseName);
     }
 
 
-    private void loadFilesIntoHdfs(String dataPath, String[] dataFilter) throws IOException, InterruptedException {
+    private void loadFilesIntoHdfs(String localDataPath, String hdfsDataPath, String[] dataFilter) throws IOException, InterruptedException {
 
-        final String hdfsPath = environment.getProperty("hdfs.data.path");
-
-        hadoopService.createDirectory(hdfsPath);
+        hadoopService.createDirectory(hdfsDataPath);
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-        final String locationPattern = cleanPath(dataPath);
+        final String locationPattern = cleanPath(localDataPath);
 
         Resource[] resources = resolver.getResources("file:" + locationPattern);
 
         List<Resource> filteredResources = applyFilters(resources, dataFilter, null);
 
         for (Resource resource : filteredResources) {
-            hadoopService.writeFile(resource);
+            hadoopService.writeFile(resource, hdfsDataPath);
         }
     }
 
@@ -135,14 +133,14 @@ public class Proof {
         return filteredFiles;
     }
 
-    private void buildTables(String[] tableFilter) throws IOException {
+    private void buildTables(String[] tableFilter, String hdfsDataPath) throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath:sql/tables/*.sql");
 
         List<Resource> filteredResources = applyFilters(resources, tableFilter, null);
 
         for (Resource resource : filteredResources) {
-            hiveService.executeSqlScript(resource);
+            hiveService.executeSqlScript(resource, hdfsDataPath);
         }
     }
 

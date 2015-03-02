@@ -71,7 +71,7 @@ public class HadoopService {
         });
     }
 
-    public void writeFile(final Resource resource) throws IOException, InterruptedException {
+    public void writeFile(final Resource resource, final String hdfsDataPath) throws IOException, InterruptedException {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
@@ -79,7 +79,7 @@ public class HadoopService {
 
             public Void run() throws Exception {
 
-                Path path = new Path(environment.getProperty("hdfs.data.path") + "/" + resource.getFilename());
+                Path path = new Path(hdfsDataPath + "/" + resource.getFilename());
 
                 StopWatch sw = new StopWatch("wrote file to path " + path);
                 sw.start();

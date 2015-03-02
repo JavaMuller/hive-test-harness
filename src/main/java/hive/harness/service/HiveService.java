@@ -111,23 +111,16 @@ public class HiveService {
             long countDuration = 0;
 
             if (countResults) {
+                ResultSet resultSet = statement.executeQuery();
 
                 StopWatch sw = new StopWatch();
-                sw.start("execute query");
-                ResultSet resultSet = statement.executeQuery();
-                sw.stop();
-
-                sw.start("iterate and count");
+                sw.start();
                 while (resultSet.next()) {
                     count++;
                 }
                 sw.stop();
 
-                countDuration = sw.getLastTaskTimeMillis();
-
-                if (log.isDebugEnabled()) {
-                    log.debug(sw.prettyPrint());
-                }
+                countDuration = sw.getTotalTimeMillis();
 
                 resultSet.close();
             }
@@ -149,11 +142,9 @@ public class HiveService {
     }
 
 
-    public void executeSqlScript(Resource resource) throws IOException {
+    public void executeSqlScript(Resource resource, String hdfsDataPath) throws IOException {
 
         final List<String> statements = getSqlStrings(resource);
-
-        final String hdfsDataPath = environment.getProperty("hdfs.data.path");
 
         try (
                 Connection connection = dataSource.getConnection()
@@ -191,11 +182,9 @@ public class HiveService {
     }
 
 
-    public void createDatabase() throws IOException, InterruptedException {
+    public void createDatabase(String databaseName) throws IOException, InterruptedException {
 
         HCatClient client = null;
-
-        final String databaseName = environment.getProperty("hive.db.name");
 
         try {
             client = getHCatClient();

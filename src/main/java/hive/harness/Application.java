@@ -43,7 +43,9 @@ public class Application {
         options.addOption("i", "iterations", true, "number of times the query will be executed");
 
         options.addOption(OptionBuilder.withLongOpt("test.name").withDescription("short name or description of test being run").hasArg().withArgName("NAME").create());
-        options.addOption(OptionBuilder.withLongOpt("data.path").withDescription("path to local data to be uploaded to HDFS and used by build scripts ").hasArg().withArgName("PATH").create());
+        options.addOption(OptionBuilder.withLongOpt("hdfs.data.path").withDescription("path to where the data should be stored on HDFS").hasArg().withArgName("PATH").create());
+        options.addOption(OptionBuilder.withLongOpt("local.data.path").withDescription("path to local data to be uploaded to HDFS and used by build scripts ").hasArg().withArgName("PATH").create());
+        options.addOption(OptionBuilder.withLongOpt("hive.db.name").withDescription("name of database to create in Hive ").hasArg().withArgName("NAME").create());
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("java -jar <Hive Test Harness Jar>", options );

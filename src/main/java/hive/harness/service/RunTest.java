@@ -42,7 +42,9 @@ public class RunTest implements CommandLineRunner {
         final boolean query = commandLine.hasOption("q");
         final boolean count = commandLine.hasOption("c");
         final String testName = commandLine.getOptionValue("test.name", environment.getProperty("test.name"));
-        final String dataPath = commandLine.getOptionValue("data.path", environment.getProperty("data.path"));
+        final String localDataPath = commandLine.getOptionValue("local.data.path", environment.getProperty("local.data.path"));
+        final String hdfsDataPath = commandLine.getOptionValue("hdfs.data.path", environment.getProperty("hdfs.data.path"));
+        final String databaseName = commandLine.getOptionValue("hive.db.name", environment.getProperty("hive.db.name"));
         final int iterations = Integer.parseInt(commandLine.getOptionValue("i", "1"));
 
         System.out.println();
@@ -57,7 +59,9 @@ public class RunTest implements CommandLineRunner {
         }
 
         if (build) {
-            log.info("\tData Path: " + dataPath);
+            log.info("\tLocal Data Path: " + localDataPath);
+            log.info("\tHDFS Data Path: " + hdfsDataPath);
+            log.info("\tDatabase Name: " + databaseName);
         }
 
         if (query) {
@@ -79,7 +83,7 @@ public class RunTest implements CommandLineRunner {
 
             String[] tableFilter = new String[]{};
 
-            proof.build(dataPath, dataFilter, tableFilter);
+            proof.build(localDataPath, hdfsDataPath, dataFilter, tableFilter, databaseName);
         }
 
 

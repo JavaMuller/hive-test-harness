@@ -34,7 +34,7 @@ usage: java -jar <Hive Test Harness Jar>
  -b,--build              build database, tables and load data
  -c,--count              when executing queries, count the records
                          returned from the query
-    --data.path <PATH>   path to local data to be uploaded to HDFS and
+    --local.data.path <PATH>   path to local data to be uploaded to HDFS and
                          used by build scripts
  -i,--iterations <arg>   number of times the query will be executed
  -q,--query              execute queries
@@ -73,14 +73,14 @@ From the project's base directory execute the following from the command line:
 # builds the spring boot jar called hive-test-harness-0.0.1-SNAPSHOT.jar
 > mvn package clean
 
-# for example, to build only using default "data.path"
+# for example, to build only using default "local.data.path"
 > java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b
 
 # for example, to query only using default "test.name" with 10 iterations
 > java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -q -i 10
 
 # for example, to do everything with custom values
-> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b --data.path "/foo/bar" -q --test.name "super important test" -i 50
+> java -jar target/hive-test-harness-0.0.1-SNAPSHOT.jar -b --local.data.path "/foo/bar" -q --test.name "super important test" -i 50
 
 ```
 
@@ -96,6 +96,6 @@ Run on a remote cluster by setting the active profile (eg `-Dspring.profiles.act
 Once the jar has been deployed to the remote cluster, you can execute the following:
 
 ```
-java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar -b --data.path "/foo/bar" -q --test.name "super important test" -i 50
+java -jar -Dspring.profiles.active=remote hive-test-harness-0.0.1-SNAPSHOT.jar -b --local.data.path "/foo/bar" -q --test.name "super important test" -i 50
 ```
 
