@@ -14,6 +14,7 @@ import java.net.URI;
 @Configuration
 public class HadoopConfig implements EnvironmentAware {
 
+    private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
     private Environment environment;
 
@@ -41,7 +42,15 @@ public class HadoopConfig implements EnvironmentAware {
 
     @Bean
     public DataSource buildDataSource() {
-        return new HiveDataSource(environment.getProperty("hive.jdbc.url"), environment.getProperty("hive.username"));
+        String url = environment.getProperty("hive.jdbc.url");
+        String database = environment.getProperty("hive.db.name");
+
+        if (log.isDebugEnabled()) {
+            log.debug("url: " + url);
+            log.debug("db name: " + database);
+        }
+
+        return new HiveDataSource(url + "/" + database, environment.getProperty("hive.username"));
     }
 
 }

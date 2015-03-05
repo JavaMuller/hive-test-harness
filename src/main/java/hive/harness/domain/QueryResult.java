@@ -1,7 +1,6 @@
 package hive.harness.domain;
 
 
-import com.google.common.base.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class QueryResult {

@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import hive.harness.domain.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,6 @@ import java.util.*;
 
 @Service
 public class Proof {
-
-    @Autowired
-    private Environment environment;
 
     @Autowired
     private HiveService hiveService;

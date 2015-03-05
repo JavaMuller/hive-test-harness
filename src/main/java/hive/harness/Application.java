@@ -1,9 +1,7 @@
 package hive.harness;
 
-import com.codahale.metrics.MetricRegistry;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
+import hive.harness.config.CommonsCLIPropertySource;
+import org.apache.commons.cli.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration;
@@ -13,7 +11,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 import org.springframework.boot.autoconfigure.jta.JtaAutoConfiguration;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,18 +22,22 @@ import org.springframework.context.annotation.Configuration;
 public class Application {
 
     public static void main(String[] args) throws Exception {
+
+        final CommandLine commandLine = buildCommandLine(args);
+
         SpringApplication app = new SpringApplication(Application.class);
         app.setWebEnvironment(false);
+        app.addListeners(new ApplicationListener<ApplicationEnvironmentPreparedEvent>() {
+            @Override
+            public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+                event.getEnvironment().getPropertySources().addLast(new CommonsCLIPropertySource(commandLine));
+            }
+        });
+
         app.run(args);
     }
 
-    @Bean
-    public MetricRegistry buildRegistry() {
-        return new MetricRegistry();
-    }
-
-    @Bean
-    public Options commandLineOptions() {
+    private static CommandLine buildCommandLine(String[] args) throws ParseException {
         Options options = new Options();
 
         options.addOption("b", "build", false, "build database, tables and load data");
@@ -50,7 +53,9 @@ public class Application {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("java -jar <Hive Test Harness Jar>", options );
 
-        return options;
+        CommandLineParser parser = new BasicParser();
+
+        return parser.parse(options, args);
     }
 
 }
