@@ -10,6 +10,7 @@ cat > /etc/hosts <<EOF
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 $1  $2
+192.168.66.10   repo.hdp.local
 EOF
 SCRIPT
 
@@ -28,11 +29,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "hosts", type: "shell", inline: $hostsFile, args: [IP, HOSTNAME]
 
-  config.vm.provision "base", type: "shell", path: "provision-base.sh", args: [HOSTNAME]
+  config.vm.provision "base", type: "shell", path: "vagrant/provision-base.sh", args: [HOSTNAME]
 
-  config.vm.provision "ambari", type: "shell", path: "provision-ambari.sh", args: [HOSTNAME]
+  config.vm.provision "ambari", type: "shell", path: "vagrant/provision-ambari.sh", args: [HOSTNAME]
 
-  config.vm.provision "cluster", type: "shell", path: "provision-cluster.sh", args: [HOSTNAME]
+  config.vm.provision "cluster", type: "shell", path: "vagrant/provision-cluster.sh", args: [HOSTNAME]
 
   config.vm.hostname = HOSTNAME
 

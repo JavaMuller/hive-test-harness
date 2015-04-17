@@ -13,6 +13,18 @@
     <name>hive-test-harness</name>
     <description>Hive Test Harness</description>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>hive.harness.Application</start-class>
+        <java.version>1.7</java.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+
+        <hive.version>0.14.0.2.2.4.0-2633</hive.version>
+        <hadoop.version>2.6.0.2.2.4.0-2633</hadoop.version>
+        <metrics.version>3.1.0</metrics.version>
+    </properties>
+
     <repositories>
         <repository>
             <releases>
@@ -36,7 +48,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.2.2.RELEASE</version>
+        <version>1.2.3.RELEASE</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -150,18 +162,6 @@
         </dependency>
 
     </dependencies>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>hive.harness.Application</start-class>
-        <java.version>1.7</java.version>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-
-        <hive.version>0.14.0.2.2.0.0-2041</hive.version>
-        <hadoop.version>2.6.0.2.2.0.0-2041</hadoop.version>
-        <metrics.version>3.1.0</metrics.version>
-    </properties>
 
     <build>
         <resources>
