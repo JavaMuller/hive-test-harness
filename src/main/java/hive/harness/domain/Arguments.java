@@ -15,8 +15,8 @@ public class Arguments {
     private String databaseName;
 
     public Arguments(Environment environment) {
-        this.build =  environment.containsProperty("b");
-        this.query =  environment.containsProperty("q");
+        this.build = environment.containsProperty("b");
+        this.query = environment.containsProperty("q");
         this.count = environment.containsProperty("c");
         this.testName = environment.getProperty("test.name");
         this.localDataPath = environment.getProperty("local.data.path");

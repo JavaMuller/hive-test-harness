@@ -51,7 +51,7 @@ public class Application {
         options.addOption(OptionBuilder.withLongOpt("hive.db.name").withDescription("name of database to create in Hive ").hasArg().withArgName("NAME").create());
 
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("java -jar <Hive Test Harness Jar>", options );
+        formatter.printHelp("java -jar <Hive Test Harness Jar>", options);
 
         CommandLineParser parser = new BasicParser();
 

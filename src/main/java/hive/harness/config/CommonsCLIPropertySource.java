@@ -43,6 +43,6 @@ public class CommonsCLIPropertySource extends CommandLinePropertySource<CommandL
             names.add(option.getArgName());
         }
 
-       return names.toArray(new String[names.size()]);
+        return names.toArray(new String[names.size()]);
     }
 }

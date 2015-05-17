@@ -5,6 +5,7 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Snapshot;
 import hive.harness.domain.QueryResult;
 import org.apache.commons.lang.StringUtils;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hive.hcatalog.api.HCatClient;
@@ -43,9 +44,6 @@ public class HiveService {
     private Environment environment;
 
     @Autowired
-    private HiveConf hiveConf;
-
-    @Autowired
     private DataSource dataSource;
 
     @Autowired
@@ -57,6 +55,13 @@ public class HiveService {
 
         return ugi.doAs(new PrivilegedExceptionAction<HCatClient>() {
             public HCatClient run() throws Exception {
+
+                Configuration configuration = new Configuration();
+                configuration.set("fs.defaultFS", environment.getProperty("hdfs.url"));
+
+                HiveConf hiveConf = new HiveConf(configuration, HiveConf.class);
+                hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS, environment.getProperty("hive.metastore.url"));
+
                 return HCatClient.create(hiveConf);
             }
         });

@@ -1,22 +1,16 @@
 package hive.harness.service;
 
-import org.apache.hadoop.fs.FSDataOutputStream;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.permission.FsAction;
-import org.apache.hadoop.fs.permission.FsPermission;
-import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
+import org.springframework.data.hadoop.fs.FsShell;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.PrivilegedExceptionAction;
 
 @Service
@@ -25,10 +19,10 @@ public class HadoopService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private FileSystem fs;
+    private Environment environment;
 
     @Autowired
-    private Environment environment;
+    private FsShell shell;
 
 
     public void createDirectory(final String directory) throws IOException, InterruptedException {
@@ -39,34 +33,35 @@ public class HadoopService {
 
             public String run() throws Exception {
 
-                Path path = new Path(directory);
 
-                boolean exists = fs.exists(path);
+                boolean exists = shell.test(directory);
 
                 if (exists) {
                     if (log.isDebugEnabled()) {
-                        log.debug("path [" + path.toString() + "] exists so it shall be deleted!");
+                        log.debug("path [" + directory + "] exists so it shall be deleted!");
                     }
 
-                    deleteDirectory(path);
+                    deleteDirectory(directory);
                 }
 
-                fs.mkdirs(path);
-                fs.setPermission(path, new FsPermission(FsAction.ALL, FsAction.ALL, FsAction.ALL));
+                shell.mkdir(directory);
+                shell.chmodr(777, directory);
 
-                return path.toString();
+                return directory;
             }
         });
     }
 
-    private void deleteDirectory(final Path path) throws IOException, InterruptedException {
+    private void deleteDirectory(final String directory) throws IOException, InterruptedException {
 
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
-        ugi.doAs(new PrivilegedExceptionAction<Boolean>() {
+        ugi.doAs(new PrivilegedExceptionAction<Void>() {
 
-            public Boolean run() throws Exception {
-                return fs.delete(path, true);
+            public Void run() throws Exception {
+                shell.rm(true, directory);
+
+                return null;
             }
         });
     }
@@ -79,16 +74,12 @@ public class HadoopService {
 
             public Void run() throws Exception {
 
-                Path path = new Path(hdfsDataPath + "/" + resource.getFilename());
+                String hdfsPath = hdfsDataPath + "/" + resource.getFilename();
 
-                StopWatch sw = new StopWatch("wrote file to path " + path);
+                StopWatch sw = new StopWatch("wrote file to path " + hdfsPath);
                 sw.start();
 
-                FSDataOutputStream outputStream = fs.create(path, true);
-
-                InputStream inputStream = resource.getInputStream();
-
-                IOUtils.copyBytes(inputStream, outputStream, fs.getConf());
+                shell.put(resource.getFile().getAbsolutePath(), hdfsPath);
 
                 sw.stop();
 
