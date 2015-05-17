@@ -174,6 +174,8 @@ public class HiveService {
                     log.debug(sw.shortSummary());
                 }
 
+                statement.close();
+
             }
 
         } catch (Exception e) {
