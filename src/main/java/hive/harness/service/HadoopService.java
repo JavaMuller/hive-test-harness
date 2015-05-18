@@ -1,5 +1,6 @@
 package hive.harness.service;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,13 @@ public class HadoopService {
     @Autowired
     private FsShell shell;
 
+    @Autowired
+    private Configuration configuration;
+
 
     public void createDirectory(final String directory) throws IOException, InterruptedException {
 
+        UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
         ugi.doAs(new PrivilegedExceptionAction<String>() {
@@ -54,6 +59,7 @@ public class HadoopService {
 
     private void deleteDirectory(final String directory) throws IOException, InterruptedException {
 
+        UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
         ugi.doAs(new PrivilegedExceptionAction<Void>() {
@@ -68,6 +74,7 @@ public class HadoopService {
 
     public void writeFile(final Resource resource, final String hdfsDataPath) throws IOException, InterruptedException {
 
+        UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
         ugi.doAs(new PrivilegedExceptionAction<Void>() {

@@ -49,15 +49,16 @@ public class HiveService {
     @Autowired
     private MetricRegistry metricRegistry;
 
+    @Autowired
+    private Configuration configuration;
 
     public HCatClient getHCatClient() throws IOException, InterruptedException {
+
+        UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hive.username"));
 
         return ugi.doAs(new PrivilegedExceptionAction<HCatClient>() {
             public HCatClient run() throws Exception {
-
-                Configuration configuration = new Configuration();
-                configuration.set("fs.defaultFS", environment.getProperty("hdfs.url"));
 
                 HiveConf hiveConf = new HiveConf(configuration, HiveConf.class);
                 hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS, environment.getProperty("hive.metastore.url"));

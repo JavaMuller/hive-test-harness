@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.data.hadoop.config.annotation.EnableHadoop;
 import org.springframework.data.hadoop.config.annotation.SpringHadoopConfigurerAdapter;
+import org.springframework.data.hadoop.config.annotation.builders.HadoopConfigConfigurer;
 import org.springframework.data.hadoop.fs.FsShell;
 
 import java.io.IOException;
@@ -19,21 +20,31 @@ public class HadoopConfig extends SpringHadoopConfigurerAdapter {
     @Autowired
     private Environment environment;
 
-    @Bean
-    public FsShell buildMyFsShellShell() throws IOException, InterruptedException {
+    @Autowired
+    private Configuration configuration;
 
+
+    @Override
+    public void configure(HadoopConfigConfigurer config) throws Exception {
+        config.fileSystemUri(environment.getProperty("hdfs.url"));
+        config.withProperties()
+                .property("hadoop.user.group.static.mapping.overrides", "vagrant=users,hadoop,hdfs;dr.who=;")
+                .property("fs.hdfs.impl.disable.cache", "true")
+                .property("fs.file.impl.disable.cache", "true");
+    }
+
+
+    @Bean(destroyMethod = "close")
+    public FsShell buildShell() throws IOException, InterruptedException {
+
+        UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
         return ugi.doAs(new PrivilegedExceptionAction<FsShell>() {
-
             public FsShell run() throws Exception {
-                Configuration configuration = new Configuration();
-                configuration.set("fs.defaultFS", environment.getProperty("hdfs.url"));
                 return new FsShell(configuration);
             }
-
         });
 
     }
-
 }
