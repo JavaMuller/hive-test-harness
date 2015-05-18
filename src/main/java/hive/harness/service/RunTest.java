@@ -53,7 +53,10 @@ public class RunTest implements CommandLineRunner {
 
             String[] includeFilter = new String[]{};
 
-            String[] excludeFilter = new String[]{};
+            String[] excludeFilter = new String[]{
+                    "average_player_weight_by_birth_year.sql",
+                    "player_count_by_school.sql"
+            };
 
             System.out.println();
             log.info("******************************************");
