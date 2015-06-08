@@ -38,7 +38,6 @@ public class HadoopService {
 
             public String run() throws Exception {
 
-
                 boolean exists = shell.test(directory);
 
                 if (exists) {
