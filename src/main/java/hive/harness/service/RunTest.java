@@ -56,6 +56,10 @@ public class RunTest implements CommandLineRunner {
 
             String[] excludeFilter = new String[]{
                     "average_player_weight_by_birth_year.sql",
+                    "avg_salary_partitioned.sql",
+                    "player_salary_per_year.sql",
+                    "player_salary_per_year_csv.sql",
+                    "player_salary_per_year_partitioned.sql",
                     "player_count_by_school.sql"
             };
 
@@ -91,6 +95,7 @@ public class RunTest implements CommandLineRunner {
         final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
 
         File file = new File("results", filename);
+        file.getParentFile().mkdirs();
 
         CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "min", "max", "mean", "median", "standard deviation", "iterations", "count", "countDuration");
 
