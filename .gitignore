@@ -4,6 +4,7 @@
 *.iws
 
 out/
+results/
 target/
 
 *.log*
