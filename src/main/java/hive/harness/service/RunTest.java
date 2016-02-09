@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -87,11 +88,13 @@ public class RunTest implements CommandLineRunner {
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss_");
 
-        final String filename = "out/query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
+        final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
+
+        File file = new File("out", filename);
 
         CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "min", "max", "mean", "median", "standard deviation", "iterations", "count", "countDuration");
 
-        try (FileWriter fileWriter = new FileWriter(filename);
+        try (FileWriter fileWriter = new FileWriter(file);
              CSVPrinter printer = new CSVPrinter(fileWriter, format)) {
 
             for (QueryResult result : results) {
