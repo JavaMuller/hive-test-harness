@@ -8,6 +8,5 @@ results/
 target/
 
 *.log*
-/*.csv
 
 .vagrant
