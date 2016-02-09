@@ -34,25 +34,22 @@ public class HadoopService {
         UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
-        ugi.doAs(new PrivilegedExceptionAction<String>() {
+        ugi.doAs((PrivilegedExceptionAction<String>) () -> {
 
-            public String run() throws Exception {
+            boolean exists = shell.test(directory);
 
-                boolean exists = shell.test(directory);
-
-                if (exists) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("path [" + directory + "] exists so it shall be deleted!");
-                    }
-
-                    deleteDirectory(directory);
+            if (exists) {
+                if (log.isDebugEnabled()) {
+                    log.debug("path [" + directory + "] exists so it shall be deleted!");
                 }
 
-                shell.mkdir(directory);
-                shell.chmodr(777, directory);
-
-                return directory;
+                deleteDirectory(directory);
             }
+
+            shell.mkdir(directory);
+            shell.chmodr(777, directory);
+
+            return directory;
         });
     }
 
@@ -61,13 +58,10 @@ public class HadoopService {
         UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
-        ugi.doAs(new PrivilegedExceptionAction<Void>() {
+        ugi.doAs((PrivilegedExceptionAction<Void>) () -> {
+            shell.rm(true, directory);
 
-            public Void run() throws Exception {
-                shell.rm(true, directory);
-
-                return null;
-            }
+            return null;
         });
     }
 
@@ -76,25 +70,22 @@ public class HadoopService {
         UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
-        ugi.doAs(new PrivilegedExceptionAction<Void>() {
+        ugi.doAs((PrivilegedExceptionAction<Void>) () -> {
 
-            public Void run() throws Exception {
+            String hdfsPath = hdfsDataPath + "/" + resource.getFilename();
 
-                String hdfsPath = hdfsDataPath + "/" + resource.getFilename();
+            StopWatch sw = new StopWatch("wrote file to path " + hdfsPath);
+            sw.start();
 
-                StopWatch sw = new StopWatch("wrote file to path " + hdfsPath);
-                sw.start();
+            shell.put(resource.getFile().getAbsolutePath(), hdfsPath);
 
-                shell.put(resource.getFile().getAbsolutePath(), hdfsPath);
+            sw.stop();
 
-                sw.stop();
-
-                if (log.isDebugEnabled()) {
-                    log.debug(sw.shortSummary());
-                }
-
-                return null;
+            if (log.isDebugEnabled()) {
+                log.debug(sw.shortSummary());
             }
+
+            return null;
         });
     }
 }

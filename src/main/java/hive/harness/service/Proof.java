@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class Proof {
@@ -108,18 +109,14 @@ public class Proof {
             Set<String> excludedNames = Sets.newHashSet(excludeFilter);
             final Set<String> difference = Sets.difference(allFileNames, excludedNames).immutableCopy();
 
-            for (String fileName : difference) {
-                filteredFiles.add(fileMap.get(fileName));
-            }
+            filteredFiles.addAll(difference.stream().map(fileMap::get).collect(Collectors.toList()));
         }
 
         if (includeFilter != null && includeFilter.length > 0) {
             Set<String> includedNames = Sets.newHashSet(includeFilter);
             final Set<String> intersection = Sets.intersection(allFileNames, includedNames).immutableCopy();
 
-            for (String fileName : intersection) {
-                filteredFiles.add(fileMap.get(fileName));
-            }
+            filteredFiles.addAll(intersection.stream().map(fileMap::get).collect(Collectors.toList()));
         }
 
         if (filteredFiles.isEmpty()) {

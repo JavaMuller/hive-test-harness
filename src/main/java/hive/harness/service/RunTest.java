@@ -87,7 +87,7 @@ public class RunTest implements CommandLineRunner {
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss_");
 
-        final String filename = "query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
+        final String filename = "out/query-results_" + sdf.format(new Date()) + StringUtils.join(words, "-") + ".csv";
 
         CSVFormat format = CSVFormat.DEFAULT.withHeader("file", "min", "max", "mean", "median", "standard deviation", "iterations", "count", "countDuration");
 

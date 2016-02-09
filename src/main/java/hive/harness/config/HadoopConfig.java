@@ -40,11 +40,7 @@ public class HadoopConfig extends SpringHadoopConfigurerAdapter {
         UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hdfs.username"));
 
-        return ugi.doAs(new PrivilegedExceptionAction<FsShell>() {
-            public FsShell run() throws Exception {
-                return new FsShell(configuration);
-            }
-        });
+        return ugi.doAs((PrivilegedExceptionAction<FsShell>) () -> new FsShell(configuration));
 
     }
 }

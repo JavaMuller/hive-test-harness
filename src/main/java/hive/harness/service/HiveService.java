@@ -57,14 +57,12 @@ public class HiveService {
         UserGroupInformation.setConfiguration(configuration);
         UserGroupInformation ugi = UserGroupInformation.createRemoteUser(environment.getProperty("hive.username"));
 
-        return ugi.doAs(new PrivilegedExceptionAction<HCatClient>() {
-            public HCatClient run() throws Exception {
+        return ugi.doAs((PrivilegedExceptionAction<HCatClient>) () -> {
 
-                HiveConf hiveConf = new HiveConf(configuration, HiveConf.class);
-                hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS, environment.getProperty("hive.metastore.url"));
+            HiveConf hiveConf = new HiveConf(configuration, HiveConf.class);
+            hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS, environment.getProperty("hive.metastore.url"));
 
-                return HCatClient.create(hiveConf);
-            }
+            return HCatClient.create(hiveConf);
         });
     }
 
@@ -95,19 +93,19 @@ public class HiveService {
                 StopWatch queryTimer = new StopWatch();
                 queryTimer.start();
 
-                ResultSet resultSet = statement.executeQuery();
+                try (ResultSet ignored = statement.executeQuery()) {
 
-                queryTimer.stop();
+                    queryTimer.stop();
 
-                final long totalTimeMillis = queryTimer.getTotalTimeMillis();
+                    final long totalTimeMillis = queryTimer.getTotalTimeMillis();
 
-                histogram.update(totalTimeMillis);
+                    histogram.update(totalTimeMillis);
 
-                if (log.isDebugEnabled()) {
-                    log.debug("executing " + (i + 1) + " of " + iterations + " in " + numberInstance.format(totalTimeMillis) + " ms, " + numberInstance.format(totalTimeMillis / 1000) + " s");
+                    if (log.isDebugEnabled()) {
+                        log.debug("executing " + (i + 1) + " of " + iterations + " in " + numberInstance.format(totalTimeMillis) + " ms, " + numberInstance.format(totalTimeMillis / 1000) + " s");
+                    }
+
                 }
-
-                resultSet.close();
             }
 
             final Snapshot snapshot = histogram.getSnapshot();
@@ -117,18 +115,18 @@ public class HiveService {
             long countDuration = 0;
 
             if (countResults) {
-                ResultSet resultSet = statement.executeQuery();
+                try (ResultSet resultSet = statement.executeQuery()) {
 
-                StopWatch sw = new StopWatch();
-                sw.start();
-                while (resultSet.next()) {
-                    count++;
+                    StopWatch sw = new StopWatch();
+                    sw.start();
+                    while (resultSet.next()) {
+                        count++;
+                    }
+                    sw.stop();
+
+                    countDuration = sw.getTotalTimeMillis();
+
                 }
-                sw.stop();
-
-                countDuration = sw.getTotalTimeMillis();
-
-                resultSet.close();
             }
 
             final QueryResult queryResult = new QueryResult(filename, snapshot.getMin(), snapshot.getMax(), snapshot.getMean(), snapshot.getMedian(), snapshot.getStdDev(), snapshot.size(), count, countDuration);
@@ -157,30 +155,30 @@ public class HiveService {
         ) {
 
             for (String query : statements) {
-                Statement statement = connection.createStatement();
+                try (Statement statement = connection.createStatement()) {
 
 
-                if (StringUtils.contains(query, PATH_TOKEN)) {
+                    if (StringUtils.contains(query, PATH_TOKEN)) {
 
-                    if (log.isDebugEnabled()) {
-                        log.debug("replacing " + PATH_TOKEN + " with [" + hdfsDataPath + "]");
+                        if (log.isDebugEnabled()) {
+                            log.debug("replacing " + PATH_TOKEN + " with [" + hdfsDataPath + "]");
+                        }
+
+                        query = StringUtils.replace(query, PATH_TOKEN, hdfsDataPath);
                     }
 
-                    query = StringUtils.replace(query, PATH_TOKEN, hdfsDataPath);
+                    StopWatch sw = new StopWatch(query);
+                    sw.start();
+
+                    statement.execute(query);
+
+                    sw.stop();
+
+                    if (log.isDebugEnabled()) {
+                        log.debug(sw.shortSummary());
+                    }
+
                 }
-
-                StopWatch sw = new StopWatch(query);
-                sw.start();
-
-                statement.execute(query);
-
-                sw.stop();
-
-                if (log.isDebugEnabled()) {
-                    log.debug(sw.shortSummary());
-                }
-
-                statement.close();
 
             }
 
