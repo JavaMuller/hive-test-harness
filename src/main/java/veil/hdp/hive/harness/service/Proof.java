@@ -1,14 +1,14 @@
-package hive.harness.service;
+package veil.hdp.hive.harness.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-import hive.harness.domain.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
+import veil.hdp.hive.harness.domain.QueryResult;
 
 import java.io.File;
 import java.io.IOException;

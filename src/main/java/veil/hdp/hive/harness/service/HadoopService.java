@@ -1,4 +1,4 @@
-package hive.harness.service;
+package veil.hdp.hive.harness.service;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.security.UserGroupInformation;

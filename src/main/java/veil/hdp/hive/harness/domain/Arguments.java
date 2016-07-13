@@ -1,4 +1,4 @@
-package hive.harness.domain;
+package veil.hdp.hive.harness.domain;
 
 import com.google.common.base.Objects;
 import org.springframework.core.env.Environment;

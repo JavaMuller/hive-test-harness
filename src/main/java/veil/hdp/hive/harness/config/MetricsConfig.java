@@ -1,4 +1,4 @@
-package hive.harness.config;
+package veil.hdp.hive.harness.config;
 
 import com.codahale.metrics.MetricRegistry;
 import org.springframework.context.annotation.Bean;

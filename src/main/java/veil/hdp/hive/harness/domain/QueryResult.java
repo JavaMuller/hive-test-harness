@@ -1,4 +1,4 @@
-package hive.harness.domain;
+package veil.hdp.hive.harness.domain;
 
 
 import org.apache.commons.lang3.builder.ToStringBuilder;

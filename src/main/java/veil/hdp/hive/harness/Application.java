@@ -1,6 +1,5 @@
-package hive.harness;
+package veil.hdp.hive.harness;
 
-import hive.harness.config.CommonsCLIPropertySource;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +14,7 @@ import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEven
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import veil.hdp.hive.harness.config.CommonsCLIPropertySource;
 
 @Configuration
 @ComponentScan

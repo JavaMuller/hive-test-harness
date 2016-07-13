@@ -1,4 +1,4 @@
-package hive.harness.config;
+package veil.hdp.hive.harness.config;
 
 
 import org.springframework.util.StopWatch;
@@ -35,7 +35,7 @@ public class HiveDataSource implements DataSource {
         sw.start();
 
         try {
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            Class.forName("org.apache.veil.hdp.hive.jdbc.HiveDriver");
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage(), e);
         }

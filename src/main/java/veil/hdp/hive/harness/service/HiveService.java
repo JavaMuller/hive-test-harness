@@ -1,9 +1,8 @@
-package hive.harness.service;
+package veil.hdp.hive.harness.service;
 
 import com.codahale.metrics.Histogram;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Snapshot;
-import hive.harness.domain.QueryResult;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.conf.HiveConf;
@@ -20,6 +19,7 @@ import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
+import veil.hdp.hive.harness.domain.QueryResult;
 
 import javax.sql.DataSource;
 import java.io.IOException;

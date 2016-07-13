@@ -1,7 +1,5 @@
-package hive.harness.service;
+package veil.hdp.hive.harness.service;
 
-import hive.harness.domain.Arguments;
-import hive.harness.domain.QueryResult;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang.StringUtils;
@@ -11,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import veil.hdp.hive.harness.domain.Arguments;
+import veil.hdp.hive.harness.domain.QueryResult;
 
 import java.io.File;
 import java.io.FileWriter;
